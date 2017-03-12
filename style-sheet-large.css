@@ -933,7 +933,7 @@ a {
 }
 .stylemod__title
 {
-    position: fixed;
+    position: relative;
      display: block;
   font-weight: 400;
  font-family: 'Lobster', cursive;
@@ -942,8 +942,8 @@ a {
   line-height: 48px;
     margin-bottom:3%;
     margin-left: 5%;
-    top:30%;
-    left:20%
+    top:100px;
+    left:15%
 }
 .stylistImage
 {
@@ -954,9 +954,9 @@ a {
 }
 .stylistSpecialties
 {
-    position: fixed;
-    top:37%;
-    left:25%;
+    position: relative;
+    top:-120px;
+    left:20%;
     overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -971,9 +971,9 @@ a {
 }
 .stylistLocation
 {
-    position: fixed;
-    top:44%;
-    left:25%;
+    position: relative;
+    top:-120px;
+    left:20%;
     overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
