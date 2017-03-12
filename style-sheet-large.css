@@ -8,9 +8,11 @@ a {
     text-decoration: none;
 }
 #calendar {
-        
+		 position:relative;
 		max-width: 700px;
-		margin: 0 auto;
+		max-width: 700px;
+		margin: 5% auto;
+        right: 30%
 	}
 .background /*background color*/
 {
