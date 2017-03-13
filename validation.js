@@ -274,7 +274,7 @@ function createAccount(event)
       var password2 = document.getElementById("passwordRepeat").value;
       if (password2 === "" || password2.length === 0) //checks if empty
         {
-            document.getElementById("label-passwordRepeat").style.color = "red";            event.preventDefault();  
+            document.getElementById("label-passwordConfirm").style.color = "red";            event.preventDefault();  
             test=false;
         }
     
