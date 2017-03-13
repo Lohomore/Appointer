@@ -32,7 +32,7 @@ function logIn(event)
     else
     {
         document.getElementById("loginemail").className =("sminputs");  //if fixed applies old style
-        document.getElementById("invalid-loginemail").innerHTML = "";
+        document.getElementById("label-loginemail").innerHTML = "";
         document.getElementById("label-loginemail").style.color = "#000";
     }
     
@@ -40,7 +40,7 @@ function logIn(event)
     {
         document.getElementById("loginemail").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-loginemail").style.color = "red";
-        document.getElementById("invalid-loginemail").innerHTML = "Please enter valid email (example@example.com/ca)";
+        document.getElementById("label-loginemail").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();  
         test= false;
     }
@@ -48,7 +48,7 @@ function logIn(event)
     {
         document.getElementById("loginemail").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-loginemail").style.color = "red";
-        document.getElementById("invalid-loginemail").innerHTML = "Email address is too long)";
+        document.getElementById("label-loginemail").innerHTML = "Email address is too long)";
         event.preventDefault();  
         test= false;
     }
@@ -57,6 +57,7 @@ function logIn(event)
         {
             document.getElementById("loginpassword").className="errorBorder";  //add red borders-and text
             document.getElementById("label-loginpassword").style.color = "red";
+            document.getElementById("label-loginpassword").innerHTL = "Password";
             event.preventDefault();  
             test=false;
         }
@@ -141,7 +142,7 @@ function createAccount(event)
     var monthpat =/^(0?[1-9]|1[012])$/;
     var yearpat =/^\d{4}$/;
     var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31]; 
-    if (month === "0" || day==="0" || year==="0") //checks if empty
+    if (month === "0" || day==="0" || year==="0" || year>1993) //checks if empty
     {
         document.getElementById("label-birthdate").style.color="red";
         event.preventDefault();  
