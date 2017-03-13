@@ -248,22 +248,50 @@ $(document).ready(function() {
                     <!-- Modal content -->
                     <div id="popup__content" class="popup__content">
                         <span class="close">&times;</span>
-                        <p>Select a Hairstyle from the Gallery</p>
-                        <span id="picForm__wrapper">
-                            
-                            <img class="selectHairstyleImage" src="Photos/colorfulHair.jpeg">
-                            <img class="selectHairstyleImage" src="Photos/colorfulHair.jpeg">
-                            <img class="selectHairstyleImage" src="Photos/colorfulHair.jpeg">
-                            <br />
-                            <button id="submitSelectedHairstyle" class="sumbit">Submit</button>
-                            <button id="cancelSelectedHairstyle" class="sumbit">Cancel</button>
-                        </span>
+                        <p>Select a Hairstyle</p>
+                        
+                        <div class="styled-select">
+                        <select id="selectHairstyle">
+                            <option value="Please Select">(Please select)</option>
+                            <option value="cutW">Women's Haircut</option>
+                            <option value="cutM">Men's Haircut</option>
+                            <option value="cutK">Kid's Haircut</option>
+                            <option value="dye">Hair Dye</option>
+                            <option value="perm">Perm</option>
+                          </select>
+                        </div>
+
+                        <br /><br />
+                            <button id="submitSelectedHairstyle" class="bookAppointmentButton">Confirm</button>
+                            <button id="cancelSelectedHairstyle" class="bookAppointmentButton">Cancel</button>
+                        <br /><br />
+                        
                     </div>
                   </div>
                   
-                  <button class="bookAppointmentButton" id="selectedHairstyle">Select Style</button>
+                  <button class="bookAppointmentButton" id="selectHairstyleButton">Select Style</button>
+                  <p id="selectHairstyleInput">Please select</p>
               </div>
             </div>
+          
+            <div class="sminputs">
+              <div class="input full">
+                  <label class="string optional" for="user-name" id="label-bookAppointment">Select a location</label>
+                  
+    
+                <div class="styled-select">
+                <select id="selectLocation">
+                        <option value="Please Select">(Please select)</option>
+                        <option value="cutW">489 Albert St N</option>
+                        <option value="cutM">2315 Victoria Ave.</option>
+                        <option value="cutK">Cornwall Centre</option>
+                        <option value="dye">Golden Mile Mall</option>
+                </select>
+                  </div>
+                  
+              </div>
+            </div>
+          
           
             <div class="sminputs">
               <div class="input full">
@@ -276,16 +304,13 @@ $(document).ready(function() {
                     <div id="popup__content" class="popup__content">
                         <span class="close">&times;</span>
                         <p>Select a Hairstylist</p>
-                        <button id="submitSelectedHairstylist" class="sumbit">Submit</button>
-                        <button id="cancelSelectedHairstylist" class="sumbit">Cancel</button>
-                        <button id="defaultSelectedHairstylist" class="sumbit">Set as My Stylist</button>
                         <span id="picForm__wrapper">
                             
                         
           <div id ="employee__wrapper" class="employee_wrapper">
 
              <div class="main">
-                    <ul id="og-grid" class="og-grid scrollable">
+                    <ul id="selectStylistGrid" class="og-grid scrollable">
                         <li>
 
                             <a href="#" >
@@ -349,24 +374,19 @@ $(document).ready(function() {
                     </ul>
 
                     </div><!-- /container -->
-                    <br><br><br><br><br><br><br><br><br><br>
-                    <br><br><br><br><br><br><br><br><br><br> 
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
                     </div> 
-                            
-                        </span>
-                    </div>
+                    </span>
+                    <br>
+                    <button id="submitSelectedHairstylist" class="bookAppointmentButton">Confirm</button>
+                    <button id="cancelSelectedHairstylist" class="bookAppointmentButton">Cancel</button>
+                    <button id="defaultSelectedHairstylist" class="bookAppointmentButton">Set as My Stylist</button>
+                    <br><br>
+                    </div>  
                   </div>
                   
-                  
                   <button class="bookAppointmentButton" id="selectedHairstylist">Select Stylist</button>
-              </div>
-            </div>
-          
-          <div class="sminputs">
-              
-              <div class="input full">
-                <label class="string optional" for="user-name" id="label-appointmentRequests">Special Request(s)</label>
-                <input class="string optional" maxlength="255" id="appointmentRequests" placeholder="Details" type="text" size="50" />
+                  <p id="selectHairstylistInput">Please select</p>
               </div>
             </div>
           
@@ -387,9 +407,9 @@ $(document).ready(function() {
             </div>
 
           <div class="simform__actions">
-          <input class="sumbit" name="newAppointment" type="submit" id="newAppointment" value="Add" />
-          <br /><br /><br />
-          <input class="sumbit" name="payNow" type="submit" id="payNow" value="Pay Now" />
+            <button class="sumbit" name="newAppointment" type="submit" id="newAppointment" value="Add">Add</button>
+              <br /><br /><br />
+              <button class="sumbit" name="payNow" type="submit" id="payNow" value="Pay Now">Pay Now</button>
           </div>
       </div>
   <!-- END OF SIDE PANEL -->
@@ -407,6 +427,9 @@ $(document).ready(function() {
            <div id="eventStylist" class="eventEtc"></div>
            <div id="eventLocation" class="eventEtc"></div>
           </div>
+          
+          <button>CANCEL</button>
+          
           <div id="galleryBar" class="galleryBar">
           Gallery
           </div>

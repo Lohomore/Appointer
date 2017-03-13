@@ -542,7 +542,6 @@ function validateLastName(event) //Level One
     var form = event.currentTarget.id;
     var name = "invalid-"+form;
     var label= "label-"+form;
-    alert(label);
     var last = event.currentTarget.value;
      if (last === "" || last.length === 0) //checks if empty
     {
@@ -889,12 +888,30 @@ function selectHairstyle(event)
     var modal = document.getElementById("hairPopup");
     modal.style.display = "block";
     //var inner = document.getElementById("popup__content");
-    
+    document.getElementById("submitSelectedHairstyle").addEventListener("click", closeSelectHairstyle);
     document.getElementById("cancelSelectedHairstyle").addEventListener("click", closeSelectHairstyle);   
 }
 
 function closeSelectHairstyle(event)
 {
+    // if the "Confirm" button was pressed, save the selected hairstyle
+    if(event.target.id == "submitSelectedHairstyle")
+    {
+        var defaultOption = document.getElementById("selectHairstyle").options[0].value;
+        
+        var selectedHairstyle = document.getElementById("selectHairstyle").value;
+        
+        if(selectedHairstyle == defaultOption)
+        {
+            document.getElementById("selectHairstyleInput").innerHTML = "No style selected";
+        }
+        else
+        {
+            document.getElementById("selectHairstyleInput").innerHTML = selectedHairstyle;
+        }
+    }
+    
+    // close module
      var modal = document.getElementById("hairPopup");
      modal.style.display = "none";
 }
@@ -904,12 +921,28 @@ function selectHairstylist(event)
     var modal = document.getElementById("popupStylist");
     modal.style.display = "block";
     //var inner = document.getElementById("popup__content");
-    
+    document.getElementById("submitSelectedHairstylist").addEventListener("click", closeSelectHairstylist);
     document.getElementById("cancelSelectedHairstylist").addEventListener("click", closeSelectHairstylist);   
 }
 
+
 function closeSelectHairstylist(event)
 {
+    // if the "Confirm" button was pressed, save the selected hairstylist
+    if(event.target.id == "submitSelectedHairstylist")
+    {
+     /*   
+        if(selectedHairstyle == defaultOption)
+        {
+            document.getElementById("selectHairstylistInput").innerHTML = "No stylist";
+        }
+        else
+        {
+            document.getElementById("selectHairstylistInput").innerHTML = selectedHairstyle;
+        }
+        */
+    }
+    
      var modal = document.getElementById("popupStylist");
      modal.style.display = "none";
 }
@@ -1101,7 +1134,7 @@ function editGallery(event)
     container = document.getElementById("og-grid");
     items = container.getElementsByClassName("deletePhoto");
     pics = container.getElementsByTagName("li");
-   alert(items.length);
+   
     for (var j = 0; j < items.length; j++) 
     {
      items[j].style.display = "block";
@@ -1117,7 +1150,7 @@ function closeEditGallery(event)
     container = document.getElementById("og-grid");
     items = container.getElementsByClassName("deletePhoto");
     pics = container.getElementsByTagName("li");
-    alert(items.length);
+    
     for (var j = 0; j < items.length; j++) 
     {
      items[j].style.display = "none";
@@ -1176,7 +1209,7 @@ function photoDelete(event)
     parentDiv = event.currentTarget.parentNode;
     parentDiv.style.display="none";
     var arr = parentDiv.getElementsByTagName("a");
-    alert(arr.length)
+    
     arr.style.display="none";
     arr.src = "#";
     arr.href="#";

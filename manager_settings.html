@@ -31,7 +31,7 @@
     </head>
     
 <body>    
-    
+    <div class="background">
     <!-- START OF TOOLBAR -->
     <nav>
         <ul class="toolbar__wrapper">
@@ -53,8 +53,6 @@
          
        <div class="stylemod__tab-wrapper">
            
-           
-          <span class="stylemod__heading-subtitle">
               <div class="settings__wrapper">
                   <div id="stylistName" class="settings__title">Manager Settings</div>
               Change settings like your email, password, and address.
@@ -102,9 +100,9 @@
            <hr>
                   
            <label class="settings_label">Change Password:</label>
-                  <br /><input type="text" name="changePassword" class="settings_input" placeholder="Change Password"> <br />
+                  <br /><input type="text" name="changePassword" class="settings_input" placeholder="Enter New Password"> <br />
            <label class="settings_label">Confirm Password:</label>
-                  <br /><input type="text" name="confirmChangePassword" class="settings_input" placeholder="Confirm Password"> <br />
+                  <br /><input type="text" name="confirmChangePassword" class="settings_input" placeholder="Confirm New Password"> <br />
            <hr>
                   
            <label class="settings_label">Delete a Stylist's Account: </label>
@@ -123,8 +121,12 @@
                   
            <button class="deleteButton">Delete Account</button>
            
+           <br /><br />
+           <hr>
+                  
+           <button class="saveButton">Save Changes</button>
+                  
         </div>
-        </span>
         </div>
 
       
@@ -132,7 +134,7 @@
     </div>
     </div>
     </div>
-    
+    </div>
     </body>
     <script src="edit_stylist_handler.js"></script>
 
