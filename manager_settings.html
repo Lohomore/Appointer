@@ -8,7 +8,7 @@
     
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
-  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+  <link rel="stylesheet prefetch" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
    <link rel="stylesheet" type="text/css"
   media="screen and (max-device-width: 480px)"
@@ -22,10 +22,7 @@
   media="screen and (min-device-width: 786px)"
       href="style-sheet-large.css" >
 
-<link rel="shortcut icon" href="../favicon.ico"> 
-		<link rel="stylesheet" type="text/css" href="css/default.css" />
-		<link rel="stylesheet" type="text/css" href="css/component.css" />
-		<script src="js/modernizr.custom.js"></script>
+    
     
  <script src="validation.js"></script>
     </head>
@@ -58,10 +55,12 @@
               Change settings like your email, password, and address.
               <br /><br />
               
-            <label class="settings_label">Change Branch Location:</label>
+            <label id="label-location" class="settings_label">Change Branch Location:
+                  <label class="error" id="invalid-location"></label>
+                  
+                  </label>
             
             <br />
-            <input type="text" name="changeAddress" class="settings_input" placeholder="Change Address"> <br />
                   
             <div class="styled-select" >
                   <select id="country">
@@ -90,19 +89,38 @@
                   <select id="city">
                        <option value="00" >City</option>
                       </select>
+                        <div class="styled-select" >
+                  <select id="salon">
+                       <option value="00" >Salon</option>
+                      </select>
                   </div>
+                  </div>
+                  <button class="saveButton" id="saveLocation">Save Location</button>
               
            <br /> <br />
            <hr>
         
-           <label class="settings_label">Change Email:</label>
-                  <br /><input type="text" name="changeEmail" class="settings_input" placeholder="Change Email"> <br />
+           <label id="label-email" class="settings_label">Change Email:</label>
+                  <br /><input type="email" name="email" id="email" class="settings_input" placeholder="Change Email"> 
+                  
+                  <button class="saveButton" id="saveEmail">Save Email</button>
+                  
+                  <br/>
+                  <br/>
+                  <br />
            <hr>
                   
-           <label class="settings_label">Change Password:</label>
-                  <br /><input type="text" name="changePassword" class="settings_input" placeholder="Enter New Password"> <br />
-           <label class="settings_label">Confirm Password:</label>
-                  <br /><input type="text" name="confirmChangePassword" class="settings_input" placeholder="Confirm New Password"> <br />
+           <label  id="label-password" class="settings_label">Change Password: <label  for="user-pw"id="passwordStrength"></label></label>
+                  <br /><input type="password" id="password" name="password" class="settings_input" placeholder="Enter New Password"> <br /><br/>
+           <label id="label-passwordConfirm"class="settings_label">Confirm Password:</label>
+                  <br /><input type="password" id="passwordRepeat" name="passwordRepeat" class="settings_input" placeholder="Confirm New Password"> 
+                    
+                  <button class="saveButton" id="savePassword">Save Password</button>
+                  
+                  <br />
+                  <br/>
+                  <br/>
+                  
            <hr>
                   
            <label class="settings_label">Delete a Stylist's Account: </label>
@@ -115,16 +133,16 @@
            </select>
             </div>
            <br />
-           <button class="deleteButton">Delete Stylist Account</button>
+           <button id="deleteStylist" class="deleteButton">Delete Stylist Account</button>
            <br /><br />
            <hr>
                   
-           <button class="deleteButton">Delete Account</button>
+           <button  id="deleteAccount"class="deleteButton">Delete Account</button>
            
            <br /><br />
            <hr>
                   
-           <button class="saveButton">Save Changes</button>
+           
                   
         </div>
         </div>
@@ -135,16 +153,18 @@
     </div>
     </div>
     </div>
+    
+      <!-- The popup box for profile pic change-->
+    <div id="popup" class="popup__wrapper">
+
+      <!-- Modal content -->
+      <div id="popup__content" class="popup__content">
+        <span class="close">&times;</span>
+        <p>Upload New Profile Picture</p>
+      </div>
+
+    </div>
     </body>
-    <script src="edit_stylist_handler.js"></script>
-
-    		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="js/grid.js"></script>
-		<script>
-			$(function() {
-				Grid.init();
-			});
-		</script>
-
+    <script src="update_managerSettings_handler.js"></script>
     
 </html>
