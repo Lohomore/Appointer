@@ -612,25 +612,25 @@ function validateYear(event) //Level One
     }
 }
 
-function validateEmail(event) //Level One
+function validateEmail(event) 
 {
     var email = event.currentTarget.value;
     var label= "label-"+event.currentTarget.id;
      if (email === "" || email.length === 0) //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
+       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById(label).style.color = "red";
         event.preventDefault();  
     }
     else
     {
-        event.currentTarget.className =("sminputs");  //if fixed applies old style
-        document.getElementById("invalid-email").innerHTML = "";
+        //event.currentTarget.className =("sminputs");  //if fixed applies old style
+        //document.getElementById("invalid-email").innerHTML = "";
         document.getElementById(label).style.color = "#000";
     }
 }
 
-function validateCountry(event) //Level One
+function validateCountry(event) 
 {
      var form = this;
      var name= "invalid-"+form.name;
@@ -642,7 +642,7 @@ function validateCountry(event) //Level One
      if (country === "00") //checks if empty
     {
         event.currentTarget.className="errorBorderLong";  //add red borders-and text
-        document.getElementById("invalid-locaton").style.color = "red";
+        document.getElementById("invalid-location").style.color = "red";
         event.preventDefault();  
     }
     else 
@@ -663,7 +663,7 @@ function validateReigon(event) //for province selection
      if (reigon === "" || reigon.length === 0 || reigon === "00") //checks if empty
     {
          event.currentTarget.className="errorBorderLong";  //add red borders-and text
-        document.getElementById("invalid-locaton").style.color = "red";
+        document.getElementById("invalid-location").style.color = "red";
         event.preventDefault();  
     }
     else
@@ -691,34 +691,34 @@ function validateReigon(event) //for province selection
 }
 
 
-function validateCity(event) //Level One
+function validateCity(event)
 {
     var city = event.currentTarget.value;
      if (city === "" || city.length === 0) //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
-        document.getElementById("invalid-locaton").style.color = "red";
+       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
+        document.getElementById("invalid-location").style.color = "red";
         event.preventDefault();  
     }
     else
     {
-        event.currentTarget.className =("sminputs");  //if fixed applies old style
+        //event.currentTarget.className =("sminputs");  //if fixed applies old style
         document.getElementById("invalid-location").innerHTML = "";    
     }
 }
 
-function validateSalon(event) //Level One
+function validateSalon(event)
 {
     var salon = event.currentTarget.value;
      if (salon === "" || salon.length === 0) //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
+       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById("invalid-locaton").style.color = "red";
         event.preventDefault();  
     }
     else
     {
-        event.currentTarget.className =("sminputs");  //if fixed applies old style
+       // event.currentTarget.className =("sminputs");  //if fixed applies old style
         document.getElementById("invalid-location").innerHTML = "";    
     }
 }
@@ -804,16 +804,175 @@ function validatePassword(event)
     var password = event.currentTarget;
       if (password.value === "" || password.value.length === 0) //checks if empty
         {
-             event.currentTarget.className="errorBorderLong";  //add red borders-and text
+             //event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById(label).style.color = "red";
         event.preventDefault(); 
         }
         else
         {
-            event.currentTarget.className =("sminputs");  //if fixed applies old style
-            document.getElementById(label).innerHTML = "";    
+            //event.currentTarget.className =("sminputs");  //if fixed applies old style
+            //document.getElementById(label).innerHTML = "";  
+            document.getElementById(label).style.color = "black";
         }
 }
+/**********************For Settings Pages**************/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+function submitEmail(event)
+{
+     //*****Email **************//
+    
+      var email = document.getElementById("email").value;
+      var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
+     if (email === "" || email.length === 0) //checks if empty
+    {
+        //document.getElementById("email").className="errorBorderLong";  //add red borders-and text
+        document.getElementById("label-email").style.color = "red";
+        event.preventDefault();  
+        test= false;
+    }
+   
+    else if(email.length>256)
+    {
+        //document.getElementById("email").className="errorBorderLong";  //add red borders-and text
+        document.getElementById("label-email").style.color = "red";
+        document.getElementById("label-email").innerHTML = "Email address is too long)";
+        event.preventDefault();  
+        test= false;
+    }
+    
+     else
+    {
+        //document.getElementById("email").className =("sminputs");  //if fixed applies old style
+        document.getElementById("label-email").innerHTML = "Change Email:";
+        document.getElementById("label-email").style.color = "#000";
+    }
+    
+      
+   if(!email.match(emailpat))
+    {
+        //document.getElementById("email").className="errorBorderLong";  //add red borders-and text
+        document.getElementById("label-email").style.color = "red";
+        document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
+        event.preventDefault();  
+        test= false;
+    }
+     else
+    {
+        //document.getElementById("email").className =("sminputs");  //if fixed applies old style
+        document.getElementById("label-email").innerHTML = "Change Email:";
+        document.getElementById("label-email").style.color = "#000";
+    }
+}
+
+function submitPassword(event)
+{
+    //*****Passwords  **************//
+    
+      var password = document.getElementById("password").value;
+      if (password === "" || password.length === 0) //checks if empty
+        {
+           document.getElementById("label-password").style.color = "red";
+            event.preventDefault();  
+            test=false;
+        }
+      
+      var password2 = document.getElementById("passwordRepeat").value;
+      if (password2 === "" || password2.length === 0) //checks if empty
+        {
+            document.getElementById("label-passwordConfirm").style.color = "red";            event.preventDefault();  
+            test=false;
+        }
+    
+       if(password !== password2)
+       {
+            document.getElementById("label-password").innerHTML = "Passwords Do Not Match";
+            document.getElementById("label-password").style.color = "red";
+        document.getElementById("label-password").style.fontSize = "10px";
+            event.preventDefault();  
+            test=false;
+       }
+       else
+       {
+           if(password.length >=96)
+            {
+                document.getElementById("label-password").innerHTML = "Max Length Has Been Reached"
+                document.getElementById("label-password").style.color = "red";
+                document.getElementById("label-password").style.fontSize = "10px";
+                event.preventDefault();  
+                test=false;
+            }
+            else
+            {
+                var score = scorePassword(password);
+                if(score<60)
+                {
+                    document.getElementById("label-password").innerHTML =  "Password is not Strong Enough";
+                    document.getElementById("label-password").style.color = "red";
+                    document.getElementById("label-password").style.fontSize = "10px";
+                    event.preventDefault();  
+                    test=false;
+                }
+            }  
+       }
+}
+
+function submitLocation(event)
+{
+    //*****Country **************//
+    var country = document.getElementById("country").value;
+     if (country === "00" || country==="") //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your country";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+    //*****Reigon **************//
+     var reigon = document.getElementById("province").value;
+     if (reigon === "00"||reigon==="") //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your province";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+    //*****City **************//
+    var city = document.getElementById("city").value;
+     if (city === "00"||city===""||city.length===0) //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your city";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+    //*****Salon **************//
+    var salon = document.getElementById("salon").value;
+     if (salon === "00"||salon===""||salon.length===0) //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your city";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+}
+
+function deleteStylist(event)
+{
+    
+}
+
+function deleteAccount(event)
+{
+    
+}
+
+function selectStylist(event)
+{
+    
+}
+
+
+
 /**********************For Home Calendar Page**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 function addAppointment(event)
