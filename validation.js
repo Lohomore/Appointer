@@ -1042,39 +1042,73 @@ function addAppointment(event)
 
 /**********************For Customer View Page**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-
-function selectHairstyle(event)
-{    
-    var modal = document.getElementById("hairPopup");
-    modal.style.display = "block";
-    //var inner = document.getElementById("popup__content");
-    document.getElementById("submitSelectedHairstyle").addEventListener("click", closeSelectHairstyle);
-    document.getElementById("cancelSelectedHairstyle").addEventListener("click", closeSelectHairstyle);   
-}
-
-function closeSelectHairstyle(event)
+function newCustomerAppointment(event)
 {
-    // if the "Confirm" button was pressed, save the selected hairstyle
-    if(event.target.id == "submitSelectedHairstyle")
+    /*
+    var first = document.getElementById("appointmentName").value; //for appointment name
+     if (first === "" || first.length === 0) //checks if empty
     {
-        var defaultOption = document.getElementById("selectHairstyle").options[0].value;
-        
-        var selectedHairstyle = document.getElementById("selectHairstyle").value;
-        
-        if(selectedHairstyle == defaultOption)
-        {
-            document.getElementById("selectHairstyleInput").innerHTML = "No style selected";
-        }
-        else
-        {
-            document.getElementById("selectHairstyleInput").innerHTML = selectedHairstyle;
-        }
+        document.getElementById("label-appointmentName").style.color = "red";
+        event.preventDefault();  
+    }
+    else if(first>60)
+    {
+        document.getElementById("label-appointmentName").style.color = "red";
+        document.getElementById("label-appointmentName").innerHTML = "Name less then 60 characters";
+        event.preventDefault();  
+    }
+    else
+    {
+       document.getElementById("label-appointmentName").innerHTML = "Appointment Title";
+        document.getElementById("label-appointmentName").style.color = "#000";
     }
     
-    // close module
-     var modal = document.getElementById("hairPopup");
-     modal.style.display = "none";
+    //Appointment Description
+     var first = document.getElementById("appointmentDetails").value; //for appointment name
+    if(first>150)
+    {
+        document.getElementById("label-appointmentDetails").style.color = "red";
+        document.getElementById("label-appointmentDetails").innerHTML = "Name less then 60 characters";
+        event.preventDefault();  
+    }
+    else
+    {
+        document.getElementById("label-appointmentDetails").innerHTML = "Appointment Description";
+        document.getElementById("label-appointmentDetails").style.color = "#000";
+    }
+    
+    //Appointment start date
+    var start =document.getElementById("start").value; //for appointment start date/time
+    if(!start.match(/^(([0]?[1-9]|1[0-2])([0-2]?[0-9]|3[0-1])[1-2]d{3}) (20|21|22|23|[0-1]?d{1}):([0-5]?d{1})$/))
+    {
+        document.getElementById("label-start").style.color = "red";document.getElementById("label-start").innerHTML = "Enter valid date yyyy-mm-dd-hh-mm";
+        event.preventDefault(); 
+    }
+    else
+    {
+        document.getElementById("label-start").innerHTML = "Start Date";
+        document.getElementById("label-start").style.color = "#000";
+    }
+    
+    //Appointment end date
+    var end =document.getElementById("end").value; //for appointment end date/time
+    if(!end.match(/^(([0]?[1-9]|1[0-2])([0-2]?[0-9]|3[0-1])[1-2]d{3}) (20|21|22|23|[0-1]?d{1}):([0-5]?d{1})$/))
+    {
+        document.getElementById("label-end").style.color = "red";document.getElementById("label-end").innerHTML = "Enter valid date yyyy-mm-dd-hh-mm";
+        event.preventDefault(); 
+    }
+    else
+    {
+        document.getElementById("label-end").innerHTML = "End Date";
+        document.getElementById("label-end").style.color = "#000";
+    }
+    
+    /**********SEND DATE TO BACKEND********************************///
+    /*********************************************************************
+    ****************************************************************/
+    
 }
+
 
 function selectHairstylist(event)
 {    
