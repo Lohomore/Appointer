@@ -674,7 +674,7 @@ function validateReigon(event) //for province selection
     {
         
        // event.currentTarget.className =("sminputs");  //if fixed applies old style
-        document.getElementById("invalid-location").innerHTML = ""; 
+       // document.getElementById("invalid-location").innerHTML = ""; 
          for(i=select.options.length-1;i>=0;i--)
         {
         select.remove(i);
@@ -918,6 +918,13 @@ function submitPassword(event)
                     document.getElementById("label-password").style.fontSize = "10px";
                     event.preventDefault();  
                     test=false;
+                }
+                else
+                {
+                    document.getElementById("label-password").innerHTML =  "Change Password:";
+                    document.getElementById("label-password").style.color = "#000";
+                    document.getElementById("label-passwordConfirm").style.color = "#000";
+                    document.getElementById("label-password").style.fontSize = "16px";
                 }
             }  
        }
