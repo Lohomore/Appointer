@@ -662,14 +662,14 @@ function validateReigon(event) //for province selection
      var city_stateArr;
      if (reigon === "" || reigon.length === 0 || reigon === "00") //checks if empty
     {
-         event.currentTarget.className="errorBorderLong";  //add red borders-and text
+         ///event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById("invalid-location").style.color = "red";
         event.preventDefault();  
     }
     else
     {
         
-        event.currentTarget.className =("sminputs");  //if fixed applies old style
+       // event.currentTarget.className =("sminputs");  //if fixed applies old style
         document.getElementById("invalid-location").innerHTML = ""; 
          for(i=select.options.length-1;i>=0;i--)
         {
@@ -697,13 +697,13 @@ function validateCity(event)
      if (city === "" || city.length === 0) //checks if empty
     {
        // event.currentTarget.className="errorBorderLong";  //add red borders-and text
-        document.getElementById("invalid-location").style.color = "red";
+        document.getElementById("label-location").style.color = "red";
         event.preventDefault();  
     }
     else
     {
         //event.currentTarget.className =("sminputs");  //if fixed applies old style
-        document.getElementById("invalid-location").innerHTML = "";    
+        document.getElementById("label-location").innerHTML = "Change Location";    
     }
 }
 
@@ -813,6 +813,8 @@ function validatePassword(event)
             //event.currentTarget.className =("sminputs");  //if fixed applies old style
             //document.getElementById(label).innerHTML = "";  
             document.getElementById(label).style.color = "black";
+            document.getElementById(label).innerHTML = "Change Password:";
+             document.getElementById("label-password").style.fontSize = "16px";
         }
 }
 /**********************For Settings Pages**************/
@@ -949,7 +951,7 @@ function submitLocation(event)
     var salon = document.getElementById("salon").value;
      if (salon === "00"||salon===""||salon.length===0) //checks if empty
     {
-        document.getElementById("label-location").innerHTML = "Please enter your city";
+        document.getElementById("label-location").innerHTML = "Please enter your salon";
         document.getElementById("label-location").style.color = "red";
         event.preventDefault();  
         test=false;
@@ -958,12 +960,82 @@ function submitLocation(event)
 
 function deleteStylist(event)
 {
+    var account = document.getElementById("stylistAccounts").value;
     
+    if(account!="00")
+    {
+    
+     var modal = document.getElementById("popup"); 
+    
+    modal.style.display = "block";
+    var inner = document.getElementById("popup__content");
+    var r = document.createElement('span');
+    r.innerHTML="";
+    r.innerHTML="Are you sure you want to delete "+account+"?";
+
+     var z = document.createElement("BUTTON");
+    z.setAttribute("type", "button");
+    z.setAttribute("id", "cancelDeletion");
+    //x.setAttribute("", "submit");
+    z.setAttribute("class", "sumbit");
+    z.className="sumbit";
+    var t = document.createTextNode("Cancel");       
+    z.appendChild(t)
+    r.appendChild(z);
+    
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "submit");
+    x.setAttribute("id", "saveDeletion");
+    //x.setAttribute("", "submit");
+    x.setAttribute("class", "sumbit");
+    x.className="sumbit";
+    r.appendChild(x);
+    inner.appendChild(r);
+    
+    document.getElementById("cancelDeletion").className= "stop";
+      document.getElementById("saveDeletion").className= "save";
+    
+    document.getElementById("cancelDeletion").addEventListener("click",closeEditProfilePic); 
+    document.getElementById("label-stylistAccounts").style.color="black";
+    }
+    else
+    {
+        document.getElementById("label-stylistAccounts").style.color="red";
+    }
 }
 
 function deleteAccount(event)
 {
+     var modal = document.getElementById("popup");
+    modal.style.display = "block";
+    var inner = document.getElementById("popup__content");
+    var r = document.createElement('span');
+    r.innerHTML="";
+    r.innerHTML="Are you sure you want to delete your account?"
+
+     var z = document.createElement("BUTTON");
+    z.setAttribute("type", "button");
+    z.setAttribute("id", "cancelDeletion");
+    //x.setAttribute("", "submit");
+    z.setAttribute("class", "sumbit");
+    z.className="sumbit";
+    var t = document.createTextNode("Cancel");       
+    z.appendChild(t)
+    r.appendChild(z);
     
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "submit");
+    x.setAttribute("id", "saveDeletion");
+    //x.setAttribute("", "submit");
+    x.setAttribute("class", "sumbit");
+    x.className="sumbit";
+    r.appendChild(x);
+    inner.appendChild(r);
+    
+    document.getElementById("cancelDeletion").className= "stop";
+      document.getElementById("saveDeletion").className= "save";
+    
+    document.getElementById("cancelDeletion").addEventListener("click",closeEditProfilePic); 
 }
 
 function selectStylist(event)
