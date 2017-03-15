@@ -238,39 +238,21 @@ $(document).ready(function() {
        <!-- START OF SIDE PANEL -->
       <div class="sidepanel__wrapper">
           <h2 class="bookAppointmentHeader" id="bookAppointment-title">Book appointment</h2>
-          <div class="sminputs">
+                  
+               <div class="sminputs">
               <div class="input full">
                   <label class="string optional" for="user-name" id="label-bookAppointment">Select a hairstyle</label>
                   
-                  <!-- The popup box for selecting a hairstyle-->
-                  <div id="hairPopup" class="popup__wrapper">
-
-                    <!-- Modal content -->
-                    <div id="popup__content" class="popup__content">
-                        <span class="close">&times;</span>
-                        <p>Select a Hairstyle</p>
-                        
-                        <div class="styled-select">
-                        <select id="selectHairstyle">
-                            <option value="Please Select">(Please select)</option>
-                            <option value="cutW">Women's Haircut</option>
-                            <option value="cutM">Men's Haircut</option>
-                            <option value="cutK">Kid's Haircut</option>
-                            <option value="dye">Hair Dye</option>
-                            <option value="perm">Perm</option>
-                          </select>
-                        </div>
-
-                        <br /><br />
-                            <button id="submitSelectedHairstyle" class="bookAppointmentButton">Confirm</button>
-                            <button id="cancelSelectedHairstyle" class="bookAppointmentButton">Cancel</button>
-                        <br /><br />
-                        
-                    </div>
+                <div class="styled-select">
+                    <select id="selectHairstyle">
+                        <option value="Please Select">(Please select)</option>
+                        <option value="cutW">Women's Haircut</option>
+                        <option value="cutM">Men's Haircut</option>
+                        <option value="cutK">Kid's Haircut</option>
+                        <option value="dye">Hair Dye</option>
+                        <option value="perm">Perm</option>
+                    </select>
                   </div>
-                  
-                  <button class="bookAppointmentButton" id="selectHairstyleButton">Select Style</button>
-                  <p id="selectHairstyleInput">Please select</p>
               </div>
             </div>
           
@@ -377,10 +359,6 @@ $(document).ready(function() {
                     <br><br><br><br><br><br><br><br><br><br><br><br><br>
                     </div> 
                     </span>
-                    <br>
-                    <button id="submitSelectedHairstylist" class="bookAppointmentButton">Confirm</button>
-                    <button id="cancelSelectedHairstylist" class="bookAppointmentButton">Cancel</button>
-                    <button id="defaultSelectedHairstylist" class="bookAppointmentButton">Set as My Stylist</button>
                     <br><br>
                     </div>  
                   </div>
@@ -395,6 +373,13 @@ $(document).ready(function() {
               <div class="input full">
                 <label class="string optional" for="user-name" id="label-appointmentUpload">photo of desired hairstyle</label>
                 <input type="file" name="appointmentPic">
+              </div>
+            </div>
+          
+            <div class="sminputs">  
+              <div class="input full">
+                <label class="string optional" for="user-name" id="label-appointmentRequests">Special Request(s)</label>
+                <input class="string optional" maxlength="255" id="appointmentRequests" placeholder="Details" type="text" size="50" />
               </div>
             </div>
           

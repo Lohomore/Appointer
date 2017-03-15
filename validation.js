@@ -1182,33 +1182,21 @@ function newCustomerAppointment(event)
 }
 
 
-function selectHairstylist(event)
+function openHairstylistWindow(event)
 {    
     var modal = document.getElementById("popupStylist");
     modal.style.display = "block";
-    //var inner = document.getElementById("popup__content");
-    document.getElementById("submitSelectedHairstylist").addEventListener("click", closeSelectHairstylist);
-    document.getElementById("cancelSelectedHairstylist").addEventListener("click", closeSelectHairstylist);   
+    //var inner = document.getElementById("popup__content");  
 }
 
+function selectHairstylist(event)
+{    
+    document.getElementById("selectHairstylistInput").innerHTML = event.target.innerHTML;
+    closeSelectHairstylist();
+}
 
 function closeSelectHairstylist(event)
 {
-    // if the "Confirm" button was pressed, save the selected hairstylist
-    if(event.target.id == "submitSelectedHairstylist")
-    {
-     /*   
-        if(selectedHairstyle == defaultOption)
-        {
-            document.getElementById("selectHairstylistInput").innerHTML = "No stylist";
-        }
-        else
-        {
-            document.getElementById("selectHairstylistInput").innerHTML = selectedHairstyle;
-        }
-        */
-    }
-    
      var modal = document.getElementById("popupStylist");
      modal.style.display = "none";
 }
