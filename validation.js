@@ -1114,7 +1114,7 @@ function addAppointment(event)
 
 /**********************For Customer View Page**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-function newCustomerAppointment(event)
+function addCustomerAppointment(event)
 {
     /*
     var first = document.getElementById("appointmentName").value; //for appointment name
