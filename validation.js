@@ -142,7 +142,7 @@ function createAccount(event)
     var monthpat =/^(0?[1-9]|1[012])$/;
     var yearpat =/^\d{4}$/;
     var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31]; 
-    if (month === "0" || day==="0" || year==="0" || year>1993) //checks if empty
+    if (month === "0" || day==="0" || year==="0" || year>1998) //checks if empty
     {
         document.getElementById("label-birthdate").style.color="red";
         event.preventDefault();  
@@ -390,7 +390,7 @@ function createStylistAccount(event)
     var monthpat =/^(0?[1-9]|1[012])$/;
     var yearpat =/^\d{4}$/;
     var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31]; 
-    if (month === "0" || day==="0" || year==="0") //checks if empty
+    if (month === "0" || day==="0" || year==="0" ||year>1998) //checks if empty
     {
         document.getElementById("label-birthdate").style.color="red";
         event.preventDefault();  
@@ -538,7 +538,7 @@ function validateFirstName(event)
         document.getElementById(label).style.color = "#000";
     }
 }
-function validateLastName(event) //Level One
+function validateLastName(event)
 {
     var form = event.currentTarget.id;
     var name = "invalid-"+form;
@@ -551,10 +551,11 @@ function validateLastName(event) //Level One
         event.preventDefault();  
     }
     else
-    {
+    { 
         event.currentTarget.className =("sminputs");  //if fixed applies old style
-        document.getElementById(name).innerHTML = "";
+       // document.getElementById(name).innerHTML = "";
         document.getElementById(label).style.color = "#000";
+        document.getElementById(label).innerHTML = "Last Name*";
     }
 }
 
@@ -582,7 +583,7 @@ function validateDay(event) //Level One
      var form = this;
      var name = "invalid-"+form.name;
      var day = event.currentTarget.value;
-     if (day === "00") //checks if empty
+     if (day === "00" ) //checks if empty
     {
         event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById(name).innerHTML = "Please enter your birth month";
@@ -594,21 +595,23 @@ function validateDay(event) //Level One
         document.getElementById(name).innerHTML = "";    
     }
 }
-function validateYear(event) //Level One
+function validateYear(event)
 {
-     var form = this;
+     var form = event.currentTarget.id;
      var name = "invalid-"+form.name;
+     var label= "label-"+form;
      var year = event.currentTarget.value;
-     if (year === "00") //checks if empty
+     if (year === "00" || year>1998) //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
-        document.getElementById(name).innerHTML = "Please enter your birth year";
+       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
+        //document.getElementById(name).innerHTML = "Please enter your birth year";
         event.preventDefault();  
     }
     else
     {
         event.currentTarget.className =("sminputs");  //if fixed applies old style
-        document.getElementById(name).innerHTML = "";    
+        //document.getElementById(name).innerHTML = ""; 
+        document.getElementById("label-birthdate").style.color = "#000";
     }
 }
 
@@ -627,6 +630,7 @@ function validateEmail(event)
         //event.currentTarget.className =("sminputs");  //if fixed applies old style
         //document.getElementById("invalid-email").innerHTML = "";
         document.getElementById(label).style.color = "#000";
+        document.getElementById(label).innerHTML = "Email*";
     }
 }
 
@@ -703,7 +707,8 @@ function validateCity(event)
     else
     {
         //event.currentTarget.className =("sminputs");  //if fixed applies old style
-        document.getElementById("label-location").innerHTML = "Change Location";    
+        document.getElementById("label-location").innerHTML = "Location*";   
+        document.getElementById("label-location").style.color = "#000";
     }
 }
 
@@ -813,8 +818,8 @@ function validatePassword(event)
             //event.currentTarget.className =("sminputs");  //if fixed applies old style
             //document.getElementById(label).innerHTML = "";  
             document.getElementById(label).style.color = "black";
-            document.getElementById(label).innerHTML = "Change Password:";
-             document.getElementById("label-password").style.fontSize = "16px";
+            document.getElementById(label).innerHTML = "Password*";
+             document.getElementById("label-password").style.fontSize = "12px";
         }
 }
 /**********************For Settings Pages**************/
