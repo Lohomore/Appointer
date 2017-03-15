@@ -1,16 +1,16 @@
-document.getElementById("country").addEventListener("blur", validateCountry);
+document.getElementById("country").addEventListener("blur", submitLocation);
 document.getElementById("province").addEventListener("blur", validateReigon);
-document.getElementById("city").addEventListener("blur", validateCity);
+document.getElementById("city").addEventListener("blur", submitLocation);
 
-document.getElementById("salon").addEventListener("blur", validateSalon);
+document.getElementById("salon").addEventListener("blur", submitLocation);
 
-document.getElementById("email").addEventListener("blur", validateEmail);
-document.getElementById("email").addEventListener("keyup", validateEmail);
+document.getElementById("email").addEventListener("blur", submitEmail);
+document.getElementById("email").addEventListener("keyup", submitEmail);
 
-document.getElementById("password").addEventListener("blur", validatePassword);
-document.getElementById("password").addEventListener("keyup", validatePassword);
-document.getElementById("passwordRepeat").addEventListener("blur", validatePassword);
-document.getElementById("passwordRepeat").addEventListener("keyup", validatePassword);
+document.getElementById("password").addEventListener("blur", submitPassword);
+document.getElementById("password").addEventListener("keyup", submitPassword);
+document.getElementById("passwordRepeat").addEventListener("blur", submitPassword);
+document.getElementById("passwordRepeat").addEventListener("keyup", submitPassword);
 
 document.getElementById("password").addEventListener("keypress", passwordStrength);
 document.getElementById("password").addEventListener("keyup", passwordStrength);
