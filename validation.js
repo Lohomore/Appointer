@@ -1143,6 +1143,79 @@ function addAppointment(event)
 
 /**********************For Customer View Page**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+function addCustomerAppointment(event)
+{
+    var hairstyle = document.getElementById("selectHairstyle");
+    var location = document.getElementById("selectLocation");
+    var stylist = document.getElementById("selectHairstylistInput");
+    var request = document.getElementById("specialRequest").value;
+    
+    if(hairstyle.value == "Please Select")
+    {
+        document.getElementById("label-selectHairstyle").style.color = "red";
+    }
+    else
+    {
+         document.getElementById("label-selectHairstyle").style.color = "";
+    }
+    
+    if(location.value == "Please Select")
+    {
+        document.getElementById("label-selectLocation").style.color = "red";    
+    }
+    else
+    {
+        document.getElementById("label-selectLocation").style.color = ""; 
+    }
+    
+    if(stylist.innerHTML == "Please select")
+    {
+        document.getElementById("label-selectStylist").style.color = "red";
+    }
+    else
+    {
+        document.getElementById("label-selectStylist").style.color = "";
+    }
+    
+    if(request.length > 100)
+    {
+        requestLimitDifference = request.length - 100;
+        document.getElementById("label-specialRequest").style.color = "red";
+        document.getElementById("label-specialRequest").innerHTML = "Over limit by " + requestLimitDifference;
+        if(requestLimitDifference === 1)
+        {
+            document.getElementById("label-specialRequest").innerHTML = document.getElementById("label-specialRequest").innerHTML + " character";
+        }
+        else
+        {
+            document.getElementById("label-specialRequest").innerHTML = document.getElementById("label-specialRequest").innerHTML + " characters";
+        }
+    }
+    else
+    {
+        document.getElementById("label-specialRequest").style.color = "";
+        document.getElementById("label-specialRequest").innerHTML = "Special Request(s)";
+    }
+    
+    //Appointment start date
+    var start =document.getElementById("start").value; //for appointment start date/time
+    if(!start.match(/^(([0]?[1-9]|1[0-2])([0-2]?[0-9]|3[0-1])[1-2]d{3}) (20|21|22|23|[0-1]?d{1}):([0-5]?d{1})$/))
+    {
+        document.getElementById("label-start").style.color = "red";document.getElementById("label-start").innerHTML = "Enter valid date yyyy-mm-dd-hh-mm";
+        event.preventDefault(); 
+    }
+    else
+    {
+        document.getElementById("label-start").innerHTML = "Start Date";
+        document.getElementById("label-start").style.color = "#000";
+    }
+    
+    /**********SEND DATE TO BACKEND********************************///
+    /*********************************************************************
+    ****************************************************************/
+    
+}
+
 function verifyHairstyle(event)
 {
     var hairstyle = document.getElementById("selectHairstyle");
@@ -1167,7 +1240,7 @@ function verifyLocation(event)
     }
     else
     {
-        document.getElementById("label-selectHairstyle").style.color = "";
+        document.getElementById("label-selectLocation").style.color = "";
     }
 }
 
@@ -1179,7 +1252,10 @@ function verifyStylist(event)
     {
         document.getElementById("label-selectStylist").style.color = "red";
     }
-    
+    else
+    {  
+         document.getElementById("label-selectStylist").style.color = "";
+    }
 }
 
 function openHairstylistWindow(event)
@@ -1208,6 +1284,8 @@ function selectHairstylist(event)
     {
         document.getElementById("selectHairstylistInput").innerHTML = event.target.parentNode.id;
     }
+    
+    document.getElementById("label-selectStylist").style.color = "";
     
     closeSelectHairstylist();
 }
