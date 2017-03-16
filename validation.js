@@ -24,7 +24,6 @@ function logIn(event)
       var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
      if (email === "" || email.length === 0) //checks if empty
     {
-        document.getElementById("loginemail").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-loginemail").style.color = "red";
         event.preventDefault();  
         test= false;
@@ -38,7 +37,6 @@ function logIn(event)
     
     if(!email.match(emailpat))
     {
-        document.getElementById("loginemail").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-loginemail").style.color = "red";
         document.getElementById("label-loginemail").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();  
@@ -46,7 +44,6 @@ function logIn(event)
     }
     if(email.length>256)
     {
-        document.getElementById("loginemail").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-loginemail").style.color = "red";
         document.getElementById("label-loginemail").innerHTML = "Email address is too long)";
         event.preventDefault();  
@@ -55,7 +52,6 @@ function logIn(event)
     var password = document.getElementById("loginpassword").value;
       if (password === "" || password.length === 0) //checks if empty
         {
-            document.getElementById("loginpassword").className="errorBorder";  //add red borders-and text
             document.getElementById("label-loginpassword").style.color = "red";
             document.getElementById("label-loginpassword").innerHTL = "Password";
             event.preventDefault();  
@@ -71,14 +67,12 @@ function createAccount(event)
     
      if (first === "" || first.length === 0) //checks if empty
     {
-        document.getElementById("firstName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-firstName").style.color = "red";
         event.preventDefault();  
         test=false;
     }
     else if(first.length <2)
     {                       
-        document.getElementById("firstName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-firstName").style.color = "red";
         document.getElementById("label-firstName").innerHTML = "First Name* At Least 2 characters";
         document.getElementById("label-firstName").style.fontSize = "8px";
@@ -87,7 +81,6 @@ function createAccount(event)
     }
     else if(first.length >50)
     {
-        document.getElementById("firstName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-firstName").style.color = "red";
         document.getElementById("label-firstName").innerHTML = "Can not be greater then 50 characters";
         document.getElementById("label-firstName").style.fontSize = "8px";        
@@ -108,21 +101,18 @@ function createAccount(event)
 
      if (last === "" || last.length === 0) //checks if empty
     {
-        document.getElementById("lastName").className="errorBorder";  //add red borders-and text
          document.getElementById("label-lastName").style.color = "red";
         event.preventDefault();  
         test=false;
     }
     else if(last.length <2)
     {
-       document.getElementById("lastName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-lastName").style.color = "red";
         document.getElementById("label-lastName").innerHTML = "Last Name* At least 2 characters";
         document.getElementById("label-lastName").style.fontSize = "8px";   
     }
     else if(last.length >50)
     {
-        document.getElementById("lastName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-lastName").style.color = "red";
         document.getElementById("label-lastName").innerHTML = "Can not be greater then 50 characters";
         document.getElementById("label-lastName").style.fontSize = "8px";   
@@ -195,7 +185,6 @@ function createAccount(event)
       var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
      if (email === "" || email.length === 0) //checks if empty
     {
-        document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         event.preventDefault();  
         test= false;
@@ -203,7 +192,6 @@ function createAccount(event)
    
     else if(email.length>256)
     {
-        document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Email address is too long)";
         event.preventDefault();  
@@ -220,7 +208,6 @@ function createAccount(event)
       
    if(!email.match(emailpat))
     {
-        document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();  
@@ -319,14 +306,12 @@ function createStylistAccount(event)
     
      if (first === "" || first.length === 0) //checks if empty
     {
-        document.getElementById("firstName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-firstName").style.color = "red";
         event.preventDefault();  
         test=false;
     }
     else if(first.length <2)
     {                       
-        document.getElementById("firstName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-firstName").style.color = "red";
         document.getElementById("label-firstName").innerHTML = "First Name* At Least 2 characters";
         document.getElementById("label-firstName").style.fontSize = "8px";
@@ -335,7 +320,6 @@ function createStylistAccount(event)
     }
     else if(first.length >50)
     {
-        document.getElementById("firstName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-firstName").style.color = "red";
         document.getElementById("label-firstName").innerHTML = "Can not be greater then 50 characters";
         document.getElementById("label-firstName").style.fontSize = "8px";        
@@ -345,7 +329,6 @@ function createStylistAccount(event)
     }
     else
     {
-        document.getElementById("firstName").className =("sminput");  //if fixed applies old style
         document.getElementById("label-firstName").innerHTML = "First Name*";   
         document.getElementById("label-firstName").style.color = "#000";
         document.getElementById("label-firstName").style.fontSize = "12px"; 
@@ -356,21 +339,18 @@ function createStylistAccount(event)
 
      if (last === "" || last.length === 0) //checks if empty
     {
-        document.getElementById("lastName").className="errorBorder";  //add red borders-and text
          document.getElementById("label-lastName").style.color = "red";
         event.preventDefault();  
         test=false;
     }
     else if(last.length <2)
     {
-       document.getElementById("lastName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-lastName").style.color = "red";
         document.getElementById("label-lastName").innerHTML = "Last Name* At least 2 characters";
         document.getElementById("label-lastName").style.fontSize = "8px";   
     }
     else if(last.length >50)
     {
-        document.getElementById("lastName").className="errorBorder";  //add red borders-and text
         document.getElementById("label-lastName").style.color = "red";
         document.getElementById("label-lastName").innerHTML = "Can not be greater then 50 characters";
         document.getElementById("label-lastName").style.fontSize = "8px";   
@@ -443,7 +423,6 @@ function createStylistAccount(event)
       var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
      if (email === "" || email.length === 0) //checks if empty
     {
-        document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         event.preventDefault();  
         test= false;
@@ -451,7 +430,6 @@ function createStylistAccount(event)
    
     else if(email.length>256)
     {
-        document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Email address is too long)";
         event.preventDefault();  
@@ -468,7 +446,6 @@ function createStylistAccount(event)
       
    if(!email.match(emailpat))
     {
-        document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();  
@@ -527,7 +504,6 @@ function validateFirstName(event)
     var first = event.currentTarget.value;
      if (first === "" || first.length === 0) //checks if empty
     {
-        event.currentTarget.className="errorBorder";  //add red borders-and text
         document.getElementById(label).style.color = "red";
         event.preventDefault();  
     }
@@ -546,7 +522,6 @@ function validateLastName(event)
     var last = event.currentTarget.value;
      if (last === "" || last.length === 0) //checks if empty
     {
-        event.currentTarget.className="errorBorder";  //add red borders-and text
         document.getElementById(label).style.color = "red";
         event.preventDefault();  
     }
@@ -567,7 +542,6 @@ function validateMonth(event) //Level One
      var month = event.currentTarget.value;
      if (month === "00") //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById(name).innerHTML = "Please enter your birth month";
         event.preventDefault();  
     }
@@ -585,7 +559,6 @@ function validateDay(event) //Level One
      var day = event.currentTarget.value;
      if (day === "00" ) //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById(name).innerHTML = "Please enter your birth month";
         event.preventDefault();  
     }
@@ -603,8 +576,6 @@ function validateYear(event)
      var year = event.currentTarget.value;
      if (year === "00" || year>1998) //checks if empty
     {
-       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
-        //document.getElementById(name).innerHTML = "Please enter your birth year";
         event.preventDefault();  
     }
     else
@@ -645,7 +616,6 @@ function validateCountry(event)
     
      if (country === "00") //checks if empty
     {
-        event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById("invalid-location").style.color = "red";
         event.preventDefault();  
     }
@@ -666,24 +636,20 @@ function validateReigon(event) //for province selection
      var city_stateArr;
      if (reigon === "" || reigon.length === 0 || reigon === "00") //checks if empty
     {
-         ///event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById("invalid-location").style.color = "red";
         event.preventDefault();  
     }
     else
     {
-        
-       // event.currentTarget.className =("sminputs");  //if fixed applies old style
-       // document.getElementById("invalid-location").innerHTML = ""; 
-         for(i=select.options.length-1;i>=0;i--)
+         for(i=select.options.length-1;i>=0;i--) //removes evertying currently in city list
         {
-        select.remove(i);
+            select.remove(i);
         }
         
         select.options[select.options.length] = new Option("City", "00");
        city_stateArr = city_states[country].split("|");
         
-       for (var i = 1; i <= city_stateArr.length; i++)
+       for (var i = 1; i <= city_stateArr.length; i++) //adds new cities based on selection
         {
             if(city_stateArr[i] !== "" || city_stateArr[i].length != 00)
             {
@@ -700,13 +666,11 @@ function validateCity(event)
     var city = event.currentTarget.value;
      if (city === "" || city.length === 0) //checks if empty
     {
-       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-location").style.color = "red";
         event.preventDefault();  
     }
     else
     {
-        //event.currentTarget.className =("sminputs");  //if fixed applies old style
         document.getElementById("label-location").innerHTML = "Location*";   
         document.getElementById("label-location").style.color = "#000";
     }
@@ -717,13 +681,11 @@ function validateSalon(event)
     var salon = event.currentTarget.value;
      if (salon === "" || salon.length === 0) //checks if empty
     {
-       // event.currentTarget.className="errorBorderLong";  //add red borders-and text
         document.getElementById("invalid-locaton").style.color = "red";
         event.preventDefault();  
     }
     else
     {
-       // event.currentTarget.className =("sminputs");  //if fixed applies old style
         document.getElementById("invalid-location").innerHTML = "";    
     }
 }
@@ -807,49 +769,42 @@ function validatePassword(event)
     var name = "invalid-"+form;
     var label= "label-"+form;
     var password = event.currentTarget;
-      if (password.value === "" || password.value.length === 0) //checks if empty
-        {
-             //event.currentTarget.className="errorBorderLong";  //add red borders-and text
+    if (password.value === "" || password.value.length === 0) //checks if empty
+    {
         document.getElementById(label).style.color = "red";
         event.preventDefault(); 
-        }
-        else
-        {
-            //event.currentTarget.className =("sminputs");  //if fixed applies old style
-            //document.getElementById(label).innerHTML = "";  
-            document.getElementById(label).style.color = "black";
-            document.getElementById(label).innerHTML = "Password*";
-             document.getElementById("label-password").style.fontSize = "12px";
-        }
+    }
+    else
+    { 
+        document.getElementById(label).style.color = "#000";
+        document.getElementById(label).innerHTML = "Password*";
+        document.getElementById("label-password").style.fontSize = "12px";
+    }
 }
 /**********************For Settings Pages**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-function submitEmail(event)
+function submitEmail(event) //manager, customer, and employee settings
 {
      //*****Email **************//
     
-      var email = document.getElementById("email").value;
-      var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
+    var email = document.getElementById("email").value;
+    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
      if (email === "" || email.length === 0) //checks if empty
     {
-        //document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         event.preventDefault();  
         test= false;
     }
-   
     else if(email.length>256)
     {
-        //document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Email address is too long)";
         event.preventDefault();  
         test= false;
     }
     
-     else
+    else
     {
-        //document.getElementById("email").className =("sminputs");  //if fixed applies old style
         document.getElementById("label-email").innerHTML = "Change Email:";
         document.getElementById("label-email").style.color = "#000";
     }
@@ -857,21 +812,19 @@ function submitEmail(event)
       
    if(!email.match(emailpat))
     {
-        //document.getElementById("email").className="errorBorderLong";  //add red borders-and text
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();  
         test= false;
     }
-     else
+    else
     {
-        //document.getElementById("email").className =("sminputs");  //if fixed applies old style
         document.getElementById("label-email").innerHTML = "Change Email:";
         document.getElementById("label-email").style.color = "#000";
     }
 }
 
-function submitPassword(event)
+function submitPassword(event) //manager, customer, and employee settings
 {
     //*****Passwords  **************//
     
@@ -930,7 +883,7 @@ function submitPassword(event)
        }
 }
 
-function submitLocation(event)
+function submitLocation(event) //manager settings
 {
     //*****Country **************//
     var country = document.getElementById("country").value;
@@ -970,7 +923,38 @@ function submitLocation(event)
     }
 }
 
-function deleteStylist(event)
+function submitCustomerLocation(event) //customer settings
+{
+    //*****Country **************//
+    var country = document.getElementById("country").value;
+     if (country === "00" || country==="") //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your country";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+    //*****Reigon **************//
+     var reigon = document.getElementById("province").value;
+     if (reigon === "00"||reigon==="") //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your province";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+    //*****City **************//
+    var city = document.getElementById("city").value;
+     if (city === "00"||city===""||city.length===0) //checks if empty
+    {
+        document.getElementById("label-location").innerHTML = "Please enter your city";
+        document.getElementById("label-location").style.color = "red";
+        event.preventDefault();  
+        test=false;
+    }
+}
+
+function deleteStylist(event) //manager settings
 {
     var account = document.getElementById("stylistAccounts").value;
     
@@ -998,7 +982,6 @@ function deleteStylist(event)
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     x.setAttribute("id", "saveDeletion");
-    //x.setAttribute("", "submit");
     x.setAttribute("class", "sumbit");
     x.className="sumbit";
     r.appendChild(x);
@@ -1016,7 +999,7 @@ function deleteStylist(event)
     }
 }
 
-function deleteAccount(event)
+function deleteAccount(event) //both manager settings and customer settings
 {
      var modal = document.getElementById("popup");
     modal.style.display = "block";
@@ -1028,7 +1011,6 @@ function deleteAccount(event)
      var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "cancelDeletion");
-    //x.setAttribute("", "submit");
     z.setAttribute("class", "sumbit");
     z.className="sumbit";
     var t = document.createTextNode("Cancel");       
@@ -1038,7 +1020,6 @@ function deleteAccount(event)
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     x.setAttribute("id", "saveDeletion");
-    //x.setAttribute("", "submit");
     x.setAttribute("class", "sumbit");
     x.className="sumbit";
     r.appendChild(x);
@@ -1046,15 +1027,51 @@ function deleteAccount(event)
     
     document.getElementById("cancelDeletion").className= "stop";
       document.getElementById("saveDeletion").className= "save";
-    
-    document.getElementById("cancelDeletion").addEventListener("click",closeEditProfilePic); 
+     document.getElementById("cancelDeletion").addEventListener("click",closeEditProfilePic); 
 }
 
-function selectStylist(event)
+
+function deleteDependent(event) //customer settings page
 {
+    var account = document.getElementById("dependents").value;
     
-}
+    if(account!="00")
+    {
+    
+     var modal = document.getElementById("popup"); 
+    modal.style.display = "block";
+    var inner = document.getElementById("popup__content");
+    var r = document.createElement('span');
+    r.innerHTML="";
+    r.innerHTML="Are you sure you want to delete "+account+"?";
 
+     var z = document.createElement("BUTTON");
+    z.setAttribute("type", "button");
+    z.setAttribute("id", "cancelDeletion");
+    z.setAttribute("class", "sumbit");
+    z.className="sumbit";
+    var t = document.createTextNode("Cancel");       
+    z.appendChild(t)
+    r.appendChild(z);
+    
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "submit");
+    x.setAttribute("id", "saveDeletion");
+    x.setAttribute("class", "sumbit");
+    x.className="sumbit";
+    r.appendChild(x);
+    inner.appendChild(r);
+    
+    document.getElementById("cancelDeletion").className= "stop";
+    document.getElementById("saveDeletion").className= "save";
+     document.getElementById("cancelDeletion").addEventListener("click",closeEditProfilePic); 
+    document.getElementById("label-dependent").style.color="black";
+    }
+    else
+    {
+        document.getElementById("label-dependents").style.color="red";
+    }
+}
 
 
 /**********************For Home Calendar Page**************/
@@ -1474,7 +1491,6 @@ function editProfilePic(event)
      var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "cancelProfilePic");
-    //x.setAttribute("", "submit");
     z.setAttribute("class", "sumbit");
     z.className="sumbit";
     var t = document.createTextNode("Cancel");       
@@ -1484,17 +1500,14 @@ function editProfilePic(event)
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     x.setAttribute("id", "saveProfilePic");
-    //x.setAttribute("", "submit");
     x.setAttribute("class", "sumbit");
     x.className="sumbit";
     r.appendChild(x);
     inner.appendChild(r);
     
     document.getElementById("cancelProfilePic").className= "stop";
-      document.getElementById("saveProfilePic").className= "save";
-    
-    document.getElementById("cancelProfilePic").addEventListener("click",closeEditProfilePic);  
-    
+    document.getElementById("saveProfilePic").className= "save";
+     document.getElementById("cancelProfilePic").addEventListener("click",closeEditProfilePic);    
 }
 function closeEditProfilePic(event)
 {
