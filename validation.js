@@ -1249,9 +1249,27 @@ function openHairstylistWindow(event)
     modal.style.display = "block"; 
 }
 
+function stylistListeners(event)
+{
+    var stylists = document.getElementsByClassName("employeeInfo");
+    
+    for(i = 0; i < stylists.length; i++)
+    {
+        stylists[i].addEventListener("click", selectHairstylist);
+    }
+}
+
 function selectHairstylist(event)
-{    
-    document.getElementById("selectHairstylistInput").innerHTML = event.target.innerHTML;
+{
+    if(event.target.tagName == "DIV")
+    {
+        document.getElementById("selectHairstylistInput").innerHTML = event.target.id;
+    }
+    else
+    {
+        document.getElementById("selectHairstylistInput").innerHTML = event.target.parentNode.id;
+    }
+    
     closeSelectHairstylist();
 }
 
