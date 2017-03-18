@@ -1,6 +1,9 @@
-document.getElementById("newAppointment").addEventListener("click", addAppointment);
-document.getElementById("selectedHairstyle").addEventListener("click", selectHairstyle);
-document.getElementById("selectedHairstylist").addEventListener("click", selectHairstylist);
-document.getElementsByClassName("close")[0].addEventListener("click",closeSelectHairstyle);
-document.getElementsByClassName("close")[1].addEventListener("click",closeSelectHairstylist);
-document.getElementsByClassName("close")[2].addEventListener("click",closeEvent);
+window.addEventListener("load", stylistListeners);
+//document.getElementById("newCustomerAppointment").addEventListener("click", addCustomerAppointment);
+document.getElementById("selectHairstyle").addEventListener("blur", verifyHairstyle);
+document.getElementById("selectLocation").addEventListener("blur", verifyLocation);
+document.getElementById("selectedHairstylist").addEventListener("click", openHairstylistWindow);
+document.getElementById("specialRequest").addEventListener("keyup", verifySpecialRequest);
+document.getElementsByClassName("close")[0].addEventListener("click",closeSelectHairstylist);
+document.getElementsByClassName("close")[0].addEventListener("click",verifyStylist);
+document.getElementsByClassName("close")[1].addEventListener("click",closeEvent);

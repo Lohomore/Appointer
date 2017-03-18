@@ -24,51 +24,70 @@ class User
 
     public function login()
     {
-        if(!isset($_POST['email']) || !isset($_POST['password']))
+        header('Content-type: application/json; charset=utf-8');
+        
+        if(!isset($_POST['email']) || !isset($_POST['pass']))
         {
-            header('Location: /?error=1');
+            //header('Location: /?error=1');
+            //exit();
+            //http_response_code(401);
+            echo json_encode(array('error' => 'You have entered an invalid email and/or password!', 'success' => false));
             exit();
         }
 
-        if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && strlen($_POST['password']))
+        if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && strlen($_POST['pass']))
         {
-            if($this->getUserBy('email', $_POST['email']) && password_verify($_POST['password'], $this->data['password']))
+            if($this->getUserBy('email', $_POST['email']))
             {
-                //WE MAY NOT NEED THIS UNLESS WE DECIDE TO USE COOKIES
-                /*
-                $token = $this->generateToken();
-
-                $uniqueTokenQuery = $this->database->query('SELECT null FROM users WHERE token = ? LIMIT 1', $token);
-
-                while($this->database->rowCount($uniqueTokenQuery))
+                if(password_verify($_POST['pass'], $this->data['password']))
                 {
+                    //WE MAY NOT NEED THIS UNLESS WE DECIDE TO USE COOKIES
+                    /*
                     $token = $this->generateToken();
+
                     $uniqueTokenQuery = $this->database->query('SELECT null FROM users WHERE token = ? LIMIT 1', $token);
+
+                    while($this->database->rowCount($uniqueTokenQuery))
+                    {
+                        $token = $this->generateToken();
+                        $uniqueTokenQuery = $this->database->query('SELECT null FROM users WHERE token = ? LIMIT 1', $token);
+                    }
+
+                    $tokenQuery = $this->database->query('UPDATE users SET token = ? WHERE id = ?', $token, $this->data['id']);
+
+                    //CHECK !isset($_SESSION) here
+                    $_SESSION["token"] = $token;
+                    */
+
+                    $_SESSION["id"] = $this->data['id'];
+
+                    echo json_encode(array('success' => true));
+                    exit();
+                    //header('Location: /home');
+                    //exit();
                 }
-
-                $tokenQuery = $this->database->query('UPDATE users SET token = ? WHERE id = ?', $token, $this->data['id']);
-
-                //CHECK !isset($_SESSION) here
-                $_SESSION["token"] = $token;
-                */
-
-                $_SESSION["id"] = $this->data['id'];
-
-                header('Location: /home');
-                exit();
+                else
+                {
+                    echo json_encode(array('error' => 'The password you entered is incorrect!', 'success' => false));
+                    exit();
+                }
             }
             else
             {
                 //http_response_code(401);
-                header('Location: /?error=2');
+                echo json_encode(array('error' => 'An account with that email does not exist!', 'success' => false));
                 exit();
+                //header('Location: /?error=2');
+                //exit();
             }
         }
         else
         {
-            http_response_code(401);
-            header('Location: /?error=3');
+            //http_response_code(401);
+            echo json_encode(array('error' => 'You have entered an invalid email and/or password!', 'success' => false));
             exit();
+            //header('Location: /?error=3');
+            //exit();
         }
     }
     

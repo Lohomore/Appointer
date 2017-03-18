@@ -5,53 +5,51 @@
   <title>Appointer</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    
+ 
+    
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-  <link rel="stylesheet prefetch" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
- <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="/pages/css/style-sheet-small.css">
- <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 480px)" href="/pages/css/style-sheet-medium.css" >
- <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 786px)" href="/pages/css/style-sheet-large.css" >
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+  <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="/pages/css/style-sheet-small.css">
+  <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="/pages/css/style-sheet-medium.css">
+  <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 786px)" href="/pages/css/style-sheet-large.css">
     
-  <link href="/pages/css/fullcalendar.min.css" rel="stylesheet" />
-  <link href="/pages/css/fullcalendar.print.min.css" rel="stylesheet" media="print" />
-  <script src="/pages/js/moment.min.js"></script>
-  <script src="/pages/js/jquery.min.js"></script>
-  <script src="/pages/js/fullcalendar.min.js"></script>
-     
-  <script src="/pages/js/sweetalert.min.js"></script>
-  <script src="/pages/js/validation.js"></script>
-  <link rel="stylesheet" type="text/css" href="/pages/css/sweetalert.css">
+<link href='fullcalendar.min.css' rel='stylesheet' />
+<link href='fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='moment.min.js'></script>
+<script src='jquery.min.js'></script>
+<script src='fullcalendar.min.js'></script>
+   
+<script src="sweetalert.min.js"></script>
+<script src="validation.js"></script>
+<link rel="stylesheet" type="text/css" href="sweetalert.css">
+  
     
-      
-  <link rel="shortcut icon" href="favicon.ico"> 
-  <link rel="stylesheet" type="text/css" href="/pages/css/default.css" />
-  <link rel="stylesheet" type="text/css" href="/pages/css/component.css" />
-  <script src="/pages/js/modernizr.custom.js"></script>
+<link rel="shortcut icon" href="favicon.ico"> 
+<link rel="stylesheet" type="text/css" href="default.css" />
+<link rel="stylesheet" type="text/css" href="component.css" />
+<script src="modernizr.custom.js"></script>
     
 <script>
 $(document).ready(function() {
-	var transition = false;
-		$.post("/existing.php",null).done(function() {console.log("Success!");}).fail(function() {console.log("Failure!");});
+		
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month,agendaDay'
+				right: 'month,agendaWeek,agendaDay'
 			},
-			//defaultDate: '2017-03-15',
-			disableDragging: true,
-			navLinks: false, // can click day/week names to navigate views
+			defaultDate: '2016-12-12',
+			navLinks: true, // can click day/week names to navigate views
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				//if (start.add(1, 'days').date() != end.date() )
-				//$scope.eventCal.fullCalendar('unselect');
-				if (transition) {
-					transition = false;
-				} else {
+                
                 swal({
-                  title: "Book Appointment",
-                  text: "APPOINTMENT INFO",
+                  title: "Bookk Appointment",
+                  text: "INFO 1",
                   type: "info",
                   showCancelButton: true,
                   closeOnConfirm: false,
@@ -62,69 +60,30 @@ $(document).ready(function() {
                   animation: "slide-from-top"
                 },
                 function(){
-					
-                                    var eventData = { // eventData for calendar call
+                  swal("Appointment Added!", "INFO 2", "success");
+                       var eventData;
+
+                                    eventData = {
                                         title: "TITLE",
                                         start: start,
                                         end: end
                                     };
-									var edata = { // wrap eventData for POST query
-                                        title: "TITLE",
-                                        start: String(start),
-                                        end: String(end)
-                                    };
                                     $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                               $('#calendar').fullCalendar('unselect');  
-							   
-							 
-							   $.post("/process.php",edata).done(function() {swal("Appointment Booked!",  "INFO", "success");}).fail(function() {swal("Appointment Booking \nFailed!",  "Sorry for that! We are working on it!", "error");}); //put this above the calendar calls
-							   
+                                $('#calendar').fullCalendar('unselect');  
+
                                  //RIGHT HERE SEND NEW APPOINTMENT TO PHP  
 
-				}     
-				);}
+                    
+});
 				
-			},
-			dayClick: function(date, jsEvent, view) {
-				if ($('#calendar').fullCalendar('getView').name=='month') {
-					transition = true;
-					if (date >= moment().startOf('day')) {
-						$('#calendar').fullCalendar('gotoDate',date.format());
-						$('#calendar').fullCalendar('changeView','agendaDay');	
-					}
-					
-				}
-
-			},
-			viewRender: function(currentView){
-				var minDate = moment(),
-				maxDate = moment().add('weeks', 2);
-				// Past
-				if (minDate >= currentView.start && minDate <= currentView.end) {
-					$(".fc-prev-button").prop('disabled', true); 
-					$(".fc-prev-button").addClass('fc-state-disabled'); 
-				}
-				else {
-					$(".fc-prev-button").removeClass('fc-state-disabled'); 
-					$(".fc-prev-button").prop('disabled', false); 
-				}
-				// Future
-/* 				if (maxDate >= currentView.start && maxDate <= currentView.end) {
-					$(".fc-next-button").prop('disabled', true); 
-					$(".fc-next-button").addClass('fc-state-disabled'); 
-				} else {
-					$(".fc-next-button").removeClass('fc-state-disabled'); 
-					$(".fc-next-button").prop('disabled', false); 
-				} */
 			},
              eventClick: function( event, jsEvent, view ) 
             { 
-			//alert(event.color);
                 //use event to access server to get gallery pictures
                 
                 //if stylist field is set then it is a hair appointment so set the gallery field and add stylist info/profile page link. Otherwise dont not call those tabs and just provide date and title 
                 //on customer view they need the option to add photos to the appointment, stylist can only see the photos
-                if (event.color != "#BBB") {
+                
                var modal = document.getElementById("eventPopup");
                modal.style.display = "block";
               var eventTitle = document.getElementById("eventTitle");
@@ -150,17 +109,15 @@ $(document).ready(function() {
                  var gallery = document.getElementById("og-grid2");
             gallery.style.position="relative";
            gallery.innerHTML="<li><img src=\'images/thumbs/3.jpg\' alt='img03'/></li><li> <img src=\'images/thumbs/1.jpg\' alt='img01'/></li>";
-            }
-			},
-			editable: false,
+            },
+			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
 				{
-					id: -1,
-					title: 'N/A',
-					start: '2016-12-01T12:30:00',
-					end: '2016-12-01T13:00:00',
-					color: '#BBB'
+                    id: 0,
+					title: 'TEST EVENT',
+					start: '2016-12-01'
+                    end: '2016-12-10'
 				}
 			]
 		});
@@ -205,7 +162,7 @@ $(document).ready(function() {
       
     <!-- START OF CALENDAR -->
       
-      <div id="calendar"></div>
+      <div id='calendar'></div>
     
       
       
@@ -213,27 +170,45 @@ $(document).ready(function() {
        <!-- START OF SIDE PANEL -->
       <div class="sidepanel__wrapper">
           <h2 class="bookAppointmentHeader" id="bookAppointment-title">Book appointment</h2>
-                  
-               <div class="sminputs">
+          <div class="sminputs">
               <div class="input full">
-                  <label class="string optional" for="user-name" id="label-selectHairstyle">Select a hairstyle</label>
+                  <label class="string optional" for="user-name" id="label-bookAppointment">Select a hairstyle</label>
                   
-                <div class="styled-select">
-                    <select id="selectHairstyle">
-                        <option value="Please Select">(Please select)</option>
-                        <option value="cutW">Women"s Haircut</option>
-                        <option value="cutM">Men"s Haircut</option>
-                        <option value="cutK">Kid"s Haircut</option>
-                        <option value="dye">Hair Dye</option>
-                        <option value="perm">Perm</option>
-                    </select>
+                  <!-- The popup box for selecting a hairstyle-->
+                  <div id="hairPopup" class="popup__wrapper">
+
+                    <!-- Modal content -->
+                    <div id="popup__content" class="popup__content">
+                        <span class="close">&times;</span>
+                        <p>Select a Hairstyle</p>
+                        
+                        <div class="styled-select">
+                        <select id="selectHairstyle">
+                            <option value="Please Select">(Please select)</option>
+                            <option value="cutW">Women's Haircut</option>
+                            <option value="cutM">Men's Haircut</option>
+                            <option value="cutK">Kid's Haircut</option>
+                            <option value="dye">Hair Dye</option>
+                            <option value="perm">Perm</option>
+                          </select>
+                        </div>
+
+                        <br /><br />
+                            <button id="submitSelectedHairstyle" class="bookAppointmentButton">Confirm</button>
+                            <button id="cancelSelectedHairstyle" class="bookAppointmentButton">Cancel</button>
+                        <br /><br />
+                        
+                    </div>
                   </div>
+                  
+                  <button class="bookAppointmentButton" id="selectHairstyleButton">Select Style</button>
+                  <p id="selectHairstyleInput">Please select</p>
               </div>
             </div>
           
             <div class="sminputs">
               <div class="input full">
-                  <label class="string optional" for="user-name" id="label-selectLocation">Select a location</label>
+                  <label class="string optional" for="user-name" id="label-bookAppointment">Select a location</label>
                   
     
                 <div class="styled-select">
@@ -271,9 +246,9 @@ $(document).ready(function() {
                         <li>
 
                             <a href="#" >
-                            <div class="employeeInfo" id="Samantha">
+                            <div class="employeeInfo">
                             <img id="employeeProfilePic" class="employeeProfile" src="Photos/curlers.jpeg" alt="Stylist Image"/>
-                              <p id="employeeName" class="employeeName">Stylist Name</p>
+                              <div id="employeeName" class="employeeName">Stylist Name</div>
                             </div>
                             </a>
 
@@ -284,9 +259,9 @@ $(document).ready(function() {
                             <li>
 
                             <a href="#" >
-                            <div class="employeeInfo" id="Maurice">
+                            <div class="employeeInfo">
                             <img id="employeeProfilePic" class="employeeProfile" src="Photos/curlers.jpeg" alt="Stylist Image"/>
-                              <p id="employeeName" class="employeeName">Stylist Name</p>
+                              <div id="employeeName" class="employeeName">Stylist Name</div>
                             </div>
                             </a>
 
@@ -296,9 +271,9 @@ $(document).ready(function() {
                             <li>
 
                             <a href="#" >
-                            <div class="employeeInfo" id="Chloe">
+                            <div class="employeeInfo">
                             <img id="employeeProfilePic" class="employeeProfile" src="Photos/curlers.jpeg" alt="Stylist Image"/>
-                              <p id="employeeName" class="employeeName">Stylist Name</p>
+                              <div id="employeeName" class="employeeName">Stylist Name</div>
                             </div>
                             </a>
 
@@ -308,9 +283,9 @@ $(document).ready(function() {
                             <li>
 
                             <a href="#" >
-                            <div class="employeeInfo" id="Emily">
+                            <div class="employeeInfo">
                             <img id="employeeProfilePic" class="employeeProfile" src="Photos/curlers.jpeg" alt="Stylist Image"/>
-                              <p id="employeeName" class="employeeName">Stylist Name</p>
+                              <div id="employeeName" class="employeeName">Stylist Name</div>
                             </div>
                             </a>
 
@@ -320,20 +295,24 @@ $(document).ready(function() {
                             <li>
 
                             <a href="#" >
-                            <div class="employeeInfo" id="Jermain">
+                            <div class="employeeInfo">
                             <img id="employeeProfilePic" class="employeeProfile" src="Photos/curlers.jpeg" alt="Stylist Image"/>
-                              <p id="employeeName" class="employeeName">Stylist Name</p>
+                              <div id="employeeName" class="employeeName">Stylist Name</div>
                             </div>
                             </a>
 
                         </li>
 
                     </ul>
-                 
+
                     </div><!-- /container -->
                     <br><br><br><br><br><br><br><br><br><br><br><br><br>
                     </div> 
                     </span>
+                    <br>
+                    <button id="submitSelectedHairstylist" class="bookAppointmentButton">Confirm</button>
+                    <button id="cancelSelectedHairstylist" class="bookAppointmentButton">Cancel</button>
+                    <button id="defaultSelectedHairstylist" class="bookAppointmentButton">Set as My Stylist</button>
                     <br><br>
                     </div>  
                   </div>
@@ -351,14 +330,17 @@ $(document).ready(function() {
               </div>
             </div>
           
-            <div class="sminputs">  
+          <div class="sminputs">
+              
               <div class="input full">
-                <label class="string optional" for="user-name" id="label-specialRequest">Special Request(s)</label>
-                <input class="string optional" maxlength="255" id="specialRequest" placeholder="Details" type="text" size="50" />
+                <label class="string optional" for="user-name" id="label-start">enter appointment time*</label>
+                <input class="string optional" maxlength="255" id="start" type="datetime-local" size="50" />
               </div>
             </div>
 
           <div class="simform__actions">
+            <button class="sumbit" name="newAppointment" type="submit" id="newAppointment" value="Add">Add</button>
+              <br /><br /><br />
               <button class="sumbit" name="payNow" type="submit" id="payNow" value="Pay Now">Pay Now</button>
           </div>
       </div>
@@ -396,10 +378,10 @@ $(document).ready(function() {
     
     </body>
     
-    <script src="/pages/js/appointment_handler.js"></script>
+    <script src="appointment_handler.js"></script>
     
      <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> This makes the photo grid run but crashes calendar -->
-  <script src="/pages/js/grid.js"></script>
+  <script src="grid.js"></script>
 		<script>
 			$(function() {
 				Grid.init();

@@ -50,6 +50,7 @@ a {
    border-radius: 0;
    height: 34px;
    -webkit-appearance: none;
+    -moz-appearance:none;
     display: inline;
     background-image:
     linear-gradient(45deg, transparent 50%, gray 50%),
@@ -81,6 +82,7 @@ a {
    border-radius: 0;
    height: 34px;
    -webkit-appearance: none;
+    -moz-appearance:none;
     display: inline;
     background-image:
     linear-gradient(45deg, transparent 50%, gray 50%),
@@ -121,6 +123,30 @@ select.minimal:focus {
 .show
 {
     display: block;
+}
+.saveButton
+{
+  float: right;
+  height: 30px;
+  color: #FFF;
+  margin-right: 3%;
+  font-weight: 700;
+  font-size: 16px;
+  background-color: #ffa500;
+  margin-top: 7px;
+  
+  border: none;
+   text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 24px;
+  margin-left: 4%;
+  width: 300px;
 }
 /*****Booking Appointment ********
 ********************************
@@ -315,7 +341,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
     margin-left: 5px;
     padding: 12px 20px 12px 60px;
     height: 25px;
-    background-image: url("/pages/images/search.png");
+    background-image: url("Photos/search.png");
     background-repeat: no-repeat;
       
 }
@@ -474,6 +500,117 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
   line-height: 24px;
   margin-left:4%;
     margin-top:10%;
+}
+
+/***********Manager Calendar ********
+*************************************
+*************************************/
+.dropdown {
+  position: relative;
+
+  transform: translateY(-50%);
+}
+
+a {
+  color: #8C979E;
+}
+
+.dropdown dd,
+.dropdown dt {
+  margin-left: 5%;
+  margin-bottom: 7%;
+  padding: 0px;
+}
+
+.dropdown ul {
+  margin: -1px 0 0 0;
+}
+
+.dropdown dd {
+  position: relative;
+}
+
+.dropdown a,
+.dropdown a:visited {
+  color: #8C979E;
+  text-decoration: none;
+  outline: none;
+  font-size: 12px;
+}
+
+.dropdown dt a {
+  background-color: #4F6877;
+  display: block;
+  padding: 8px 20px 5px 10px;
+  min-height: 25px;
+  line-height: 24px;
+  overflow: hidden;
+  border: 0;
+  width: 272px;
+    
+ background: transparent;
+    float:left;
+   width: 155px;
+   padding: 3px;
+    margin-left: 1.5%;
+   font-size: 12px;
+   color: #8C979E;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+    -moz-appearance:none;
+    display: inline;
+    background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;   
+    
+}
+
+.dropdown dt a span,
+.multiSel span {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 3px 2px 0;
+}
+
+.dropdown dd ul {
+  background-color: #FFF;
+  border: 0;
+  color: #8C979E;
+  display: none;
+  left: 0px;
+  padding: 2px 15px 2px 5px;
+  position: absolute;
+  top: 2px;
+  width: 280px;
+  list-style: none;
+  height: 100px;
+  overflow: auto;
+}
+
+.dropdown span.value {
+  display: none;
+}
+
+.dropdown dd ul li a {
+  padding: 5px;
+  display: block;
+}
+
+.dropdown dd ul li a:hover {
+  background-color: #fff;
 }
 
 /***********Add Stylist Page ********
@@ -1129,7 +1266,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
   left: 0;
   opacity: 1;
   background: rgba(0, 0, 0, 0.1);
-  background-image: url("/pages/images/curlers.jpeg");
+  background-image: url("Photos/curlers.jpeg");
   background-size: 100% 100%;
   
   z-index: 1;

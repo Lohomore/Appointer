@@ -1,6 +1,4 @@
 
-
-
 /*****General Things Needed on each page ********
 ********************************
 ********************************/
@@ -8,12 +6,10 @@ a {
     text-decoration: none;
 }
 #calendar {
-        
-        position:relative;
-		max-width: 700px;
+        float:right;
 		max-width: 700px;
 		margin: 5% auto;
-        right: 30%
+        margin-right: 5%
 	}
 .background /*background color*/
 {
@@ -293,7 +289,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
     margin-left: 5px;
     padding: 12px 20px 12px 60px;
     height: 25px;
-    background-image: url("/pages/images/search.png");
+    background-image: url("Photos/search.png");
     background-repeat: no-repeat;
       
 }
@@ -309,7 +305,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
     float: left;
     background-color: white;
     height: 100%;
-    width: 300px;
+    width: 22%;
     z-index: 10;
     box-shadow: 0 0 18px rgba(0, 0, 0, 0.2);
 }
@@ -652,7 +648,7 @@ a {
   background: #FFF;
   position: relative;
   float:left;
-  top: -20%;
+  top: 0%;
   left:10%;
   max-width: 80%;
   width: 80%;
@@ -720,15 +716,15 @@ a {
 {
     position: relative; /*Brooke you just added this 2017-03-12*/
     margin-left: 2%;
-    width:200px;
-    height:200px;
+    width:150px;
+    height:150px;
     top: -10px;
 }
 
 .customerLocation
 {
     position: relative; /*Brooke you just added this 2017-03-12*/
-    top:-150px;
+    top:-110px;
     left:25%;
     overflow: hidden;
   text-overflow: ellipsis;
@@ -749,7 +745,7 @@ a {
       height: 30px;
   float: left;
   color: #FFF;
-  width: 32%;
+  width: auto;
   font-weight: 700;
   font-size: 16px;
   background-color: #ffa500;
@@ -847,7 +843,7 @@ a {
   height: 30px;
   float: right;
   color: #FFF;
-  width: 8%;
+  width: auto;
   font-weight: 700;
   font-size: 16px;
   background: #ffa500;
@@ -869,7 +865,7 @@ a {
   height: 30px;
   float: right;
   color: #FFF;
-  width: 8%;
+  width: auto;
   font-weight: 700;
   font-size: 16px;
   background: #809191;;
@@ -948,21 +944,21 @@ a {
   line-height: 48px;
     margin-bottom:3%;
     margin-left: 5%;
-    top:100px;
-    left:15%
+    top:90px;
+    left:20%
 }
 .stylistImage
 {
     position: relative;
     margin-left: 2%;
-    width:200px;
-    height:200px;
+    width:150px;
+    height:150px;
 }
 .stylistSpecialties
 {
     position: relative;
-    top:-120px;
-    left:20%;
+    top:-70px;
+    left:25%;
     overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -978,8 +974,8 @@ a {
 .stylistLocation
 {
     position: relative;
-    top:-120px;
-    left:20%;
+    top:-70px;
+    left:25%;
     overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1333,7 +1329,6 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
 .weak
 {
     color:red;
-    display:inline !important;
 }
 .good
 {
@@ -1354,7 +1349,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
   left: 0;
   opacity: 1;
   background: rgba(0, 0, 0, 0.1);
-  background-image: url("/pages/images/curlers.jpeg");
+  background-image: url("Photos/curlers.jpeg");
   background-size: 100% 100%;
   
   z-index: 1;
@@ -1369,7 +1364,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
   background: #FFF;
   position: relative;
   float:right;
-  top: -15%;
+  top: 15%;
   right:10%;
   max-width: 550px;
   border-radius: 4px;
@@ -1916,7 +1911,7 @@ html {
   width: 100%;
   height: 1px;
   bottom: 0px;
-  left: 0%;
+  left: 0;
   background: #f00;
   visibility: hidden;
   transform: scaleX(0);
