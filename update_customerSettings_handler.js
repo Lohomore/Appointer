@@ -19,5 +19,4 @@ document.getElementsByClassName("close")[0].addEventListener("click",closeEditPr
 document.getElementById("saveEmail").addEventListener("click", submitEmail);
 document.getElementById("savePassword").addEventListener("click", submitPassword);
 document.getElementById("saveLocation").addEventListener("click", submitCustomerLocation);
-document.getElementById("deleteDependent").addEventListener("click", deleteDependent);
 document.getElementById("deleteAccount").addEventListener("click", deleteAccount);
