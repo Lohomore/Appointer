@@ -1,5 +1,7 @@
 window.addEventListener("load", populateStylists);
 window.addEventListener("load", stylistListeners);
+window.addEventListener("load", populateServices);
+window.addEventListener("load", populateLocations);
 document.getElementById("newCustomerAppointment").addEventListener("click", addCustomerAppointment);
 document.getElementById("selectHairstyle").addEventListener("blur", verifyHairstyle);
 document.getElementById("selectLocation").addEventListener("blur", verifyLocation);

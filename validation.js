@@ -1138,6 +1138,32 @@ function populateStylists(event)
     popupWindow.appendChild(newLi);
 }
 
+function populateServices(event)
+{
+    /******* RETRIEVE SERVICE FROM BACKEND *******///
+    $service = "Perm";
+    
+    var select = document.getElementById("selectHairstyle");
+    
+    var opt = document.createElement("option");
+    opt.value = $service;
+    opt.innerHTML = $service;
+    select.appendChild(opt);
+}
+
+function populateLocations(event)
+{
+    /******* RETRIEVE LOCATION FROM BACKEND *******///
+    $location = "Cornwall Mall";
+    
+    var select = document.getElementById("selectLocation");
+    
+    var opt = document.createElement("option");
+    opt.value = $location;
+    opt.innerHTML = $location;
+    select.appendChild(opt);
+}
+
 function addCustomerAppointment(event)
 {
     var hairstyle = document.getElementById("selectHairstyle");
