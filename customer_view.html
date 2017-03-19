@@ -241,7 +241,7 @@ $(document).ready(function() {
                   
                <div class="sminputs">
               <div class="input full">
-                  <label class="string optional" for="user-name" id="label-selectHairstyle">Select a hairstyle</label>
+                  <label class="string optional" for="user-name" id="label-selectHairstyle">Select a Service</label>
                   
                 <div class="styled-select">
                     <select id="selectHairstyle">
@@ -326,6 +326,8 @@ $(document).ready(function() {
             </div>
 
           <div class="simform__actions">
+              <button class="sumbit" name="newAppointment" type="submit" id="newCustomerAppointment" value="Add">Add</button>
+              <br><br><br>
               <button class="sumbit" name="payNow" type="submit" id="payNow" value="Pay Now">Pay Now</button>
           </div>
       </div>
@@ -339,13 +341,12 @@ $(document).ready(function() {
           <span class="close">&times;</span>
           <div id="eventInfo" class="eventInfo">
            <div id="eventTitle" class="eventTitle"></div>
+              <button id="cancelAppointmentButton" class="cancelAppointmentButton">CANCEL APPOINTMENT</button>
            <div id="eventStart" class="eventEtc"></div>
            <div id="eventEnd" class="eventEtc"></div> 
            <div id="eventStylist" class="eventEtc"></div>
            <div id="eventLocation" class="eventEtc"></div>
           </div>
-          
-          <button>CANCEL</button>
           
           <div id="galleryBar" class="galleryBar">
           Gallery
