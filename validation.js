@@ -1031,49 +1031,6 @@ function deleteAccount(event) //both manager settings and customer settings
 }
 
 
-function deleteDependent(event) //customer settings page
-{
-    var account = document.getElementById("dependents").value;
-    
-    if(account!="00")
-    {
-    
-     var modal = document.getElementById("popup"); 
-    modal.style.display = "block";
-    var inner = document.getElementById("popup__content");
-    var r = document.createElement('span');
-    r.innerHTML="";
-    r.innerHTML="Are you sure you want to delete "+account+"?";
-
-     var z = document.createElement("BUTTON");
-    z.setAttribute("type", "button");
-    z.setAttribute("id", "cancelDeletion");
-    z.setAttribute("class", "sumbit");
-    z.className="sumbit";
-    var t = document.createTextNode("Cancel");       
-    z.appendChild(t)
-    r.appendChild(z);
-    
-    var x = document.createElement("INPUT");
-    x.setAttribute("type", "submit");
-    x.setAttribute("id", "saveDeletion");
-    x.setAttribute("class", "sumbit");
-    x.className="sumbit";
-    r.appendChild(x);
-    inner.appendChild(r);
-    
-    document.getElementById("cancelDeletion").className= "stop";
-    document.getElementById("saveDeletion").className= "save";
-     document.getElementById("cancelDeletion").addEventListener("click",closeEditProfilePic); 
-    document.getElementById("label-dependent").style.color="black";
-    }
-    else
-    {
-        document.getElementById("label-dependents").style.color="red";
-    }
-}
-
-
 /**********************For Home Calendar Page**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 function addAppointment(event)
@@ -1143,6 +1100,44 @@ function addAppointment(event)
 
 /**********************For Customer View Page**************/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+function populateStylists(event)
+{
+    /******* RETRIEVE STYLIST NAME FROM BACKEND *******///
+    $stylistName = "Joe";
+    $stylistAvatarSRC = "Photos/curlers.jpeg";
+    
+    // get the ul element
+    var popupWindow = document.getElementById("selectStylistGrid");
+    
+    var newLi = document.createElement("li");
+    
+    var newDiv = document.createElement("div");
+    newDiv.className = "employeeInfo";
+    newDiv.id = $stylistName;
+    
+    // create stylist image
+    var newImg = document.createElement("img");
+    newImg.id = "employeeProfilePic";
+    newImg.className = "employeeProfile";
+    newImg.src = $stylistAvatarSRC;
+    newImg.alt = "Stylist Image";
+    
+    // create stylist name
+    var newP = document.createElement("p");
+    newP.id = "employeeName";
+    newP.className = "employeeName";
+    var newPText = document.createTextNode($stylistName);
+    newP.appendChild(newPText);
+    
+    // insert photo and name into div
+    newDiv.appendChild(newImg);
+    newDiv.appendChild(newP);
+    
+    // now insert div into li and into popup
+    newLi.appendChild(newDiv);
+    popupWindow.appendChild(newLi);
+}
+
 function addCustomerAppointment(event)
 {
     var hairstyle = document.getElementById("selectHairstyle");
@@ -1177,9 +1172,9 @@ function addCustomerAppointment(event)
         document.getElementById("label-selectStylist").style.color = "";
     }
     
-    if(request.length > 100)
+    if(request.length > 256)
     {
-        requestLimitDifference = request.length - 100;
+        requestLimitDifference = request.length - 256;
         document.getElementById("label-specialRequest").style.color = "red";
         document.getElementById("label-specialRequest").innerHTML = "Over limit by " + requestLimitDifference;
         if(requestLimitDifference === 1)
@@ -1306,9 +1301,9 @@ function verifySpecialRequest(event)
 {
     var request = event.target.value;
     
-    if(request.length > 100)
+    if(request.length > 256)
     {
-        requestLimitDifference = request.length - 100;
+        requestLimitDifference = request.length - 256;
         document.getElementById("label-specialRequest").style.color = "red";
         document.getElementById("label-specialRequest").innerHTML = "Over limit by " + requestLimitDifference;
         if(requestLimitDifference === 1)
