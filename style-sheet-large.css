@@ -244,6 +244,11 @@ select.minimal:focus {
     width: 100px;
 }
 
+.textareaStyle
+{
+    resize: none;
+}
+
 /*****Toolbar ********
 ********************************
 ********************************/

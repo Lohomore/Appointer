@@ -239,6 +239,12 @@ select.minimal:focus {
     height: 100px;
     width: 100px;
 }
+
+.textareaStyle
+{
+    resize: none;
+}
+
 /*****Event Info Popup ********
 ********************************
 ********************************/
