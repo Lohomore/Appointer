@@ -22,4 +22,4 @@ document.getElementById("saveEmail").addEventListener("click", submitEmail);
 document.getElementById("savePassword").addEventListener("click", submitPassword);
 document.getElementById("saveLocation").addEventListener("click", submitLocation);
 document.getElementById("deleteStylist").addEventListener("click", deleteStylist);
-document.getElementById("deleteAccount").addEventListener("click", deleteAccount);
+
