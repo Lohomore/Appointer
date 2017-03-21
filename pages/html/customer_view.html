@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Appointer</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  <link rel="stylesheet prefetch" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+ <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="/pages/css/style-sheet-small.css">
+ <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 480px)" href="/pages/css/style-sheet-medium.css" >
+ <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 786px)" href="/pages/css/style-sheet-large.css" >
+    
+  <link href="/pages/css/fullcalendar.min.css" rel="stylesheet" />
+  <link href="/pages/css/fullcalendar.print.min.css" rel="stylesheet" media="print" />
+  <script src="/pages/js/moment.min.js"></script>
+  <script src="/pages/js/jquery.min.js"></script>
+  <script src="/pages/js/fullcalendar.min.js"></script>
+     
+  <script src="/pages/js/sweetalert.min.js"></script>
+  <script src="/pages/js/validation.js"></script>
+  <link rel="stylesheet" type="text/css" href="/pages/css/sweetalert.css">
+    
+      
+  <link rel="shortcut icon" href="favicon.ico"> 
+  <link rel="stylesheet" type="text/css" href="/pages/css/component.css" />
+  <script src="/pages/js/modernizr.custom.js"></script>
+<script>
+var enabled = false;
+var services;
+var locations;
+var stylists;
+var selectedService = 0;
+var selectedLocation = 0;
+var selectedStylist = 0;
+
+var fileUploaded = false;
+var selectedEvent = 0;
+
+function conflict(start, end, events)
+{
+    for (i = 0; i < events.length; i++)
+    {
+        if(start.isSame(events[i].start) || end.isSame(events[i].end))
+        {
+            return true;
+        }
+        else if(start.isAfter(events[i].start) && start.isBefore(events[i].end))
+        {
+            return true;
+        }
+        else if(end.isAfter(events[i].start) && end.isBefore(events[i].end))
+        {
+            return true;
+        }
+        else if(start.isBefore(events[i].start) && start.isAfter(events[i].end))
+        {
+            return true;
+        }
+    }
+    
+    var endOfDay = start.clone();
+    endOfDay.hour(18); //SET FROM DATABASE
+    endOfDay.minute(00); //SET FROM DATABASE
+    
+    if(start.isAfter(endOfDay) || end.isAfter(endOfDay))
+    {
+        return true;
+    }
+    
+    return false
+}
+
+$(document).ready(function()
+{
+    var transition = false;
+
+    $('#calendar').fullCalendar(
+    {
+        header:
+        {
+            left: 'prev,next',
+            center: 'title',
+            right: 'month,agendaDay'
+        },
+        
+        minTime: "10:00:00", //SET FROM DATABASE
+        maxTime: "18:00:00", //SET FROM DATABASE
+        defaultDate: moment().add('days', 1), 
+        slotDuration: "00:30:00",
+        disableDragging: true,
+        navLinks: false,
+        selectable: false,
+        selectHelper: true,
+        allDaySlot: false,
+        editable: false,
+        eventLimit: true,
+        height: 500,
+        
+        select: function(start, end)
+        {
+            if (transition)
+            {
+                transition = false;
+            }
+            else
+            {
+                swal(
+                    {
+                        title: "Book Appointment",
+                        text: "APPOINTMENT INFO",
+                        type: "info",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        showCancelButton: true,
+                        confirmButtonColor: "#ffa500",
+                        confirmButtonText: "Book",
+                        closeOnConfirm: false,
+                        animation: "slide-from-top"
+                    },
+                    function()
+                    {
+                        var eventData = 
+                        {
+                            title: "Appointment",
+                            start: start,
+                            end: end,
+                            service: services[selectedService].id,
+                            serviceName: services[selectedService].service,
+                            stylist: stylists[selectedStylist].id,
+                            stylistName: stylists[selectedStylist].firstName,
+                            location: locations[selectedLocation].id,
+                            locationName: locations[selectedLocation].address,
+                            details: document.getElementById("specialRequest").value,
+                            image: ''
+                        };
+
+                        var edata = 
+                        {
+                            title: "Appointment",
+                            start: String(start),
+                            end: String(end),
+                            service: services[selectedService].id,
+                            serviceName: services[selectedService].service,
+                            stylist: stylists[selectedStylist].id,
+                            stylistName: stylists[selectedStylist].firstName,
+                            location: locations[selectedLocation].id,
+                            locationName: locations[selectedLocation].address,
+                            details: document.getElementById("specialRequest").value,
+                            image: ''
+                        };
+
+                        if (!conflict(start, end, $('#calendar').fullCalendar('clientEvents')))
+                        {
+                            if(fileUploaded)
+                            {
+                                var styleImage = document.getElementById('appointmentPic').files[0];
+                                var formData = new FormData();
+
+                                formData.append('file', styleImage);
+
+                                $.ajax({
+                                    url: '/system/upload',
+                                    data: formData,
+                                    type: 'POST',
+                                    contentType: false,
+                                    processData: false,
+                                    dataType: "json",
+
+                                    success:function(data) 
+                                    {
+                                        if(!data.error)
+                                        {
+                                            eventData.image = data.file;
+                                            edata.image = data.file;
+                                            
+                                            $('#calendar').fullCalendar('renderEvent', eventData, false); //Possibly move into conditional below
+                                           
+                                            $.post("/system/schedule", edata,
+                                                function(data)
+                                                {
+                                                    if (data.success)
+                                                    {
+                                                        swal("Appointment Booked!", "Your appointment was succesfully booked!", "success");
+                                                    }
+                                                    else
+                                                    {
+                                                        swal("Appointment Booking \nFailed!", "Sorry for that! We are working on it!", "error");
+                                                    }
+                                                },
+                                                'json'
+                                            );
+                                        }
+                                        else
+                                        {
+                                            swal("Appointment Booking \nFailed!", "Sorry for that! We are working on it!", "error");
+                                        }
+                                    },
+                                    fail:function()
+                                    {
+                                        swal("Appointment Booking \nFailed!", "Sorry for that! We are working on it!", "error");
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                $('#calendar').fullCalendar('renderEvent', eventData, false); //Possibly move into conditional below
+                                
+                                $.post("/system/schedule", edata,
+                                    function(data)
+                                    {
+                                        if (data.success)
+                                        {
+                                            swal("Appointment Booked!", "Your appointment was succesfully booked!", "success");
+                                        }
+                                        else
+                                        {
+                                            swal("Appointment Booking \nFailed!", "Sorry for that! We are working on it!", "error");
+                                        }
+                                    },
+                                    'json'
+                                );
+
+                            }
+                        }
+                        else
+                        {
+                            swal("Appointment Booking \nFailed!", "CONFLICT!", "error");
+                        }
+
+                        $('#calendar').fullCalendar('unselect');
+                        //RIGHT HERE SEND NEW APPOINTMENT TO PHP  
+
+                    }
+                );
+            }
+        },
+        dayClick: function(date, jsEvent, view)
+        {
+            if(enabled)
+            {
+                if ($('#calendar').fullCalendar('getView').name == 'month')
+                {
+                    transition = true;
+
+                    if (date >= moment().startOf('day') && date.month() <= moment().add('months', 5).month())
+                    {
+                        $('#calendar').fullCalendar('select', date);
+                        $('#calendar').fullCalendar('gotoDate', date.format());
+                        $('#calendar').fullCalendar('changeView', 'agendaDay');
+                    }
+                    else
+                    {
+                        swal("Whoops!", "You can't book an appointment here!", "warning");
+                    }
+                }
+                else
+                {
+                    var start = date;
+                    //var end = date.clone().add(2, 'hours');
+                    var end = date.clone().add(services[selectedService].minutes, 'minutes');
+
+                    if (!conflict(start, end, $('#calendar').fullCalendar('clientEvents')))
+                    {
+                        $('#calendar').fullCalendar('select', start, end);
+                    }
+                    else
+                    {
+                        swal("Whoops!", "You can't book an appointment here!", "warning");
+                    }
+                }
+            }
+            else
+            {
+              swal("Click Update!", "Please click the 'Update' button\nto refresh the calendar!", "warning");
+            }
+        },
+        viewRender: function(currentView)
+        {
+            var minDate = moment(),
+                maxDate = moment().add('months', 6);
+            // Past
+            if (minDate >= currentView.start && minDate <= currentView.end)
+            {
+                $(".fc-prev-button").prop('disabled', true);
+                $(".fc-prev-button").addClass('fc-state-disabled');
+            }
+            else
+            {
+                $(".fc-prev-button").removeClass('fc-state-disabled');
+                $(".fc-prev-button").prop('disabled', false);
+            }
+            // Future
+            				if (maxDate.month() >= currentView.start.month() && maxDate.month() <= currentView.end.month()) {
+                    
+            					$(".fc-next-button").prop('disabled', true); 
+            					$(".fc-next-button").addClass('fc-state-disabled'); 
+            				} else {
+            					$(".fc-next-button").removeClass('fc-state-disabled'); 
+            					$(".fc-next-button").prop('disabled', false); 
+            				} 
+                    
+        },
+        eventClick: function(event, jsEvent, view)
+        {
+            //alert(event.color);
+            //use event to access server to get gallery pictures
+
+            //if stylist field is set then it is a hair appointment so set the gallery field and add stylist info/profile page link. Otherwise dont not call those tabs and just provide date and title 
+            //on customer view they need the option to add photos to the appointment, stylist can only see the photos
+            if (event.color != "#BBB")
+            {
+                selectedEvent = event.id;
+                
+                var modal = document.getElementById("eventPopup");
+                modal.style.display = "block";
+                var eventTitle = document.getElementById("eventTitle");
+                eventTitle.innerHTML = event.title;
+
+                var eventStart = document.getElementById("eventStart");
+                eventStart.innerHTML = "Start Time: " + event.start.format('MM/DD/YYYY hh:mma');
+
+                var eventEnd = document.getElementById("eventEnd");
+                eventEnd.innerHTML = "End Time: " + event.end.format('MM/DD/YYYY hh:mma');
+
+                //Add section for stylist if hair appointment
+                var eventEnd = document.getElementById("eventStylist");
+                eventEnd.innerHTML = "Stylist: " + event.stylistName;
+
+                var eventEnd = document.getElementById("eventLocation");
+                eventEnd.innerHTML = "Salon Location: " + event.locationName;
+                
+                if(event.details != '')
+                {
+                   var eventEnd = document.getElementById("eventDetails");
+                    eventEnd.innerHTML="Event Details: " + event.details;     
+                }
+                else
+                {
+                   var eventEnd = document.getElementById("eventDetails");
+                   eventEnd.innerHTML="Event Details: NO DETAILS SPECIFIED";  
+                }
+
+
+
+                //Add Gallery for stylist picture  
+                var galleryBar = document.getElementById("galleryBar");
+                galleryBar.style.display = "block";
+                var gallery = document.getElementById("og-grid2");
+                gallery.style.position = "relative";
+                
+                if(event.image != '')
+                {
+                    gallery.innerHTML = "<li><img src=\"/uploads/" + event.image + "\" height=\"250\" width=\"250\" alt=\"img\"/></li>";
+                }
+                else
+                {
+                    gallery.innerHTML = "<span>NO IMAGE UPLOADED</span>";
+                }
+               
+            }
+        },
+
+        businessHours:
+        {
+            // days of week. an array of zero-based day of week integers (0=Sunday)
+            dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
+
+            start: '10:00', // a start time (10am in this example)
+            end: '18:00', // an end time (6pm in this example)
+        },
+        events: '/system/appointments'
+    });
+
+});
+
+function testFunc()
+{
+
+}
+</script>
+<style>
+	body 
+    {
+		margin: 40px 10px;
+		padding: 0;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        font-size: 12px;
+        cursor: pointer;
+        line-height: 24px;
+	}
+	
+</style> 
+    
+</head>
+
+<body>    
+    <div class="background">
+    <!-- START OF TOOLBAR -->
+    <nav>
+        <ul class="toolbar__wrapper">
+            <a href="Appointer-Home.html"><img src="Photos/Logo.png" class="toolbarLogo"></a>
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="#myprofile">My Profile</a></li>
+            <li><a href="#mystylist">My Stylist</a></li>
+            <li><a href="/system/logout">Logout</a></li>
+        </ul>
+      </nav>
+    <!-- END OF TOOLBAR -->
+      
+    <!-- START OF CALENDAR -->
+      
+      <div id='calendar'></div>
+    
+      
+      
+      <!-- END OF CALENDAR -->
+       <!-- START OF SIDE PANEL -->
+      <div class="sidepanel__wrapper">
+          <h2 class="bookAppointmentHeader" id="bookAppointment-title">Book appointment</h2>
+                  
+               <div class="sminputs">
+              <div class="input full">
+                  <label class="string optional" for="user-name" id="label-selectHairstyle">Select a Service</label>
+                  
+                <div class="styled-select">
+                    <select id="selectHairstyle">
+                        <option value="Please Select">(Please select)</option>
+
+                    </select>
+                  </div>
+              </div>
+            </div>
+          
+            <div class="sminputs">
+              <div class="input full">
+                  <label class="string optional" for="user-name" id="label-selectLocation">Select a location</label>
+                  
+    
+                <div class="styled-select">
+                <select id="selectLocation">
+                        <option value="Please Select">(Please select)</option>
+
+                </select>
+                  </div>
+                  
+              </div>
+            </div>
+          
+          
+            <div class="sminputsLarge">
+              <div class="input full">
+                  <label class="string optional" for="user-name" id="label-selectStylist">Select Stylist</label>
+                  
+                  <!-- The popup box for selecting a hairstylist-->
+                  <div id="popupStylist" class="popup__wrapper">
+
+                    <!-- Modal content -->
+                    <div id="popup__content" class="popup__content">
+                        <span class="close">&times;</span>
+                        <p>Select a Hairstylist</p>
+                        <span id="picForm__wrapper">
+                            
+                        
+          <div id ="employee__wrapper" class="employee_wrapper">
+
+             <div class="main">
+                    <ul id="selectStylistGrid" class="og-grid scrollable">
+
+                    </ul>
+                 
+                    </div><!-- /container -->
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    </div> 
+                    </span>
+                    <br><br>
+                    </div>  
+                  </div>
+                  
+                  <button class="bookAppointmentButton" id="selectedHairstylist">(Please select)</button>
+              </div>
+            </div>
+          
+            <div class="sminputs">
+              
+              <div class="input full">
+                <label class="string optional" for="user-name" id="label-appointmentUpload">photo of desired hairstyle</label>
+                <input type="file" name="appointmentPic" id="appointmentPic">
+              </div>
+            </div>
+          
+            <div class="sminputsLarge">  
+              <div class="input full">
+                <label class="string optional" for="user-name" id="label-specialRequest">Details</label>
+                <textarea id="specialRequest" placeholder="Details" class="textareaStyle"></textarea>
+              </div>
+            </div>
+
+          <div class="simform__actions">
+              <button class="sumbit" name="newAppointment" type="submit" id="newCustomerAppointment" value="Update">Update</button>
+          </div>
+      </div>
+  <!-- END OF SIDE PANEL -->
+    </div> 
+    <!-- The popup box for event information-->
+    <div id="eventPopup" class="popup__wrapper">
+        
+      <!-- Modal content -->
+      <div id="eventPopup__content" class="popup__content">
+          <span class="close">&times;</span>
+          <div id="eventInfo" class="eventInfo">
+           <div id="eventTitle" class="eventTitle"></div>
+              <button id="cancelAppointmentButton" class="cancelAppointmentButton">CANCEL APPOINTMENT</button>
+           <div id="eventStart" class="eventEtc"></div>
+           <div id="eventEnd" class="eventEtc"></div> 
+           <div id="eventStylist" class="eventEtc"></div>
+           <div id="eventLocation" class="eventEtc"></div>
+           <div id="eventDetails" class="eventEtc"></div>
+          </div>
+          
+          <div id="galleryBar" class="galleryBar">
+          Gallery
+          </div>
+          <div id="gallery" class="gallery">
+             <div class="main">
+               <ul id="og-grid2" class="og-grid scrollable">
+                   
+               </ul>
+           </div>
+          </div>
+        
+      </div>
+    </div>
+    
+    </body>
+    
+    <script src="/pages/js/appointment_handler.js"></script>
+    
+     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> This makes the photo grid run but crashes calendar -->
+  <script src="/pages/js/grid.js"></script>
+		<script>
+			$(function() {
+				Grid.init();
+			});
+		</script>
+    
+</html>
