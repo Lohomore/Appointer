@@ -1168,7 +1168,7 @@ function addCustomerAppointment(event)
 {
     var hairstyle = document.getElementById("selectHairstyle");
     var location = document.getElementById("selectLocation");
-    var stylist = document.getElementById("selectHairstylistInput");
+    var stylist = document.getElementById("selectedHairstylist");
     var request = document.getElementById("specialRequest").value;
     
     if(hairstyle.value == "Please Select")
@@ -1189,7 +1189,7 @@ function addCustomerAppointment(event)
         document.getElementById("label-selectLocation").style.color = ""; 
     }
     
-    if(stylist.innerHTML == "Please select")
+    if(stylist.innerHTML == "(Please select)")
     {
         document.getElementById("label-selectStylist").style.color = "red";
     }
@@ -1267,9 +1267,9 @@ function verifyLocation(event)
 
 function verifyStylist(event)
 {
-    var stylist = document.getElementById("selectHairstylistInput");
+    var stylist = document.getElementById("selectedHairstylist");
     
-    if(stylist.innerHTML == "Please select")
+    if(stylist.innerHTML == "(Please select)")
     {
         document.getElementById("label-selectStylist").style.color = "red";
     }
@@ -1299,11 +1299,11 @@ function selectHairstylist(event)
 {
     if(event.target.tagName == "DIV")
     {
-        document.getElementById("selectHairstylistInput").innerHTML = event.target.id;
+        document.getElementById("selectedHairstylist").innerHTML = event.target.id;
     }
     else
     {
-        document.getElementById("selectHairstylistInput").innerHTML = event.target.parentNode.id;
+        document.getElementById("selectedHairstylist").innerHTML = event.target.parentNode.id;
     }
     
     document.getElementById("label-selectStylist").style.color = "";

@@ -178,7 +178,8 @@ select.minimal:focus {
 
 .bookAppointmentButton
 {
-    height: 30px;
+  height: 30px;
+  width: 105%;
   float: left;
   color: #FFF;
   font-weight: 700;
@@ -246,6 +247,8 @@ select.minimal:focus {
 
 .textareaStyle
 {
+    width: 105%;
+    height: 55%;
     resize: none;
 }
 
@@ -1662,7 +1665,88 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
   line-height: 48px;
 }
 
-
+.sminputsLarge {
+  height: 12%;
+  border-bottom: 1px solid #E5E5E5;
+}
+.sminputsLarge::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.sminputsLarge .input {
+  display: block;
+  position: relative;
+  width: 50%;
+  height: 71px;
+  padding: 11px 24px;
+  border-right: 1px solid #e5e5e5;
+  border-bottom: none;
+  float: left;
+  background-color: #FFF;
+  border-radius: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.sminputsLarge .input.active {
+  background: #eee;
+}
+.sminputsLarge .input.active .hide-password {
+  background: #eee;
+}
+.sminputsLarge .input.full {
+  width: 100%;
+}
+.sminputsLarge .input label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 24px;
+}
+.sminputsLarge .input input 
+{
+  postion: relative;
+  display: inline-block;
+  height: 24px;
+  font-size: 15px;
+  line-height: 19.2px;
+  color: #555;
+  border-radius: 4px;
+  vertical-align: middle;
+  box-shadow: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgba(75, 89, 102, 0.85);
+}
+.sminputsLarge .hide-password {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0 15px;
+  border-left: 1px solid #e4e4e4;
+  font-size: 14px;
+  background: #FFF;
+  overflow: hidden;
+  color: #444;
+  cursor: pointer;
+  margin-top: 12px;
+  line-height: 48px;
+}
 
 html {
   font-size: 16px;
