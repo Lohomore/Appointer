@@ -7,7 +7,9 @@ function classAutoloader($class) { require_once (__DIR__ . '/classes/class.' . $
 spl_autoload_register('classAutoloader');
 
 //echo memory_get_usage() . "\n";
-$database = new Database($config);
-$user = new User($database);
-$core = new Core($config, $database, $user);
+//$database = new Database($config);
+//$user = new User($database);
+//$appointment = new Appointment($database);
+//$core = new Core($config, $database, $user, $appointment);
+$core = new Core($config);
 //echo memory_get_usage() . "\n";

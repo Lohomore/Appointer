@@ -320,7 +320,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
     margin-left: 5px;
     padding: 12px 20px 12px 60px;
     height: 25px;
-    background-image: url("Photos/search.png");
+    background-image: url("/images/search.png");
     background-repeat: no-repeat;
       
 }
@@ -1380,7 +1380,7 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
   left: 0;
   opacity: 1;
   background: rgba(0, 0, 0, 0.1);
-  background-image: url("Photos/curlers.jpeg");
+  background-image: url("/pages/images/curlers.jpeg");
   background-size: 100% 100%;
   
   z-index: 1;
