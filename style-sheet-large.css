@@ -17,6 +17,7 @@ a {
 	}
 .background /*background color*/
 {
+    overflow: scroll;
   display: block;
   position: fixed;
   top: 0;
@@ -43,7 +44,6 @@ a {
 {
     background: transparent;
     float:left;
-   width: 275px;
    padding: 3px;
     margin-left: 1.5%;
    font-size: 14px;
@@ -1341,8 +1341,6 @@ box-shadow: -1px 5px 31px 0px rgba(97,90,97,1);*/
 /*****Login SignUp Page ********
 ********************************
 ********************************/
-
-
 
 .error
 {
