@@ -23,7 +23,9 @@ a {
   background: rgba(247, 247, 242,0.1)
   background-size: 100% 100%; 
   z-index: 1;
-    overflow: scroll;
+  overflow: scroll;
+  background-image: url("Photos/curlers.jpeg");
+  background-size: 100% 100%;
 
 
 }

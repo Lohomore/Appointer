@@ -19,11 +19,10 @@ a {
   bottom: 0;
   left: 0;
   opacity: 1;
-  background: rgba(247, 247, 242,0.1)
-  background-size: 100% 100%; 
+  background: rgba(247, 247, 242,0.1);
   z-index: 1;
-
-
+  background-image: url("Photos/curlers.jpeg");
+  background-size: 100% 100%;
 }
 .darkenbackground
 {

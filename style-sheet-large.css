@@ -28,7 +28,8 @@ a {
   background: rgba(247, 247, 242,0.1)
   background-size: 100% 100%; 
   z-index: 1;
-    overflow: scroll;
+  background-image: url("Photos/curlers.jpeg");
+  background-size: 100% 100%;
 }
 .darkenbackground
 {
@@ -44,6 +45,7 @@ a {
 {
     background: transparent;
     float:left;
+    width: 155px;
    padding: 3px;
     margin-left: 1.5%;
    font-size: 14px;
