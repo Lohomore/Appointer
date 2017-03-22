@@ -24,11 +24,25 @@ a {
   background-size: 100% 100%; 
   z-index: 1;
   overflow: scroll;
-  background-image: url("Photos/curlers.jpeg");
-  background-size: 100% 100%;
-
-
 }
+
+.backgroundLoginSignup
+{
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  background: rgba(247, 247, 242,0.1)
+  background-size: 100% 100%; 
+  z-index: 1;
+  overflow: scroll;
+  background-image: url("Photos/curlers.jpeg");
+  background-size: cover;
+}
+
 .darkenbackground
 {
     position: relative;
