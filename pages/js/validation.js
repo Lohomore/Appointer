@@ -1,4 +1,9 @@
 //--------------------- MODIFIED BY MITCHELL ---------------------//
+/* This function is used on the log in page validates users input on 
+   the click of the submit button. It also sends the data, and recieves 
+   back if the user is allowed to enter the site or not. In the latter 
+   case an error is shown to the user */
+   
 function logIn(event) //Log the user in
 {
     event.preventDefault(); //Stop the form from submitting
@@ -53,12 +58,16 @@ function logIn(event) //Log the user in
     }
 }
 
+/* This function is used for the signup page validates users input on 
+   the click of the submit button. It also sends the data, and recieves 
+   back if the user is allowed to sign up with the information provided 
+   or not. In the latter case an error is shown to the user */
 function createAccount(event) //Create a new account
 {
     event.preventDefault(); //Stop the form from submitting
 
     var test = true;
-
+    //obtain all values from the form
     var first = document.getElementById("firstName").value;
     var last = document.getElementById("lastName").value;
     var month = document.getElementById("months").value;
@@ -212,7 +221,9 @@ function createAccount(event) //Create a new account
         );
     }
 }
-
+/*This function is used both for signup and adding a stylist.
+  As the user types and clicks off of the input field this
+  function is called to check if the name is valid*/
 function validateFirstName(event) //Validate the first name
 {
     var form = event.currentTarget.id;
@@ -228,6 +239,9 @@ function validateFirstName(event) //Validate the first name
     }
 }
 
+/*This function is used both for signup and adding a stylist.
+  As the user types and clicks off of the input field this
+  function is called to check if the name is valid*/
 function validateLastName(event) //Validate the last name
 {
     var form = event.currentTarget.id;
@@ -242,7 +256,9 @@ function validateLastName(event) //Validate the last name
         document.getElementById(label).style.color = "red";
     }
 }
-
+/*This function is used both for signup and adding a stylist.
+  As the user clicks on and clicks off of the input field this
+  function is called to check if the birthdate is valid*/
 function validateDate() //Validate the date
 {
     var month = document.getElementById("months").value;
@@ -257,7 +273,9 @@ function validateDate() //Validate the date
         document.getElementById("label-birthdate").style.color = "red";
     }
 }
-
+/*This function is used both for signup and adding a stylist.
+  As the user types and clicks off of the input field this
+  function is called to check if the email is valid*/
 function validateEmail(event) //Validate the email
 {
     var form = event.currentTarget.id;
@@ -273,7 +291,10 @@ function validateEmail(event) //Validate the email
         document.getElementById(label).style.color = "red";
     }
 }
-
+/*This function is used both for signup,adding a stylist,
+  manager settings, and customer settings.As the user clicks on 
+  and clicks off of the input field this function is called 
+  to check if the location is valid*/
 function validateLocation() //Validate the location
 {
     var country = document.getElementById("country").value;
@@ -288,7 +309,10 @@ function validateLocation() //Validate the location
         document.getElementById("label-location").style.color = "red";
     }
 }
-
+/*This function is used both for signup,adding a stylist,
+  manager settings, and customer settings.As the user clicks 
+  off of the province field this function is called 
+  to provide a list of cities availabe in that province*/
 function populateCities(event) //Populate the city list
 {
     var province = event.currentTarget.value;
@@ -331,7 +355,10 @@ function populateCities(event) //Populate the city list
         }
     }
 }
-
+/*This function is used both for signup, manager settings, 
+  employee settings, and customer settings. As the user types 
+  and clicks off of the input field this function is called 
+  to check if the email is valid*/
 function validatePassword(event) //Validate the password
 {
     var form = event.currentTarget.id;
@@ -785,7 +812,10 @@ function cancelMeeting(event) //Cancel a meeting event
 }
 
 //--------------------- EVERYTHING BEYOND THIS POINT IS UNTOUCHED ---------------------//
-
+/* This function is used on the add stylist page and validates users input on 
+   the click of the submit button. It also sends the data, and recieves 
+   back if the user is allowed to create a new stylist or not. In the latter 
+   case an error is shown to the user */
 function createStylistAccount(event)
 {
     var test = true;
@@ -799,7 +829,7 @@ function createStylistAccount(event)
         event.preventDefault();
         test = false;
     }
-    else if (first.length < 2)
+    else if (first.length < 2) //checks if greater then 2 characters
     {
         document.getElementById("label-firstName").style.color = "red";
         document.getElementById("label-firstName").innerHTML = "First Name* At Least 2 characters";
@@ -807,7 +837,7 @@ function createStylistAccount(event)
         event.preventDefault();
         test = false;
     }
-    else if (first.length > 50)
+    else if (first.length > 50) //checks if greater then 50 characters
     {
         document.getElementById("label-firstName").style.color = "red";
         document.getElementById("label-firstName").innerHTML = "Can not be greater then 50 characters";
@@ -816,7 +846,7 @@ function createStylistAccount(event)
         event.preventDefault();
         test = false;
     }
-    else
+    else //valid
     {
         document.getElementById("label-firstName").innerHTML = "First Name*";
         document.getElementById("label-firstName").style.color = "#000";
@@ -832,21 +862,20 @@ function createStylistAccount(event)
         event.preventDefault();
         test = false;
     }
-    else if (last.length < 2)
+    else if (last.length < 2) //checks if less then 2 characters
     {
         document.getElementById("label-lastName").style.color = "red";
         document.getElementById("label-lastName").innerHTML = "Last Name* At least 2 characters";
         document.getElementById("label-lastName").style.fontSize = "8px";
     }
-    else if (last.length > 50)
+    else if (last.length > 50) //checks if greater then 50 characters
     {
         document.getElementById("label-lastName").style.color = "red";
         document.getElementById("label-lastName").innerHTML = "Can not be greater then 50 characters";
         document.getElementById("label-lastName").style.fontSize = "8px";
     }
-    else
+    else //valid
     {
-        document.getElementById("lastName").className = ("sminputs"); //if fixed applies old style
         document.getElementById("label-lastName").innerHTML = "Last Name*";
         document.getElementById("label-lastName").style.color = "#000";
     }
@@ -860,17 +889,18 @@ function createStylistAccount(event)
     var monthpat = /^(0?[1-9]|1[012])$/;
     var yearpat = /^\d{4}$/;
     var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if (month === "0" || day === "0" || year === "0" || year > 1998) //checks if empty
+    if (month === "0" || day === "0" || year === "0" || year > 1998) //checks if empty or too young
     {
         document.getElementById("label-birthdate").style.color = "red";
         event.preventDefault();
         test = false;
     }
-    else
+    else //possibly valid
     {
         if (month.match(monthpat) && day.match(daypat) && year.match(yearpat))
         {
-            if (month === 01 || month > 02)
+            //checks to see if each month has a valid day attached
+            if (month === 01 || month > 02) 
             {
                 if (day > ListofDays[month - 1])
                 {
@@ -879,7 +909,7 @@ function createStylistAccount(event)
                     test = false;
                 }
             }
-            if (month === "02")
+            if (month === "02") //also checks here for a leap year
             {
                 var lyear = false;
                 if ((!(year % 4) && year % 100) || !(year % 400))
@@ -911,43 +941,32 @@ function createStylistAccount(event)
     //Email
     var email = document.getElementById("email").value;
     var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
+    
+    //applies old style
+    document.getElementById("label-email").innerHTML = "Email*";
+    document.getElementById("label-email").style.color = "#000";
+    
     if (email === "" || email.length === 0) //checks if empty
     {
         document.getElementById("label-email").style.color = "red";
         event.preventDefault();
         test = false;
     }
-
-    else if (email.length > 256)
+    else if (email.length > 256) //if email is too long
     {
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Email address is too long)";
         event.preventDefault();
         test = false;
     }
-
-    else
-    {
-        document.getElementById("email").className = ("sminputs"); //if fixed applies old style
-        document.getElementById("label-email").innerHTML = "Email*";
-        document.getElementById("label-email").style.color = "#000";
-    }
-
-
-    if (!email.match(emailpat))
+    else if (!email.match(emailpat)) //not valid email format
     {
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();
         test = false;
     }
-    else
-    {
-        document.getElementById("email").className = ("sminputs"); //if fixed applies old style
-        document.getElementById("label-email").innerHTML = "Email*";
-        document.getElementById("label-email").style.color = "#000";
-    }
-
+   
     //Country
     var country = document.getElementById("country").value;
     if (country === "00" || country === "") //checks if empty
@@ -1021,18 +1040,20 @@ function scorePassword(pass)
     return parseInt(score);
 }
 
+/* This function is called every time a password is entered to signup,
+   or change passwords. It checks how strong the password is based
+   on score given in score password function*/
 function passwordStrength(event)
 {
     var current = event.currentTarget.value;
     var score = scorePassword(current);
     var warning = document.getElementById("passwordStrength");
 
-    if (score >= 100)
+    if (score >= 100) //high score
     {
         warning.className = "veryGood";
         warning.innerHTML = "";
         warning.innerHTML = "Very Strong";
-
     }
     else if (score >= 80)
     {
@@ -1052,7 +1073,7 @@ function passwordStrength(event)
         warning.innerHTML = "";
         warning.innerHTML = "Weak";
     }
-    else if (score < 30)
+    else if (score < 30) //very weak not allowed to be used on the site
     {
         warning.className = "weak";
         warning.innerHTML = "";
@@ -1061,7 +1082,10 @@ function passwordStrength(event)
 
     return "";
 }
-
+/*This function is used both for adding a stylist, 
+  and manager settings.As the user clicks off of the 
+  input field this function is called to check if the 
+  salon is valid*/
 function validateSalon(event)
 {
     var salon = event.currentTarget.value;
@@ -1072,60 +1096,56 @@ function validateSalon(event)
     }
 }
 
-//Settings Views
+/*This function is used on all settings pages.
+  When the user clicks the submit email button check if the 
+  email is valid*/
 function submitEmail(event) //Manager, customer, and employee settings
 {
     //Email
     var email = document.getElementById("email").value;
     var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
+    
+    //applies normal style
+    document.getElementById("label-email").innerHTML = "Change Email:";
+    document.getElementById("label-email").style.color = "#000";
+    
     if (email === "" || email.length === 0) //checks if empty
     {
         document.getElementById("label-email").style.color = "red";
         event.preventDefault();
         test = false;
     }
-    else if (email.length > 256)
+    else if (email.length > 256) //invalid
     {
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Email address is too long)";
         event.preventDefault();
         test = false;
     }
-
-    else
-    {
-        document.getElementById("label-email").innerHTML = "Change Email:";
-        document.getElementById("label-email").style.color = "#000";
-    }
-
-
-    if (!email.match(emailpat))
+    else if (!email.match(emailpat)) //invalid
     {
         document.getElementById("label-email").style.color = "red";
         document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
         event.preventDefault();
         test = false;
     }
-    else
-    {
-        document.getElementById("label-email").innerHTML = "Change Email:";
-        document.getElementById("label-email").style.color = "#000";
-    }
 }
-
+/*This function is used on all settings pages.
+  When the user clicks the submit password button check if the 
+  password is valid*/
 function submitPassword(event) //Manager, customer, and employee settings
 {
     //Passwords
     var password = document.getElementById("password").value;
+    var password2 = document.getElementById("passwordRepeat").value;
+    
     if (password === "" || password.length === 0) //checks if empty
     {
         document.getElementById("label-password").style.color = "red";
         event.preventDefault();
         test = false;
     }
-
-    var password2 = document.getElementById("passwordRepeat").value;
-    if (password2 === "" || password2.length === 0) //checks if empty
+    if (password2 === "" || password2.length === 0) //checks if empty->confirmation password 
     {
         document.getElementById("label-passwordConfirm").style.color = "red";
         event.preventDefault();
@@ -1140,9 +1160,9 @@ function submitPassword(event) //Manager, customer, and employee settings
         event.preventDefault();
         test = false;
     }
-    else
+    else //passwords match
     {
-        if (password.length >= 96)
+        if (password.length >= 96) //invlaid
         {
             document.getElementById("label-password").innerHTML = "Max Length Has Been Reached"
             document.getElementById("label-password").style.color = "red";
@@ -1153,7 +1173,7 @@ function submitPassword(event) //Manager, customer, and employee settings
         else
         {
             var score = scorePassword(password);
-            if (score < 60)
+            if (score < 60) //invalid
             {
                 document.getElementById("label-password").innerHTML = "Password is not Strong Enough";
                 document.getElementById("label-password").style.color = "red";
@@ -1161,7 +1181,7 @@ function submitPassword(event) //Manager, customer, and employee settings
                 event.preventDefault();
                 test = false;
             }
-            else
+            else //valid
             {
                 document.getElementById("label-password").innerHTML = "Change Password:";
                 document.getElementById("label-password").style.color = "#000";
@@ -1172,6 +1192,9 @@ function submitPassword(event) //Manager, customer, and employee settings
     }
 }
 
+/*This function is used on manager settings page.
+  When the user clicks the submit location button 
+  check if the new location including salon is valid*/
 function submitLocation(event) //Manager settings
 {
     //Country
@@ -1214,7 +1237,9 @@ function submitLocation(event) //Manager settings
         test = false;
     }
 }
-
+/*This function is used on customer settings page.
+  When the user clicks the submit location button 
+  check if the new location is valid*/
 function submitCustomerLocation(event) //Customer settings
 {
     //Country
@@ -1245,31 +1270,36 @@ function submitCustomerLocation(event) //Customer settings
         test = false;
     }
 }
-
+/*This function is used on manager settings page.
+  When the user clicks the delete stylist button 
+  check if a stylist has been choosen. If so create 
+  a popup to confirm that the manger wants to delete
+  the account*/
 function deleteStylist(event) //Manager settings
 {
     var account = document.getElementById("stylistAccounts").value;
 
-    if (account != "00")
+    if (account != "00")//stylist has been selected
     {
         var modal = document.getElementById("popup");
 
-        modal.style.display = "block";
+        modal.style.display = "block"; //show popup
         var inner = document.getElementById("popup__content");
         var r = document.createElement('span');
         r.innerHTML = "";
         r.innerHTML = "Are you sure you want to delete " + account + "?";
 
+        //create cancel button
         var z = document.createElement("BUTTON");
         z.setAttribute("type", "button");
         z.setAttribute("id", "cancelDeletion");
-        //x.setAttribute("", "submit");
         z.setAttribute("class", "sumbit");
         z.className = "sumbit";
         var t = document.createTextNode("Cancel");
         z.appendChild(t)
         r.appendChild(z);
 
+        //create submit button
         var x = document.createElement("INPUT");
         x.setAttribute("type", "submit");
         x.setAttribute("id", "saveDeletion");
@@ -1278,20 +1308,25 @@ function deleteStylist(event) //Manager settings
         r.appendChild(x);
         inner.appendChild(r);
 
+        //style buttons
         document.getElementById("cancelDeletion").className = "stop";
         document.getElementById("saveDeletion").className = "save";
-
+        
         document.getElementById("cancelDeletion").addEventListener("click", closeEditProfilePic);
         document.getElementById("label-stylistAccounts").style.color = "black";
     }
-    else
+    else //stylist not entered
     {
         document.getElementById("label-stylistAccounts").style.color = "red";
     }
 }
-
-function deleteAccount(event) //Both manager settings and customer settings
+/*This function is used on customersettings page.
+  When the user clicks the delete account button 
+  create a popup to confirm that the user wants 
+  to delete the account*/
+function deleteAccount(event) //customer settings
 {
+    //fill and display popup
     var modal = document.getElementById("popup");
     modal.style.display = "block";
     var inner = document.getElementById("popup__content");
@@ -1299,6 +1334,7 @@ function deleteAccount(event) //Both manager settings and customer settings
     r.innerHTML = "";
     r.innerHTML = "Are you sure you want to delete your account?"
 
+    //create cancel button
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "cancelDeletion");
@@ -1308,6 +1344,7 @@ function deleteAccount(event) //Both manager settings and customer settings
     z.appendChild(t)
     r.appendChild(z);
 
+    //create submit button
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     x.setAttribute("id", "saveDeletion");
@@ -1315,13 +1352,15 @@ function deleteAccount(event) //Both manager settings and customer settings
     x.className = "sumbit";
     r.appendChild(x);
     inner.appendChild(r);
-
+    //style buttons
     document.getElementById("cancelDeletion").className = "stop";
     document.getElementById("saveDeletion").className = "save";
+    //add closing popup feature
     document.getElementById("cancelDeletion").addEventListener("click", closeEditProfilePic);
 }
 
-//Home Calendar View
+/*This function was for previous version of employee calendar
+  will be removed once all dependencies are checked*/
 function addAppointment(event) //WHAT IS THIS FOR?
 {
     var first = document.getElementById("appointmentName").value; //for appointment name
@@ -1437,17 +1476,21 @@ function swapProfileInfo(event)
     document.getElementById(id).className = "active";
     document.getElementById("p-" + id).className = "stylemod_tab show";
 }
-
+/*This function is used on customer profile and employee profile pages.
+  When the user hovers over his/her profile pic a little edit icon appears*/
 function hoverProfilePic(event)
 {
     document.getElementById("editProfilePic").style.display = "block";
 }
-
+/*This function is used on customer profile and employee profile pages.
+  When the user hovers off his/her profile pic a little edit icon disappears*/
 function offhoverProfilePic(event)
 {
     document.getElementById("editProfilePic").style.display = "none";
 }
-
+/*This function is used on employee profile pages.
+  It allows employee to edit information about themselves 
+  edit icon is clicked*/
 function editOverview(event)
 {
     var place = document.getElementById("p-lgm-1");
@@ -1455,7 +1498,8 @@ function editOverview(event)
     place.innerHTML = "";
     var r = document.createElement('span');
     r.setAttribute("id", "overviewForm__wrapper");
-    var y = document.createElement("TEXTAREA");
+    //creates input box
+    var y = document.createElement("TEXTAREA"); 
 
     y.setAttribute("value", text);
     y.setAttribute("cols", "160");
@@ -1463,7 +1507,7 @@ function editOverview(event)
     y.setAttribute("Name", "textelement_overview");
     y.setAttribute("id", "textelement_overview");
     r.appendChild(y);
-
+    //creates cancel button
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "overviewCancel");
@@ -1472,7 +1516,7 @@ function editOverview(event)
     var t = document.createTextNode("Cancel");
     z.appendChild(t)
     r.appendChild(z);
-
+    //creates submit button
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     //x.setAttribute("", "submit");
@@ -1486,12 +1530,14 @@ function editOverview(event)
     document.getElementById("overviewSubmit").className = "save";
     document.getElementById("overviewCancel").addEventListener("click", closeEditOverview);
 }
-
+/*On employee profile page when cancel button is clicked close editing mode*/
 function closeEditOverview()
 {
     document.getElementById("overviewForm__wrapper").style.display = "none";
 }
-
+/*This function is used on employee profile pages.
+  It allows employee to edit information about themselves 
+  edit icon is clicked*/
 function editEducation(event)
 {
     var place = document.getElementById("p-lgm-2");
@@ -1500,6 +1546,7 @@ function editEducation(event)
     var r = document.createElement('span');
     r.setAttribute("Name", "educationForm__wrapper");
     r.setAttribute("id", "educationForm__wrapper");
+    //creates text area
     var y = document.createElement("TEXTAREA");
 
     y.setAttribute("value", text);
@@ -1508,7 +1555,7 @@ function editEducation(event)
     y.setAttribute("Name", "textelement_education");
     y.setAttribute("id", "textelement_education");
     r.appendChild(y);
-
+    //cancel button
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "cancelEducation");
@@ -1518,7 +1565,7 @@ function editEducation(event)
     var t = document.createTextNode("Cancel");
     z.appendChild(t)
     r.appendChild(z);
-
+    //submit button
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     //x.setAttribute("", "submit");
@@ -1533,45 +1580,46 @@ function editEducation(event)
     document.getElementById("cancelEducation").addEventListener("click", closeEditEducation);
 
 }
-
+/*On employee profile page when cancel button is clicked close editing mode*/
 function closeEditEducation()
 {
     document.getElementById("educationForm__wrapper").style.display = "none";
 }
-
+/*This function is used on employee profile pages.
+  It allows employee to add and remove pictures
+  from their portfolio when edit icon is clicked*/
 function editGallery(event)
 {
     var place = document.getElementById("addPhoto");
     var r = document.createElement('span');
     r.setAttribute("id", "galleryForm__wrapper");
     r.setAttribute("name", "gallleryForm__wrapper");
+    
     var y = document.createElement("INPUT");
-
     y.setAttribute("type", "file");
-
     y.setAttribute("Name", "file_gallery");
     y.setAttribute("id", "file_gallery");
     r.appendChild(y);
-
+   
+    //cancel button
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "cancelGallery");
-    //x.setAttribute("", "submit");
     z.setAttribute("class", "sumbit");
     z.className = "sumbit";
     var t = document.createTextNode("Cancel");
     z.appendChild(t)
     r.appendChild(z);
-
+    //submit button
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     x.setAttribute("id", "saveGallery");
-    //x.setAttribute("", "submit");
     x.setAttribute("class", "sumbit");
     x.className = "sumbit";
     r.appendChild(x);
     place.appendChild(r);
 
+    //style buttons
     document.getElementById("cancelGallery").className = "stop";
     document.getElementById("saveGallery").className = "save";
 
@@ -1583,14 +1631,14 @@ function editGallery(event)
     container = document.getElementById("og-grid");
     items = container.getElementsByClassName("deletePhoto");
     pics = container.getElementsByTagName("li");
-
+    //for each picture add deletion x's
     for (var j = 0; j < items.length; j++)
     {
         items[j].style.display = "block";
         items[j].addEventListener("click", photoDelete);
     }
 }
-
+/*On employee profile page when cancel button is clicked close editing mode*/
 function closeEditGallery(event)
 {
     document.getElementById("galleryForm__wrapper").style.display = "none";
@@ -1601,30 +1649,30 @@ function closeEditGallery(event)
     items = container.getElementsByClassName("deletePhoto");
     pics = container.getElementsByTagName("li");
 
-    for (var j = 0; j < items.length; j++)
+    for (var j = 0; j < items.length; j++) //remove deletion x's
     {
         items[j].style.display = "none";
         items[j].removeEventListener("click", photoDelete);
     }
 }
-
+/*This function is used on employee profile and customer profile pages.
+  It allows user to change profile pictures through a popup windoww
+  when edit icon is clicked*/
 function editProfilePic(event)
 {
+    //display popup
     var modal = document.getElementById("popup");
     modal.style.display = "block";
     var inner = document.getElementById("popup__content");
     var r = document.createElement('span');
+    r.setAttribute("id", "picForm__wrapper");
+    //file upload input
     var y = document.createElement("INPUT");
-
     y.setAttribute("type", "file");
-
     y.setAttribute("Name", "file_profile");
     y.setAttribute("id", "file_profile");
     r.appendChild(y);
-
-
-    r.setAttribute("id", "picForm__wrapper");
-    r.setAttribute("id", "picForm__wrapper");
+    //cancel button
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
     z.setAttribute("id", "cancelProfilePic");
@@ -1633,7 +1681,7 @@ function editProfilePic(event)
     var t = document.createTextNode("Cancel");
     z.appendChild(t)
     r.appendChild(z);
-
+    //save picture button
     var x = document.createElement("INPUT");
     x.setAttribute("type", "submit");
     x.setAttribute("id", "saveProfilePic");
@@ -1646,13 +1694,13 @@ function editProfilePic(event)
     document.getElementById("saveProfilePic").className = "save";
     document.getElementById("cancelProfilePic").addEventListener("click", closeEditProfilePic);
 }
-
+/*On customer and employee profile page when cancel button is clicked close editing mode*/
 function closeEditProfilePic(event)
 {
     var modal = document.getElementById("popup");
     modal.style.display = "none";
 }
-
+/*On employee profile page when in edit mode delete photo from gallery*/
 function photoDelete(event)
 {
     parentDiv = event.currentTarget.parentNode;
@@ -1663,7 +1711,7 @@ function photoDelete(event)
     arr.src = "#";
     arr.href = "#";
 }
-
+/*used whenever popup is created to close the popup window*/
 function closeEventPopup(event)
 {
     var modal = document.getElementById("popup");

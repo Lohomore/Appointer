@@ -13,7 +13,7 @@ class Salon
 
     public function getBusinessHoursJSON($location) //Get the business hours and output them as JSON
     {
-        $hoursQuery = $this->database->query('SELECT open, close FROM businessHours WHERE location = ? LIMIT 1', $location); //Get the business hours from the database
+        $hoursQuery = $this->database->query('SELECT open, close FROM businesshours WHERE location = ? LIMIT 1', $location); //Get the business hours from the database
         $hours = array(); //Stores the hours
 
         if($this->database->rowCount($hoursQuery)) //The query returned at least one result
