@@ -1,4 +1,5 @@
 <?php
+//CREATED BY MITCHELL STEFFENSEN AND MIKHAIL SHCHUKIN
 if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to this file through the router
 
 /*
@@ -8,8 +9,8 @@ if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to
 */
 class Customer
 {
-    public $database, //Stores the database connection
-           $data; //Stores the user's data
+    private $database, //Stores the database connection
+            $data; //Stores the user's data
 
     public function __construct($database) //Set up the customer by copying the specified database connection
     {
@@ -175,6 +176,11 @@ class Customer
     }
 
     public function changeSettings() //Change the user's settings
+    {
+        //NOT IMPLEMENTED
+    }
+
+    public function changeProfile() //Change the stylist's profile information
     {
         //NOT IMPLEMENTED
     }

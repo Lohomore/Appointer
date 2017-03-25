@@ -1,4 +1,5 @@
 <?php
+//CREATED BY MITCHELL STEFFENSEN AND MIKHAIL SHCHUKIN
 if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to this file through the router
 
 /*

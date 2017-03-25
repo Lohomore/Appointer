@@ -1,4 +1,5 @@
 <?php
+//CREATED BY MITCHELL STEFFENSEN AND MIKHAIL SHCHUKIN
 if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to this file through the router
 
 /*
@@ -31,6 +32,11 @@ class Stylist extends Customer
     }
 
     public function changeProfile() //Change the stylist's profile information
+    {
+        //NOT IMPLEMENTED
+    }
+
+    public function changeSettings() //Change the stylist's settings
     {
         //NOT IMPLEMENTED
     }

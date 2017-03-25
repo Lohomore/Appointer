@@ -1,4 +1,5 @@
 <?php
+//CREATED BY MITCHELL STEFFENSEN AND MIKHAIL SHCHUKIN
 if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to this file through the router
 
 /*
@@ -54,7 +55,7 @@ class Manager extends Customer
         //NOT IMPLEMENTED
     }
 
-    public function removeStylist() //Remove a stylist
+    public function removeStylist($id) //Remove a stylist
     {
         //NOT IMPLEMENTED
     }

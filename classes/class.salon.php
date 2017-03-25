@@ -1,4 +1,5 @@
 <?php
+//CREATED BY MITCHELL STEFFENSEN AND MIKHAIL SHCHUKIN
 if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to this file through the router
 
 class Salon
@@ -194,7 +195,6 @@ class Salon
             {
                 $appStylistQuery = $this->database->query('SELECT * FROM appointments WHERE user != ? AND stylist = ? AND start >= ? AND end <= ?', $id, $_GET['stylist'], $start, $end); //Get all stylist appointments from the database
 
-                //echo "SELECT * FROM appointments WHERE user != {$id} AND stylist = {$_GET['stylist']} AND start >= {$start} AND end <= {$end}";
                 if($this->database->rowCount($appStylistQuery)) //The query returned a row
                 {
                     while($appStylistRow = $this->database->fetch($appStylistQuery)) //Loop through each appointment row
