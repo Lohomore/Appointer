@@ -1,325 +1,799 @@
-var city_states = Object();
-
-city_states["Alberta"] = "|Calgary|Edmonton|Medicine Hat";
-city_states["British Columbia"] = "|Abbotsford|Burnaby|Coquitlam|Kelowna|Langley|North Vancouver |Richmond|Surrey|Vancouver";
-city_states["Manitoba"] = "|Brandon|Steinbach|Thompson|Winnipeg";
-city_states["New Brunswick"] = "|Dieppe|Fredericton|Moncton|Saint John";
-city_states["Newfoundland/Labrador"] = "|Corner Brook|Conception Bay South|Mount Pearl|Paradise|St.John's";
-city_states["Nova Scotia"] = "|Amherst|Cape Breton|Halifax|Turo";
-city_states["Northwest Territories"] = "|Inuvik|Yellowknife";
-city_states["Nunavut"] = "|Iqaluit";
-city_states["Ontario"] = "|Brampton|Hamilton|London|Mississauga|Ottawa|Toronto";
-city_states["Prince Edward Island"] = "|Charlottetown|Summerside";
-city_states["Quebec"] = "|Gatineua|Laval|Longueuil|Quebec|Montreal";
-city_states["Saskatchewan"] = "|Moose Jaw|Regina|Saskatoon";
-city_states["Yukon"] = "|Whitehorse";
-
-function logIn(event)
+//--------------------- MODIFIED BY MITCHELL ---------------------//
+function logIn(event) //Log the user in
 {
+    event.preventDefault(); //Stop the form from submitting
+
     var test = true;
 
-    event.preventDefault();
+    var email = document.getElementById("loginemail").value;
+    var password = document.getElementById("loginpassword").value;
+
+    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
+
+    //Set all labels to black
     document.getElementById("label-loginemail").style.color = "#000";
     document.getElementById("label-loginpassword").style.color = "#000";
 
-    //*****Email **************//
-    var email = document.getElementById("loginemail").value;
-    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
-    if (email == "" || email.length == 0) //checks if empty
+    //Email
+    if (email == "" || email.length == 0 || !email.match(emailpat) || email.length > 256) //Invalid
     {
         document.getElementById("label-loginemail").style.color = "red";
         test = false;
-    }
-    else
-    {
-        document.getElementById("loginemail").className = ("sminputs"); //If fixed applies old style
     }
 
-    if (!email.match(emailpat))
-    {
-        document.getElementById("label-loginemail").style.color = "red";
-        //document.getElementById("label-loginemail").innerHTML = "Please enter valid email (example@example.com/ca)";
-        test = false;
-    }
-    if (email.length > 256)
-    {
-        document.getElementById("label-loginemail").style.color = "red";
-        //document.getElementById("label-loginemail").innerHTML = "Email address is too long";
-        test = false;
-    }
-    var password = document.getElementById("loginpassword").value;
-    if (password == "" || password.length == 0) //checks if empty
+    //Password
+    if (password == "" || password.length == 0) //Invalid
     {
         document.getElementById("label-loginpassword").style.color = "red";
-        document.getElementById("label-loginpassword").innerHTL = "Password";
         test = false;
     }
 
-    if (test)
+    if (test) //Valid
     {
-        $.post('/system/login', $('form#login').serialize(),
+        //Log the user in
+        $.post("/login", $("form#login").serialize(),
             function(data)
             {
-                if (data.success)
+                if (data.success) //The user was logged in
                 {
+                    //Reset the text and send the user to their home view
                     document.getElementById("loginText").innerHTML = "Enter your email and password <strong>to log in</strong>";
-                    document.getElementById("loginText").style.color = "#000";
+                    document.getElementById("loginText").style.color = "";
                     window.location.replace("/home");
                 }
-                else
+                else //The user was not logged in
                 {
+                    //Show the error
                     document.getElementById("loginText").innerHTML = data.error;
                     document.getElementById("loginText").style.color = "red";
                 }
             },
-            'json'
+            "json"
         );
     }
 }
 
-function createAccount(event)
+function createAccount(event) //Create a new account
 {
+    event.preventDefault(); //Stop the form from submitting
+
     var test = true;
 
-    event.preventDefault();
-    document.getElementById("label-firstName").style.color = "#000";
-    document.getElementById("label-lastName").style.color = "#000";
-    document.getElementById("label-birthdate").style.color = "#000";
-    document.getElementById("label-email").style.color = "#000";
-    document.getElementById("label-location").style.color = "#000";
-            document.getElementById("label-password").style.color = "#000";
-        document.getElementById("label-passwordConfirm").style.color = "#000";
-
-    //*****First Name **************//
     var first = document.getElementById("firstName").value;
-
-    if (first == "" || first.length == 0) //Checks if empty
-    {
-        document.getElementById("label-firstName").style.color = "red";
-        test = false;
-    }
-    else if (first.length < 2)
-    {
-        document.getElementById("label-firstName").style.color = "red";
-        //document.getElementById("label-firstName").innerHTML = "First Name* At Least 2 characters";
-        //document.getElementById("label-firstName").style.fontSize = "8px";
-        test = false;
-    }
-    else if (first.length > 50)
-    {
-        document.getElementById("label-firstName").style.color = "red";
-        //document.getElementById("label-firstName").innerHTML = "Can not be greater then 50 characters";
-        //document.getElementById("label-firstName").style.fontSize = "8px";
-        test = false;
-    }
-    else
-    {
-        document.getElementById("firstName").className = ("sminput"); //if fixed applies old style
-        document.getElementById("label-firstName").innerHTML = "First Name*";
-        document.getElementById("label-firstName").style.fontSize = "12px";
-    }
-
-    //*****Last Name **************//
     var last = document.getElementById("lastName").value;
-    document.getElementById("label-lastName").style.color = "#000";
-
-    if (last == "" || last.length == 0) //checks if empty
-    {
-        document.getElementById("label-lastName").style.color = "red";
-        test = false;
-    }
-    else if (last.length < 2)
-    {
-        document.getElementById("label-lastName").style.color = "red";
-        //document.getElementById("label-lastName").innerHTML = "Last Name* At least 2 characters";
-        //document.getElementById("label-lastName").style.fontSize = "8px";
-    }
-    else if (last.length > 50)
-    {
-        document.getElementById("label-lastName").style.color = "red";
-        //document.getElementById("label-lastName").innerHTML = "Can not be greater then 50 characters";
-        //document.getElementById("label-lastName").style.fontSize = "8px";
-    }
-    else
-    {
-        document.getElementById("lastName").className = ("sminputs"); //If fixed applies old style
-        document.getElementById("label-lastName").innerHTML = "Last Name*";
-        document.getElementById("label-lastName").style.fontSize = "12px";
-    }
-    
-    //*****Birthdate **************//
     var month = document.getElementById("months").value;
     var day = document.getElementById("days").value;
     var year = document.getElementById("years").value;
+    var email = document.getElementById("email").value;
+    var country = document.getElementById("country").value;
+    var province = document.getElementById("province").value;
+    var city = document.getElementById("city").value;
+    var password = document.getElementById("password").value;
+    var password2 = document.getElementById("passwordRepeat").value;
 
+    var score = scorePassword(password);
+    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
     var daypat = /([1-9]|[12]\d|3[01])/;
     var monthpat = /^(0?[1-9]|1[012])$/;
     var yearpat = /^\d{4}$/;
     var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    if (month == "0" || day == "0" || year == "0" || year > 1998) //Checks if empty
+    //Set all labels to black
+    document.getElementById("label-firstName").style.color = "#000";
+    document.getElementById("label-lastName").style.color = "#000";
+    document.getElementById("label-birthdate").style.color = "#000";
+    document.getElementById("label-email").style.color = "#000";
+    document.getElementById("label-location").style.color = "#000";
+    document.getElementById("label-password").style.color = "#000";
+    document.getElementById("label-passwordConfirm").style.color = "#000";
+
+    //First Name
+    if (first == "" || first.length == 0 || first.length < 2 || first.length > 50) //Invalid
+    {
+        document.getElementById("label-firstName").style.color = "red";
+        test = false;
+    }
+
+    //Last Name
+    if (last == "" || last.length == 0 || last.length < 2 || last.length > 50) //Invalid
+    {
+        document.getElementById("label-lastName").style.color = "red";
+        test = false;
+    }
+
+    //Birthdate
+    if (month == "0" || day == "0" || year == "0" || year > 1998) //Invalid
     {
         document.getElementById("label-birthdate").style.color = "red";
         test = false;
     }
-    else
+    else //Possibly valid
     {
-        if (month.match(monthpat) && day.match(daypat) && year.match(yearpat))
+        if (month.match(monthpat) && day.match(daypat) && year.match(yearpat)) //Matches pattern
         {
-            if (month == 1 || month > 2)
+            if ((month == 1 || month > 2) && day > ListofDays[month - 1]) //Invalid
             {
-                if (day > ListofDays[month - 1])
-                {
-                    document.getElementById("label-birthdate").style.color = "red";
-                    //document.getElementById("label-birthdate").innerHTML = "Invalid Date";
-                    test = false;
-                }
+                document.getElementById("label-birthdate").style.color = "red";
+                test = false;
             }
-            
-            if (month == 2)
+
+            if (month == 2) //February
             {
                 var lyear = false;
-                
-                if ((!(year % 4) && year % 100) || !(year % 400))
+
+                if ((!(year % 4) && year % 100) || !(year % 400)) //Check if the selected year is a leap year
                 {
                     lyear = true;
                 }
-                
-                if ((lyear == false) && (day >= 29))
+
+                if ((lyear == false && day >= 29) || (lyear == true && day > 29)) //Invalid
                 {
                     document.getElementById("label-birthdate").style.color = "red";
-                    //document.getElementById("label-birthdate").innerHTML = "Invalid Date";
-                    test = false;
-                }
-                
-                if ((lyear == true) && (day > 29))
-                {
-                    document.getElementById("label-birthdate").style.color = "red";
-                    //document.getElementById("label-birthdate").innerHTML = "Invalid Date";
                     test = false;
                 }
             }
         }
-        else
+        else //Invalid
         {
             document.getElementById("label-birthdate").style.color = "red";
-            //document.getElementById("label-birthdate").innerHTML = "Enter Date in proper dd/mm/yyyy";
             test = false;
         }
     }
-    
-    //*****Email **************//
-    var email = document.getElementById("email").value;
-    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
-    
-    if (email == "" || email.length == 0) //Checks if empty
+
+    //Email
+    if (email == "" || email.length < 6 || email.length > 256 || !email.match(emailpat)) //Invalid
     {
         document.getElementById("label-email").style.color = "red";
         test = false;
     }
-    else if (email.length > 256)
-    {
-        document.getElementById("label-email").style.color = "red";
-        //document.getElementById("label-email").innerHTML = "Email address is too long)";
-        test = false;
-    }
-    else
-    {
-        document.getElementById("email").className = ("sminputs"); //If fixed applies old style
-        document.getElementById("label-email").innerHTML = "Email*";
-    }
 
-    if (!email.match(emailpat))
+    //Country
+    if (country == "00" || country == "") //Invalid
     {
-        document.getElementById("label-email").style.color = "red";
-        //document.getElementById("label-email").innerHTML = "Please enter valid email (example@example.com/ca)";
-        test = false;
-    }
-    else
-    {
-        document.getElementById("email").className = ("sminputs"); //If fixed applies old style
-        document.getElementById("label-email").innerHTML = "Email*";
-    }
-
-    //*****Country **************//
-    var country = document.getElementById("country").value;
-    if (country == "00" || country == "") //checks if empty
-    {
-        //document.getElementById("label-location").innerHTML = "Please enter your country";
-        document.getElementById("label-location").style.color = "red";
-        test = false;
-    }
-    //*****Reigon **************//
-    var reigon = document.getElementById("province").value;
-    if (reigon == "00" || reigon == "") //checks if empty
-    {
-        //document.getElementById("label-location").innerHTML = "Please enter your province";
-        document.getElementById("label-location").style.color = "red";
-        test = false;
-    }
-    //*****City **************//
-    var city = document.getElementById("city").value;
-    if (city == "00" || city == "" || city.length == 0) //checks if empty
-    {
-        //document.getElementById("label-location").innerHTML = "Please enter your city";
         document.getElementById("label-location").style.color = "red";
         test = false;
     }
 
-    //*****Passwords **************//
-    var password = document.getElementById("password").value;
-    if (password == "" || password.length == 0) //Checks if empty
+    //Province
+    if (province == "00" || province == "") //Invalid
+    {
+        document.getElementById("label-location").style.color = "red";
+        test = false;
+    }
+
+    //City
+    if (city == "00" || city == "" || city.length == 0) //Invalid
+    {
+        document.getElementById("label-location").style.color = "red";
+        test = false;
+    }
+
+    //Passwords
+    if (password == "" || password.length == 0 || password.length >= 96 || score < 60) //Invalid or too weak
     {
         document.getElementById("label-password").style.color = "red";
         test = false;
     }
 
-    var password2 = document.getElementById("passwordRepeat").value;
-    if (password2 == "" || password2.length == 0) //Checks if empty
+    if (password2 == "" || password2.length == 0) //Invalid
     {
         document.getElementById("label-passwordConfirm").style.color = "red";
         test = false;
     }
 
-    if (password !== password2)
+    if (password !== password2) //Not equal
     {
-        //document.getElementById("label-password").innerHTML = "Passwords Do Not Match";
         document.getElementById("label-password").style.color = "red";
         document.getElementById("label-passwordConfirm").style.color = "red";
-        //document.getElementById("label-password").style.fontSize = "10px";
         test = false;
     }
-    else
+
+    if (test) //Valid
     {
-        if (password.length >= 96)
-        {
-            //document.getElementById("label-password").innerHTML = "Max Length Has Been Reached"
-            document.getElementById("label-password").style.color = "red";
-            //document.getElementById("label-password").style.fontSize = "10px";
-            test = false;
-        }
-        else
-        {
-            var score = scorePassword(password);
-            if (score < 60)
+        //Create the user's account
+        $.post("/register", $("form#register").serialize(),
+            function(data)
             {
-                //document.getElementById("label-password").innerHTML = "Password is not Strong Enough";
-                document.getElementById("label-password").style.color = "red";
-                //document.getElementById("label-password").style.fontSize = "10px";
-                test = false;
+                if (data.success) //The user's account was created
+                {
+                    //Reset the text and send the user to their home view
+                    document.getElementById("registerText").innerHTML = "Enter your personal details <strong>to create an acount</strong>";
+                    document.getElementById("registerText").style.color = "";
+                    window.location.replace("/home");
+                }
+                else
+                {
+                    //Show the error
+                    document.getElementById("registerText").innerHTML = data.error;
+                    document.getElementById("registerText").style.color = "red";
+                }
+            },
+            "json"
+        );
+    }
+}
+
+function validateFirstName(event) //Validate the first name
+{
+    var form = event.currentTarget.id;
+    var label = "label-" + form;
+    var first = event.currentTarget.value;
+
+    //Set the label back to black
+    document.getElementById(label).style.color = "#000";
+
+    if (first == "" || first.length < 2 || first.length > 50) //Invalid
+    {
+        document.getElementById(label).style.color = "red";
+    }
+}
+
+function validateLastName(event) //Validate the last name
+{
+    var form = event.currentTarget.id;
+    var label = "label-" + form;
+    var last = event.currentTarget.value;
+
+    //Set the label back to black
+    document.getElementById(label).style.color = "#000";
+
+    if (last == "" || last.length < 2 || last.length > 50) //Invalid
+    {
+        document.getElementById(label).style.color = "red";
+    }
+}
+
+function validateDate() //Validate the date
+{
+    var month = document.getElementById("months").value;
+    var day = document.getElementById("days").value;
+    var year = document.getElementById("years").value;
+
+    //Set the label back to black
+    document.getElementById("label-birthdate").style.color = "#000";
+
+    if (month == "00" || day == "00" || year == "00" || month == "" || day == "" || year == "" || month.length == 0 || day.length == 0 || year.length == 0 || year > 1998) //Invalid
+    {
+        document.getElementById("label-birthdate").style.color = "red";
+    }
+}
+
+function validateEmail(event) //Validate the email
+{
+    var form = event.currentTarget.id;
+    var label = "label-" + form;
+    var email = event.currentTarget.value;
+    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
+
+    //Set the label back to black
+    document.getElementById(label).style.color = "#000";
+
+    if (email == "" || email.length == 0 || email.length > 256 || !email.match(emailpat)) //Invalid
+    {
+        document.getElementById(label).style.color = "red";
+    }
+}
+
+function validateLocation() //Validate the location
+{
+    var country = document.getElementById("country").value;
+    var province = document.getElementById("province").value;
+    var city = document.getElementById("city").value;
+
+    //Set the label back to black
+    document.getElementById("label-location").style.color = "#000";
+
+    if (country == "00" || province == "00" || city == "00" || country == "" || province == "" || city == "" || country.length == 0 || province.length == 0 || city.length == 0 ) //Invalid
+    {
+        document.getElementById("label-location").style.color = "red";
+    }
+}
+
+function populateCities(event) //Populate the city list
+{
+    var province = event.currentTarget.value;
+    var selection = document.getElementById("city");
+    var i;
+    var city_stateArr;
+    var city_states = Object();
+
+    //Add the available cities
+    city_states["Alberta"] = "|Calgary|Edmonton|Medicine Hat";
+    city_states["British Columbia"] = "|Abbotsford|Burnaby|Coquitlam|Kelowna|Langley|North Vancouver |Richmond|Surrey|Vancouver";
+    city_states["Manitoba"] = "|Brandon|Steinbach|Thompson|Winnipeg";
+    city_states["New Brunswick"] = "|Dieppe|Fredericton|Moncton|Saint John";
+    city_states["Newfoundland/Labrador"] = "|Corner Brook|Conception Bay South|Mount Pearl|Paradise|St.John's";
+    city_states["Nova Scotia"] = "|Amherst|Cape Breton|Halifax|Turo";
+    city_states["Northwest Territories"] = "|Inuvik|Yellowknife";
+    city_states["Nunavut"] = "|Iqaluit";
+    city_states["Ontario"] = "|Brampton|Hamilton|London|Mississauga|Ottawa|Toronto";
+    city_states["Prince Edward Island"] = "|Charlottetown|Summerside";
+    city_states["Quebec"] = "|Gatineua|Laval|Longueuil|Quebec|Montreal";
+    city_states["Saskatchewan"] = "|Moose Jaw|Regina|Saskatoon";
+    city_states["Yukon"] = "|Whitehorse";
+
+    if (province != "00" && province != "" && province.length != 0) //Valid
+    {
+        for (i = selection.options.length - 1; i >= 0; i--) //Empty the city list
+        {
+            selection.remove(i);
+        }
+
+        selection.options[selection.options.length] = new Option("City", "00");
+        city_stateArr = city_states[province].split("|");
+
+        for (var i = 1; i <= city_stateArr.length; i++) //Fill the city list
+        {
+            if (city_stateArr[i] !== "" || city_stateArr[i].length != 00)
+            {
+                selection.options[i] = new Option(city_stateArr[i], city_stateArr[i]);
             }
         }
     }
 }
 
+function validatePassword(event) //Validate the password
+{
+    var form = event.currentTarget.id;
+    var label = "label-" + form;
+    var password = event.currentTarget;
+
+    //Set the label back to black
+    document.getElementById(label).style.color = "#000";
+
+    if (password.value == "" || password.value.length == 0) //Invalid
+    {
+        document.getElementById(label).style.color = "red";
+    }
+}
+
+//User Views
+function populateStylists() //Populate the stylist list
+{
+    var id = -1; //Stores the ID of the selected location
+    var popupWindow = document.getElementById("selectStylistGrid");
+
+    for (i = 0; i < locations.length && id == -1; i++) //Loop through the locations and find the selected location's ID
+    {
+        if (locations[i].address == document.getElementById("selectLocation").value)
+        {
+            id = locations[i].id;
+        }
+    }
+
+    popupWindow.innerHTML = ""; //Empty the existing stylists
+
+    //Set up the data to send
+    var loc =
+        {
+            location: id
+        };
+
+    if (id > -1) //The selected location is valid
+    {
+        //Get the stylists for the specified location
+        $.post("/salon/stylists", loc,
+            function(data)
+            {
+                stylists = data; //Update the stylists array
+
+                for (i = 0; i < data.length; i++)
+                {
+                    var stylistAvatarSRC = "/uploads/" + data[i].image;
+
+                    var newLi = document.createElement("li");
+
+                    var newDiv = document.createElement("div");
+                    newDiv.className = "employeeInfo";
+                    newDiv.id = data[i].firstName;
+
+                    //Stylist image
+                    var newImg = document.createElement("img");
+                    newImg.id = "employeeProfilePic";
+                    newImg.className = "employeeProfile";
+                    newImg.src = stylistAvatarSRC; //CHANGE
+                    newImg.alt = "Stylist Image";
+
+                    //Stylist name
+                    var newP = document.createElement("p");
+                    newP.id = "employeeName";
+                    newP.className = "employeeName";
+
+                    var newPText = document.createTextNode(data[i].firstName);
+                    newP.appendChild(newPText);
+
+                    //Insert the image and name into the div
+                    newDiv.appendChild(newImg);
+                    newDiv.appendChild(newP);
+
+                    //Insert the div into li and into the popup
+                    newLi.appendChild(newDiv);
+                    popupWindow.appendChild(newLi);
+                }
+
+                stylistListeners(); //Add listeners to the new stylists
+            },
+            "json"
+        );
+    }
+}
+
+function populateServices(event) //Populate the service list
+{
+    var list = document.getElementById("selectHairstyle");
+
+    //Get the services
+    $.post("/salon/services",
+        function(data)
+        {
+            services = data; //Update the service array
+
+            for (i = 0; i < data.length; i++) //Loop through the services and add each one to the list
+            {
+                var opt = document.createElement("option");
+
+                opt.value = data[i].service;
+                opt.innerHTML = data[i].service;
+                list.appendChild(opt);
+            }
+        },
+        "json"
+    );
+}
+
+function populateLocations(event) //Populate the location list
+{
+    var list = document.getElementById("selectLocation");
+
+    //Get the locations
+    $.post("/salon/locations", function(data)
+        {
+            locations = data; //Update the location array
+
+            for (i = 0; i < data.length; i++) //Loop through the locations and add each one to the list
+            {
+                var opt = document.createElement("option");
+
+                opt.value = data[i].address;
+                opt.innerHTML = data[i].address;
+                list.appendChild(opt);
+            }
+        },
+        "json"
+    );
+}
+
+function updateCustomerCalendar(event) //Update the customer calendar
+{
+    var test = true;
+    var hairstyle = document.getElementById("selectHairstyle");
+    var location = document.getElementById("selectLocation");
+    var stylist = document.getElementById("selectedHairstylist");
+    var request = document.getElementById("specialRequest").value;
+    var file = document.getElementById("appointmentPic");
+
+    //Reset the selections
+    selectedService = -1;
+    selectedLocation = -1;
+    selectedStylist = -1;
+
+    //Set all labels to grey
+    document.getElementById("label-selectHairstyle").style.color = "";
+    document.getElementById("label-selectLocation").style.color = "";
+    document.getElementById("label-selectStylist").style.color = "";
+    document.getElementById("label-specialRequest").style.color = "";
+    document.getElementById("label-appointmentUpload").style.color = "";
+
+    //Determine which service was selected
+    for (i = 0; i < services.length && selectedService == -1; i++)
+    {
+        if (services[i].service == hairstyle.value)
+        {
+            selectedService = i;
+        }
+    }
+
+    //Determine which location was selected
+    for (i = 0; i < locations.length && selectedLocation == -1; i++)
+    {
+        if (locations[i].address == location.value)
+        {
+            selectedLocation = i;
+        }
+    }
+
+    //Determine which stylist was selected
+    if (stylists != null)
+    {
+        for (i = 0; i < stylists.length && selectedStylist == -1; i++)
+        {
+            if (stylists[i].firstName == stylist.innerHTML)
+            {
+                selectedStylist = i;
+            }
+        }
+    }
+
+    if (hairstyle.value == "Please Select" || selectedService == -1) //Invalid
+    {
+        document.getElementById("label-selectHairstyle").style.color = "red";
+        test = false;
+    }
+
+    if (location.value == "Please Select" || !selectedLocation == -1) //Invalid
+    {
+        document.getElementById("label-selectLocation").style.color = "red";
+        test = false;
+    }
+
+    if (stylist.innerHTML == "(Please select)" || !selectedStylist == -1) //Invalid
+    {
+        document.getElementById("label-selectStylist").style.color = "red";
+        test = false;
+    }
+
+    if (request.length > 256) //Invalid
+    {
+        document.getElementById("label-specialRequest").style.color = "red";
+        test = false;
+    }
+
+    if (file.files.length == 0) //No file
+    {
+        fileUploaded = false;
+    }
+    else //File
+    {
+        var extensions = new Array("jpg", "jpeg", "png");
+        var validExtension = false;
+        var extension = file.files[0].name.split(".").pop().toLowerCase();
+
+        fileUploaded = true;
+
+        for (var i = 0; i < extensions.length && !validExtension; i++) //Validate the file extension
+        {
+            if (extensions[i] == extension)
+            {
+                validExtension = true;
+            }
+        }
+
+        if (file.files[0].size > 1000000 || !validExtension) //Invalid
+        {
+            document.getElementById("label-appointmentUpload").style.color = "red";
+            fileUploaded = false
+            test = false;
+        }
+    }
+
+    if (test) //Valid
+    {
+        //New event source
+        var source =
+            {
+                url: "/salon/unavailable",
+                data:
+                {
+                    location: locations[selectedLocation].id,
+                    stylist: stylists[selectedStylist].id
+                }
+            };
+
+        $("#calendar").fullCalendar("changeView", "month"); //Change the calendar to the month view
+        $("#calendar").fullCalendar("removeEventSources"); //Remove all old event sources
+        $("#calendar").fullCalendar("addEventSource", source); //Add the new event source
+
+        enabled = true; //Enable the calendar
+
+        swal("Calendar Updated!", "You can now choose a date and\ntime for your appointment!", "success"); //Alert the user that the calendar is enabled
+    }
+    else //Invalid
+    {
+        swal("Whoops!", "Please double check your\nappointment details!", "warning"); //Alert the user to fix their details
+    }
+
+}
+
+function updateStylistCalendar(event) //Update the stylist calendar
+{
+    var test = true;
+    var hairstyle = document.getElementById("selectHairstyle");
+    var request = document.getElementById("specialRequest").value;
+
+    selectedService = -1; //Reset the selected service
+
+    //Set all labels to grey
+    document.getElementById("label-selectHairstyle").style.color = "";
+    document.getElementById("label-specialRequest").style.color = "";
+
+    //Determine which service was selected
+    for (i = 0; i < services.length && selectedService == -1; i++)
+    {
+        if (services[i].service == hairstyle.value)
+        {
+            selectedService = i;
+        }
+    }
+
+    if (hairstyle.value == "Please Select" || selectedService == -1) //Invalid
+    {
+        document.getElementById("label-selectHairstyle").style.color = "red";
+        test = false;
+    }
+
+    if (request.length > 256) //Invalid
+    {
+        document.getElementById("label-specialRequest").style.color = "red";
+        test = false;
+    }
+
+    if (test) //Valid
+    {
+        $("#calendar").fullCalendar("refetchEvents");
+        enabled = true;
+
+        swal("Calendar Updated!", "You can now choose a date and\ntime for your appointment.", "success");
+    }
+    else
+    {
+        swal("Whoops!", "Please finish filling in your\nappointment details.", "warning");
+    }
+}
+
+function verifyHairstyle(event) //Verify the hairstyle
+{
+    var hairstyle = document.getElementById("selectHairstyle");
+
+    enabled = false; //Disable the calendar
+
+    //Set the label to grey
+    document.getElementById("label-selectHairstyle").style.color = "";
+
+    if (hairstyle.value == "Please Select") //Invalid
+    {
+        document.getElementById("label-selectHairstyle").style.color = "red";
+    }
+}
+
+function verifyLocation(event) //Verify the location
+{
+    var location = document.getElementById("selectLocation");
+
+    enabled = false; //Disable the calendar
+
+    //Set the label to grey
+    document.getElementById("label-selectLocation").style.color = "";
+
+    if (location.value == "Please Select")
+    {
+        document.getElementById("label-selectLocation").style.color = "red";
+    }
+    else
+    {
+        populateStylists(); //Populate the stylist list
+    }
+}
+
+function verifyStylist(event) //Verify the stylist
+{
+    var stylist = document.getElementById("selectedHairstylist");
+
+    enabled = false; //Disable the calendar
+
+    //Set the label to grey
+    document.getElementById("label-selectStylist").style.color = "";
+
+    if (stylist.innerHTML == "(Please select)")
+    {
+        document.getElementById("label-selectStylist").style.color = "red";
+    }
+}
+
+function verifyDetails(event) //Verify the details
+{
+    var request = event.currentTarget.value;
+
+    //Set the label back to grey
+    document.getElementById("label-specialRequest").style.color = "";
+
+    if (request.length > 256) //Invalid
+    {
+        document.getElementById("label-specialRequest").style.color = "red";
+    }
+}
+
+function closeEvent(event) //Close the event
+{
+    var modal = document.getElementById("eventPopup");
+
+    //Reset the selected event and close the event popup
+    selectedEvent = -1;
+    modal.style.display = "none";
+}
+
+function closeEventMeeting(event) //Close the meeting event
+{
+    var modal = document.getElementById("eventPopupMeeting");
+
+    //Reset the selected event and close the meeting event popup
+    selectedEvent = -1;
+    modal.style.display = "none";
+}
+
+function cancelEvent(event) //Cancel an appointment event
+{
+    if (selectedEvent > -1)
+    {
+        //Set up the data to send
+        var cancel =
+            {
+                appointment: selectedEvent
+            };
+
+        //Cancel the appointment
+        $.post("/salon/cancel", cancel,
+            function(data)
+            {
+                if (data.success) //The appointment was cancelled
+                {
+                    swal("Appointment Cancelled!", "You appointment has been cancelled!", "success"); //Alert the user
+                }
+                else //The appointment was not cancelled
+                {
+                    swal("Appointment Not Cancelled!", "You appointment could not be cancelled!", "error"); //Alert the user
+                }
+
+                $("#calendar").fullCalendar("refetchEvents"); //Refetch the calendar events
+            },
+            "json"
+        );
+    }
+
+    closeEvent(event); //Close the cancelled event
+}
+
+function cancelMeeting(event) //Cancel a meeting event
+{
+    if (selectedEvent > -1)
+    {
+        //Set up the data to send
+        var cancel =
+            {
+                appointment: selectedEvent
+            };
+
+        //Cancel the meeting
+        $.post("/salon/cancel", cancel,
+            function(data)
+            {
+                if (data.success) //The meeting was cancelled
+                {
+                    swal("Meeting Cancelled!", "Your meeting has been cancelled!", "success"); //Alert the user
+                }
+                else //The meeting was not cancelled
+                {
+                    swal("Meeting Not Cancelled!", "Your meeting could not be cancelled!", "error"); //Alert the user
+                }
+
+                $("#calendar").fullCalendar("refetchEvents"); //Refetch the calendar events
+            },
+            "json"
+        );
+    }
+
+    closeEventMeeting(event); //Close the cancelled event
+}
+
+//--------------------- EVERYTHING BEYOND THIS POINT IS UNTOUCHED ---------------------//
+
 function createStylistAccount(event)
 {
     var test = true;
-    //*****First Name **************//
 
+    //First Name
     var first = document.getElementById("firstName").value;
 
-    if (first === "" || first.length === 0) //checks if empty
+    if (first === "" || first.length === 0) //Checks if empty
     {
         document.getElementById("label-firstName").style.color = "red";
         event.preventDefault();
@@ -349,10 +823,10 @@ function createStylistAccount(event)
         document.getElementById("label-firstName").style.fontSize = "12px";
     }
 
-    //*****Last Name **************//
+    //Last Name
     var last = document.getElementById("lastName").value;
 
-    if (last === "" || last.length === 0) //checks if empty
+    if (last === "" || last.length === 0) //Checks if empty
     {
         document.getElementById("label-lastName").style.color = "red";
         event.preventDefault();
@@ -376,7 +850,8 @@ function createStylistAccount(event)
         document.getElementById("label-lastName").innerHTML = "Last Name*";
         document.getElementById("label-lastName").style.color = "#000";
     }
-    //*****Birthdate **************//
+
+    //Birthdate
     var month = document.getElementById("months").value;
     var day = document.getElementById("days").value;
     var year = document.getElementById("years").value;
@@ -432,8 +907,8 @@ function createStylistAccount(event)
             test = false;
         }
     }
-    //*****Email **************//
 
+    //Email
     var email = document.getElementById("email").value;
     var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
     if (email === "" || email.length === 0) //checks if empty
@@ -473,7 +948,7 @@ function createStylistAccount(event)
         document.getElementById("label-email").style.color = "#000";
     }
 
-    //*****Country **************//
+    //Country
     var country = document.getElementById("country").value;
     if (country === "00" || country === "") //checks if empty
     {
@@ -482,16 +957,18 @@ function createStylistAccount(event)
         event.preventDefault();
         test = false;
     }
-    //*****Reigon **************//
-    var reigon = document.getElementById("province").value;
-    if (reigon === "00" || reigon === "") //checks if empty
+
+    //Province
+    var province = document.getElementById("province").value;
+    if (province === "00" || province === "") //checks if empty
     {
         document.getElementById("label-location").innerHTML = "Please enter your province";
         document.getElementById("label-location").style.color = "red";
         event.preventDefault();
         test = false;
     }
-    //*****City **************//
+
+    //City
     var city = document.getElementById("city").value;
     if (city === "00" || city === "" || city.length === 0) //checks if empty
     {
@@ -500,7 +977,8 @@ function createStylistAccount(event)
         event.preventDefault();
         test = false;
     }
-    //*****Salon **************//
+
+    //Salon
     var salon = document.getElementById("salon").value;
     if (salon === "00" || salon === "" || salon.length === 0) //checks if empty
     {
@@ -511,232 +989,13 @@ function createStylistAccount(event)
     }
 }
 
-function validateFirstName(event)
-{
-    var form = event.currentTarget.id;
-    var name = "invalid-" + form;
-    var label = "label-" + form;
-    var first = event.currentTarget.value;
-    
-    document.getElementById(label).style.color = "#000";
-    
-    if (first == "" || first.length < 2 || first.length > 50) //Checks if too short/long
-    {
-        document.getElementById(label).style.color = "red";
-        //event.preventDefault();
-    }
-    else
-    {
-        event.currentTarget.className = ("sminputs"); //If fixed applies old style
-        //document.getElementById(name).innerHTML = "";
-    }
-}
-
-function validateLastName(event)
-{
-    var form = event.currentTarget.id;
-    var name = "invalid-" + form;
-    var label = "label-" + form;
-    var last = event.currentTarget.value;
-    
-    document.getElementById(label).style.color = "#000";
-    
-    if (last == "" || last.length < 2 || last.length > 50) //Checks if too short/long
-    {
-        document.getElementById(label).style.color = "red";
-        event.preventDefault();
-    }
-    else
-    {
-        event.currentTarget.className = ("sminputs"); //if fixed applies old style
-        //document.getElementById(name).innerHTML = "";
-    }
-}
-    
-function validateMonth(event)
-{
-    var form = event.currentTarget.id;
-    var name = "invalid-" + form.name;
-    var label = "label-" + form;
-    var month = event.currentTarget.value;
-    
-    //document.getElementById("label-birthdate").style.color = "#000";
-    
-    if (month == "00") //Checks if empty
-    {
-        document.getElementById("label-birthdate").style.color = "red";
-        //document.getElementById(name).innerHTML = "Please enter your birth month";
-        //event.preventDefault();
-    }
-    else
-    {
-        event.currentTarget.className = ("sminputs"); //if fixed applies old style
-        //document.getElementById(name).innerHTML = "";
-    }
-}
-
-function validateDay(event)
-{
-    var form = this;
-    var name = "invalid-" + form.name;
-    var day = event.currentTarget.value;
-    
-    //document.getElementById("label-birthdate").style.color = "#000";
-    
-    if (day == "00") //Checks if empty
-    {
-        document.getElementById("label-birthdate").style.color = "red";
-        //document.getElementById(name).innerHTML = "Please enter your birth day";
-        //event.preventDefault();
-    }
-    else
-    {
-        //event.currentTarget.className = ("sminputs"); //If fixed applies old style
-        //document.getElementById(name).innerHTML = "";
-    }
-}
-
-function validateYear(event)
-{
-    var form = event.currentTarget.id;
-    var name = "invalid-" + form.name;
-    var label = "label-" + form;
-    var year = event.currentTarget.value;
-    
-    document.getElementById("label-birthdate").style.color = "#000";
-    
-    if (year === "00" || year > 1998) //Checks if empty
-    {
-        document.getElementById("label-birthdate").style.color = "red";
-        //event.preventDefault();
-    }
-    else
-    {
-        event.currentTarget.className = ("sminputs"); //if fixed applies old style
-        //document.getElementById(name).innerHTML = "";
-    }
-}
-
-function validateEmail(event)
-{
-    var email = event.currentTarget.value;
-    var label = "label-" + event.currentTarget.id;
-    var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
-    
-    document.getElementById(label).style.color = "#000";
-    
-    if (email === "" || email.length === 0 || email.length > 256 || !email.match(emailpat)) //Checks if too short/long or invalid
-    {
-        document.getElementById(label).style.color = "red";
-        //event.preventDefault();
-    }
-    else
-    {
-        event.currentTarget.className =("sminputs");  //if fixed applies old style
-        //document.getElementById("invalid-email").innerHTML = "";
-    }
-}
-
-function validateCountry(event)
-{
-    var form = this;
-    var name = "invalid-" + form.name;
-    var country = event.currentTarget.value;
-    var select = document.getElementById("reigon");
-    var i;
-    var city_stateArr;
-
-    document.getElementById("label-location").style.color = "#000";
-    
-    if (country == "00") //checks if empty
-    {
-        //document.getElementById("invalid-location").style.color = "red";
-        document.getElementById("label-location").style.color = "red";
-        //event.preventDefault();
-    }
-    else
-    {
-        event.currentTarget.className = ("sminputs"); //if fixed applies old style
-        //document.getElementById(name).innerHTML = "";
-    }
-}
-
-function validateReigon(event) //Province
-{
-    var reigon = event.currentTarget.value;
-    var country = event.currentTarget.value;
-    var select = document.getElementById("city");
-    var i;
-    var city_stateArr;
-    
-    document.getElementById("label-location").style.color = "#000";
-    
-    if (reigon == "" || reigon.length == 0 || reigon == "00") //checks if empty
-    {
-        //document.getElementById("invalid-location").style.color = "red";
-        document.getElementById("label-location").style.color = "red";
-    }
-    else
-    {
-        for (i = select.options.length - 1; i >= 0; i--) //Removes everything currently in city list
-        {
-            select.remove(i);
-        }
-
-        select.options[select.options.length] = new Option("City", "00");
-        city_stateArr = city_states[country].split("|");
-
-        for (var i = 1; i <= city_stateArr.length; i++) //adds new cities based on selection
-        {
-            if (city_stateArr[i] !== "" || city_stateArr[i].length != 00)
-            {
-                select.options[i] = new Option(city_stateArr[i], city_stateArr[i]);
-            }
-        }
-        
-        document.getElementById("city").addEventListener("blur", validateCity);
-    }
-}
-
-
-function validateCity(event)
-{
-    var city = event.currentTarget.value;
-    
-    document.getElementById("label-location").style.color = "#000";
-    
-    if (city === "" || city.length === 0) //checks if empty
-    {
-        document.getElementById("label-location").style.color = "red";
-        //event.preventDefault();
-    }
-    else
-    {
-        //document.getElementById("label-location").innerHTML = "Location*";
-    }
-}
-
-function validateSalon(event)
-{
-    var salon = event.currentTarget.value;
-    if (salon === "" || salon.length === 0) //checks if empty
-    {
-        document.getElementById("invalid-locaton").style.color = "red";
-        event.preventDefault();
-    }
-    else
-    {
-        document.getElementById("invalid-location").innerHTML = "";
-    }
-}
-
 function scorePassword(pass)
 {
     var score = 0;
     if (!pass)
         return score;
 
-    // award every unique letter until 5 repetitions
+    //Award every unique letter until 5 repetitions
     var letters = new Object();
     for (var i = 0; i < pass.length; i++)
     {
@@ -744,7 +1003,7 @@ function scorePassword(pass)
         score += 5.0 / letters[pass[i]];
     }
 
-    // bonus points for mixing it up
+    //Bonus points for mixing it up
     var variations = {
         digits: /\d/.test(pass),
         lower: /[a-z]/.test(pass),
@@ -799,35 +1058,24 @@ function passwordStrength(event)
         warning.innerHTML = "";
         warning.innerHTML = "Very Weak";
     }
+
     return "";
 }
 
-function validatePassword(event)
+function validateSalon(event)
 {
-    var form = event.currentTarget.id;
-    var name = "invalid-" + form;
-    var label = "label-" + form;
-    var password = event.currentTarget;
-    
-    document.getElementById(label).style.color = "#000";
-    
-    if (password.value == "" || password.value.length == 0) //checks if empty
+    var salon = event.currentTarget.value;
+
+    if (salon == "00" || salon == "" || salon.length == 0) //Invalid
     {
-        document.getElementById(label).style.color = "red";
-        //event.preventDefault();
-    }
-    else
-    {
-        //document.getElementById(label).innerHTML = "Password*";
-        //document.getElementById("label-password").style.fontSize = "12px";
+        document.getElementById("invalid-locaton").style.color = "red";
     }
 }
-/**********************For Settings Pages**************/
-/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-function submitEmail(event) //manager, customer, and employee settings
-{
-    //*****Email **************//
 
+//Settings Views
+function submitEmail(event) //Manager, customer, and employee settings
+{
+    //Email
     var email = document.getElementById("email").value;
     var emailpat = /^(([a-zA-Z]|[0-9])|([-]|[_]|[.]))+[@](([a-zA-Z0-9])|([-])){2,63}[.](([a-zA-Z0-9]){2,63})+$/;
     if (email === "" || email.length === 0) //checks if empty
@@ -865,10 +1113,9 @@ function submitEmail(event) //manager, customer, and employee settings
     }
 }
 
-function submitPassword(event) //manager, customer, and employee settings
+function submitPassword(event) //Manager, customer, and employee settings
 {
-    //*****Passwords  **************//
-
+    //Passwords
     var password = document.getElementById("password").value;
     if (password === "" || password.length === 0) //checks if empty
     {
@@ -925,9 +1172,9 @@ function submitPassword(event) //manager, customer, and employee settings
     }
 }
 
-function submitLocation(event) //manager settings
+function submitLocation(event) //Manager settings
 {
-    //*****Country **************//
+    //Country
     var country = document.getElementById("country").value;
     if (country === "00" || country === "") //checks if empty
     {
@@ -936,16 +1183,18 @@ function submitLocation(event) //manager settings
         event.preventDefault();
         test = false;
     }
-    //*****Reigon **************//
-    var reigon = document.getElementById("province").value;
-    if (reigon === "00" || reigon === "") //checks if empty
+
+    //Province
+    var province = document.getElementById("province").value;
+    if (province === "00" || province === "") //checks if empty
     {
         document.getElementById("label-location").innerHTML = "Please enter your province";
         document.getElementById("label-location").style.color = "red";
         event.preventDefault();
         test = false;
     }
-    //*****City **************//
+
+    //City
     var city = document.getElementById("city").value;
     if (city === "00" || city === "" || city.length === 0) //checks if empty
     {
@@ -954,7 +1203,8 @@ function submitLocation(event) //manager settings
         event.preventDefault();
         test = false;
     }
-    //*****Salon **************//
+
+    //Salon
     var salon = document.getElementById("salon").value;
     if (salon === "00" || salon === "" || salon.length === 0) //checks if empty
     {
@@ -965,9 +1215,9 @@ function submitLocation(event) //manager settings
     }
 }
 
-function submitCustomerLocation(event) //customer settings
+function submitCustomerLocation(event) //Customer settings
 {
-    //*****Country **************//
+    //Country
     var country = document.getElementById("country").value;
     if (country === "00" || country === "") //checks if empty
     {
@@ -976,16 +1226,16 @@ function submitCustomerLocation(event) //customer settings
         event.preventDefault();
         test = false;
     }
-    //*****Reigon **************//
-    var reigon = document.getElementById("province").value;
-    if (reigon === "00" || reigon === "") //checks if empty
+    //Province
+    var province = document.getElementById("province").value;
+    if (province === "00" || province === "") //checks if empty
     {
         document.getElementById("label-location").innerHTML = "Please enter your province";
         document.getElementById("label-location").style.color = "red";
         event.preventDefault();
         test = false;
     }
-    //*****City **************//
+    //City
     var city = document.getElementById("city").value;
     if (city === "00" || city === "" || city.length === 0) //checks if empty
     {
@@ -996,13 +1246,12 @@ function submitCustomerLocation(event) //customer settings
     }
 }
 
-function deleteStylist(event) //manager settings
+function deleteStylist(event) //Manager settings
 {
     var account = document.getElementById("stylistAccounts").value;
 
     if (account != "00")
     {
-
         var modal = document.getElementById("popup");
 
         modal.style.display = "block";
@@ -1041,7 +1290,7 @@ function deleteStylist(event) //manager settings
     }
 }
 
-function deleteAccount(event) //both manager settings and customer settings
+function deleteAccount(event) //Both manager settings and customer settings
 {
     var modal = document.getElementById("popup");
     modal.style.display = "block";
@@ -1072,10 +1321,8 @@ function deleteAccount(event) //both manager settings and customer settings
     document.getElementById("cancelDeletion").addEventListener("click", closeEditProfilePic);
 }
 
-
-/**********************For Home Calendar Page**************/
-/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-function addAppointment(event)
+//Home Calendar View
+function addAppointment(event) //WHAT IS THIS FOR?
 {
     var first = document.getElementById("appointmentName").value; //for appointment name
 
@@ -1137,331 +1384,6 @@ function addAppointment(event)
         document.getElementById("label-end").innerHTML = "End Date";
         document.getElementById("label-end").style.color = "#000";
     }
-
-    /**********SEND DATE TO BACKEND********************************/ //
-    /*********************************************************************
-     ****************************************************************/
-}
-
-/**********************For Customer View Page**************/
-/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-function populateStylists()
-{
-    /******* RETRIEVE STYLIST NAME FROM BACKEND *******/ //
-    
-    var id = 0;
-
-    for(i = 0; i < locations.length && id == 0; i++)
-    {
-        if(locations[i].address == document.getElementById("selectLocation").value)
-        {
-            id = locations[i].id;
-        }
-    }
-    
-    var popupWindow = document.getElementById("selectStylistGrid");
-    popupWindow.innerHTML = "";
-        
-    if(id)
-    {
-        // get the ul element
-        
-        $.post("/system/stylists?loc=" + id, function(data)
-        {
-            stylists = data;
-            
-            for (i = 0; i < data.length; i++)
-            {
-               /* var opt = document.createElement("option");
-                opt.value = data[i].service;
-                opt.innerHTML = data[i].service;
-                select.appendChild(opt);
-                */
-                var stylistAvatarSRC = "/uploads/" + data[i].image;
-                
-                var newLi = document.createElement("li");
-
-                var newDiv = document.createElement("div");
-                newDiv.className = "employeeInfo";
-                newDiv.id = data[i].firstName;
-
-                // create stylist image
-                var newImg = document.createElement("img");
-                newImg.id = "employeeProfilePic";
-                newImg.className = "employeeProfile";
-                newImg.src = stylistAvatarSRC; //CHANGE
-                newImg.alt = "Stylist Image";
-
-                // create stylist name
-                var newP = document.createElement("p");
-                newP.id = "employeeName";
-                newP.className = "employeeName";
-                var newPText = document.createTextNode(data[i].firstName);
-                newP.appendChild(newPText);
-
-                // insert photo and name into div
-                newDiv.appendChild(newImg);
-                newDiv.appendChild(newP);
-
-                // now insert div into li and into popup
-                newLi.appendChild(newDiv);
-                popupWindow.appendChild(newLi);
-            }
-            
-            stylistListeners();
-        },
-        "json");
-    }
-}
-
-function populateServices(event)
-{
-    /******* RETRIEVE SERVICE FROM BACKEND *******/ //
-    var select = document.getElementById("selectHairstyle");
-
-    $.post("/system/services", function(data)
-        {
-            services = data;
-            
-            for (i = 0; i < data.length; i++)
-            {
-                var opt = document.createElement("option");
-                opt.value = data[i].service;
-                opt.innerHTML = data[i].service;
-                select.appendChild(opt);
-            }
-        },
-        "json");
-}
-
-function populateLocations(event)
-{
-    /******* RETRIEVE LOCATION FROM BACKEND *******/ //
-    var select = document.getElementById("selectLocation");
-
-    $.post("/system/locations", function(data)
-        {
-            locations = data;
-            
-            for (i = 0; i < data.length; i++)
-            {
-                var opt = document.createElement("option");
-                opt.value = data[i].address;
-                opt.innerHTML = data[i].address;
-                select.appendChild(opt);
-            }
-        },
-        "json");
-}
-
-function addCustomerAppointment(event)
-{
-    var hairstyle = document.getElementById("selectHairstyle");
-    var location = document.getElementById("selectLocation");
-    //var stylist = document.getElementById("selectHairstylistInput");
-    var stylist = document.getElementById("selectedHairstylist");
-    var request = document.getElementById("specialRequest").value;
-    var file = document.getElementById("appointmentPic");
-    
-    selectedService = 0;
-    selectedLocation = 0;
-    selectedStylist = 0;
-    
-    for(i = 0; i < services.length && selectedService == 0; i++)
-    {
-        if(services[i].service == hairstyle.value)
-        {
-            selectedService = i;
-        }
-    }
-    
-    for(i = 0; i < locations.length && selectedLocation == 0; i++)
-    {
-        if(locations[i].address == location.value)
-        {
-            selectedLocation = i;
-        }
-    }
-    
-    if(stylists != null)
-    {
-        for(i = 0; i < stylists.length && selectedStylist == 0; i++)
-        {
-            if(stylists[i].firstName == stylist.innerHTML)
-            {
-                selectedStylist = i;
-            }
-        }
-    }
-
-    var test = true;
-
-    if (hairstyle.value == "Please Select")
-    {
-        document.getElementById("label-selectHairstyle").style.color = "red";
-        test = false;
-    }
-    else
-    {
-        document.getElementById("label-selectHairstyle").style.color = "";
-    }
-
-    if (location.value == "Please Select")
-    {
-        document.getElementById("label-selectLocation").style.color = "red";
-        test = false;
-    }
-    else
-    {
-        document.getElementById("label-selectLocation").style.color = "";
-    }
-
-    if (stylist.innerHTML == "(Please select)")
-    {
-        document.getElementById("label-selectStylist").style.color = "red";
-        test = false;
-    }
-    else
-    {
-        document.getElementById("label-selectStylist").style.color = "";
-    }
-
-    if (request.length > 256)
-    {
-        requestLimitDifference = request.length - 256;
-        document.getElementById("label-specialRequest").style.color = "red";
-
-        /*
-        document.getElementById("label-specialRequest").innerHTML = "Over limit by " + requestLimitDifference;
-        if(requestLimitDifference === 1)
-        {
-            document.getElementById("label-specialRequest").innerHTML = document.getElementById("label-specialRequest").innerHTML + " character";
-        }
-        else
-        {
-            document.getElementById("label-specialRequest").innerHTML = document.getElementById("label-specialRequest").innerHTML + " characters";
-        }
-        */
-        test = false;
-    }
-    else
-    {
-        document.getElementById("label-specialRequest").style.color = "";
-        document.getElementById("label-specialRequest").innerHTML = "Special Request(s)";
-    }
-    
-    if(file.files.length == 0)
-    {
-        //console.log("NO FILE");
-        document.getElementById("label-appointmentUpload").style.color = "";
-        fileUploaded = false;
-    }
-    else
-    {
-        var extensions = new Array("jpg","jpeg","png");
-        var validExtension = false;
-        var extension = file.files[0].name.split('.').pop();
-        
-        for(var i = 0; i < extensions.length && !validExtension; i++)
-        {
-            if(extensions[i]==extension)
-            {
-                validExtension = true;
-            }
-        }
-            
-        if(file.files[0].size > 1000000 || !validExtension)
-        {
-            document.getElementById("label-appointmentUpload").style.color = "red";
-            fileUploaded = false
-            test = false;
-        }
-        else
-        {
-            document.getElementById("label-appointmentUpload").style.color = "";
-            fileUploaded = true;
-        }
-    }
-
-    if (test)
-    {
-        var source = {
-            url: '/system/appointments',
-            data:
-            {
-                location: locations[selectedLocation].id,
-                stylist: stylists[selectedStylist].id
-            }
-        };
-
-        $('#calendar').fullCalendar('removeEventSources');
-        $('#calendar').fullCalendar('addEventSource', source);
-        //$('#calendar').fullCalendar('option', 'slotDuration', '00:' + services[selectedService].minutes + ':00');
-        //console.log('00:' + services[selectedService].minutes + ':00');
-        enabled = true;
-        
-        swal("Calendar Updated!", "You can now choose a date and\ntime for your appointment.", "success");
-    }
-    else
-    {
-        swal("Whoops!", "Please finish filling in your\nappointment details.", "warning");
-    }
-
-
-    /**********SEND DATE TO BACKEND********************************/ //
-    /*********************************************************************
-     ****************************************************************/
-
-}
-
-function verifyHairstyle(event)
-{
-    var hairstyle = document.getElementById("selectHairstyle");
-    enabled = false;
-    //$('#calendar').fullCalendar('changeView', 'month');
-
-    if (hairstyle.value == "Please Select")
-    {
-        document.getElementById("label-selectHairstyle").style.color = "red";
-    }
-    else
-    {
-        document.getElementById("label-selectHairstyle").style.color = "";
-    }
-}
-
-function verifyLocation(event)
-{
-    var location = document.getElementById("selectLocation");
-    enabled = false;
-    //$('#calendar').fullCalendar('changeView', 'month');
-
-    if (location.value == "Please Select")
-    {
-        document.getElementById("label-selectLocation").style.color = "red";
-    }
-    else
-    {
-        document.getElementById("label-selectLocation").style.color = "";
-        populateStylists();
-    }
-}
-
-function verifyStylist(event)
-{
-    //var stylist = document.getElementById("selectHairstylistInput");
-    var stylist = document.getElementById("selectedHairstylist");
-    enabled = false;
-    //$('#calendar').fullCalendar('changeView', 'month');
-
-    if (stylist.innerHTML == "(Please select)")
-    {
-        document.getElementById("label-selectStylist").style.color = "red";
-    }
-    else
-    {
-        document.getElementById("label-selectStylist").style.color = "";
-    }
 }
 
 function openHairstylistWindow(event)
@@ -1502,69 +1424,7 @@ function closeSelectHairstylist(event)
     modal.style.display = "none";
 }
 
-function closeEvent(event)
-{
-    selectedEvent = 0;
-    var modal = document.getElementById("eventPopup");
-    modal.style.display = "none";
-}
-
-function cancelEvent(event)
-{
-    if(selectedEvent > 0)
-    {
-        var test = { appointment: selectedEvent };
-        
-        $.post('/system/cancel', test,
-        
-            function(data)
-            {
-                if (data.success)
-                {
-                    swal("Appointment Cancelled!", "You appointment has been cancelled!", "success");
-                }
-                else
-                {
-                    swal("Appointment Not Cancelled!", "You appointment couldn't be cancelled!", "error");
-                }
-                
-                $('#calendar').fullCalendar('refetchEvents');
-            },
-            'json'
-        );
-    }
-    
-    closeEvent(event);
-}
-
-function verifySpecialRequest(event)
-{
-    var request = event.target.value;
-
-    if (request.length > 256)
-    {
-        requestLimitDifference = request.length - 256;
-        document.getElementById("label-specialRequest").style.color = "red";
-        document.getElementById("label-specialRequest").innerHTML = "Over limit by " + requestLimitDifference;
-        if (requestLimitDifference === 1)
-        {
-            document.getElementById("label-specialRequest").innerHTML = document.getElementById("label-specialRequest").innerHTML + " character";
-        }
-        else
-        {
-            document.getElementById("label-specialRequest").innerHTML = document.getElementById("label-specialRequest").innerHTML + " characters";
-        }
-    }
-    else
-    {
-        document.getElementById("label-specialRequest").style.color = "";
-        document.getElementById("label-specialRequest").innerHTML = "Special Request(s)";
-    }
-}
-
-/**********************For Stylist Profile Page**************/
-/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
-
+//Stylist Profile View
 function swapProfileInfo(event)
 {
     var id = this.id;
@@ -1581,13 +1441,11 @@ function swapProfileInfo(event)
 function hoverProfilePic(event)
 {
     document.getElementById("editProfilePic").style.display = "block";
-
 }
 
 function offhoverProfilePic(event)
 {
     document.getElementById("editProfilePic").style.display = "none";
-
 }
 
 function editOverview(event)
@@ -1605,9 +1463,6 @@ function editOverview(event)
     y.setAttribute("Name", "textelement_overview");
     y.setAttribute("id", "textelement_overview");
     r.appendChild(y);
-
-
-
 
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
@@ -1635,12 +1490,6 @@ function editOverview(event)
 function closeEditOverview()
 {
     document.getElementById("overviewForm__wrapper").style.display = "none";
-
-    //NEED TO MAKE AJAX CALL TO GET INFO PREVIOUSLY WRITTEN 
-
-
-
-
 }
 
 function editEducation(event)
@@ -1659,7 +1508,6 @@ function editEducation(event)
     y.setAttribute("Name", "textelement_education");
     y.setAttribute("id", "textelement_education");
     r.appendChild(y);
-
 
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
@@ -1689,12 +1537,6 @@ function editEducation(event)
 function closeEditEducation()
 {
     document.getElementById("educationForm__wrapper").style.display = "none";
-
-    //NEED TO MAKE AJAX CALL TO GET INFO PREVIOUSLY WRITTEN 
-
-
-
-
 }
 
 function editGallery(event)
@@ -1710,8 +1552,6 @@ function editGallery(event)
     y.setAttribute("Name", "file_gallery");
     y.setAttribute("id", "file_gallery");
     r.appendChild(y);
-
-
 
     var z = document.createElement("BUTTON");
     z.setAttribute("type", "button");
@@ -1822,9 +1662,6 @@ function photoDelete(event)
     arr.style.display = "none";
     arr.src = "#";
     arr.href = "#";
-
-    //ADD JAVASCRIPT TO SEND SERVER WHICH PICTURE TO REMOVE FROM ACCOUNT
-
 }
 
 function closeEventPopup(event)

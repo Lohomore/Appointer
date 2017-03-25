@@ -24,13 +24,8 @@
     <script>
       var enabled = false; //Stores whether or not the calendar is clickable
       var transition = false; //Stores whether or not the calendar is transitioning between views
-      var fileUploaded = false; //Stores whether or not the user is uploading an image
       var services; //Stores an array of services
-      var locations; //Stores an array of locations
-      var stylists; //Stores an array stylists
       var selectedService = 0; //Stores the selected service
-      var selectedLocation = 0; //Stores the selected location
-      var selectedStylist = 0; //Stores the selected stylist
       var selectedEvent = 0; //Stores the selected event
 
       $(document).ready(function()
@@ -92,14 +87,10 @@
                                   end: end,
                                   service: services[selectedService].id,
                                   serviceName: services[selectedService].service,
-                                  stylist: stylists[selectedStylist].id,
-                                  stylistName: stylists[selectedStylist].firstName,
-                                  location: locations[selectedLocation].id,
-                                  locationName: locations[selectedLocation].address,
+                                  stylist: null,
+                                  stylistName: '',
                                   details: document.getElementById('specialRequest').value,
-                                  image: '',
-                                  minDate: String(moment.utc().add(1, 'day').startOf('day')),
-                                  maxDate: String(moment.utc().startOf('month').add(6, 'months').subtract(1, 'day').startOf('day'))
+                                  image: ''
                               };
 
                               var eventDataFormatted = eventData; //Copy the event data
@@ -110,86 +101,24 @@
 
                               if (!conflict(start, end, $('#calendar').fullCalendar('clientEvents'))) //There is no conflicting events
                               {
-                                  if (fileUploaded) //The user is uploading a file
-                                  {
-                                      var styleImage = document.getElementById('appointmentPic').files[0]; //Get the image to upload
-                                      var formData = new FormData(); //Create a FormData object
-
-                                      formData.append('file', styleImage); //Append the image to the FormData object
-
-                                      $.ajax( //Use AJAX to upload the file in the background
+                                  $.post('/salon/schedule', eventDataFormatted, //jQuery POST to schedule the appointment
+                                      function(data)
                                       {
-                                          url: '/core/upload',
-                                          data: formData,
-                                          type: 'POST',
-                                          contentType: false,
-                                          processData: false,
-                                          dataType: 'json',
-
-                                          success:
-                                              function(data) //The AJAX request was successful
-                                              {
-                                                  if (data.success) //The image was uploaded successfully
-                                                  {
-                                                      //Store the returned image name in both event data objects
-                                                      eventData.image = data.file;
-                                                      eventDataFormatted.image = data.file;
-
-                                                      $.post('/salon/schedule', eventDataFormatted, //jQuery POST to schedule the appointment
-                                                          function(data)
-                                                          {
-                                                              if (data.success) //Scheduling the appointment was successful
-                                                              {
-                                                                  $("#calendar").fullCalendar("refetchEvents"); //Refetch the events
-                                                                  swal('Appointment Booked!', 'Your appointment was succesfully booked!', 'success'); //Show a success alert
-
-                                                              }
-                                                              else //Scheduling the appointment was unsuccessful
-                                                              {
-                                                                  swal('Appointment Booking \nFailed!', 'Your appointment could not be booked!', 'error'); //Show an error alert
-                                                              }
-                                                          },
-                                                          'json'
-                                                      );
-                                                  }
-                                                  else //The image failed to upload
-                                                  {
-                                                      swal('Appointment Booking \nFailed!', 'Your appointment could not be booked!', 'error'); //Show an error alert
-                                                  }
-                                              },
-                                          fail:
-                                              function() //The AJAX request was successful
-                                              {
-                                                  swal('Appointment Booking \nFailed!', 'Your appointment could not be booked!', 'error'); //Show an error alert
-                                              }
-                                      });
-                                  }
-                                  else //The user isn't uploading a file
-                                  {
-                                      $.post('/salon/schedule', eventDataFormatted, //jQuery POST to schedule the appointment
-                                          function(data)
+                                          if (data.success) //Scheduling the appointment was successful
                                           {
-                                              if (data.success) //Scheduling the appointment was successful
-                                              {
-                                                  $("#calendar").fullCalendar("refetchEvents"); //Refetch the events
-                                                  swal('Appointment Booked!', 'Your appointment was succesfully booked!', 'success'); //Show a success alert
+                                              $("#calendar").fullCalendar("refetchEvents"); //Refetch the events
+                                              swal('Appointment Booked!', 'Your appointment was succesfully booked!', 'success'); //Show a success alert
 
-                                              }
-                                              else //Scheduling the appointment was unsuccessful
-                                              {
-                                                  if(data.message == null)
-                                                  {
-                                                      swal('Appointment Booking \nFailed!', 'Your appointment could not be booked!', 'error'); //Show an error alert
-                                                  }
-                                                  else
-                                                  {
-                                                      swal('Appointment Booking \nFailed!', data.message, 'error'); //Show an error alert
-                                                  }
-                                              }
-                                          },
-                                          'json'
-                                      );
-                                  }
+                                          }
+                                          else //Scheduling the appointment was unsuccessful
+                                          {
+                                              swal('Appointment Booking \nFailed!', 'Your appointment could not be booked!', 'error'); //Show an error alert
+                                          }
+
+                                          $('#calendar').fullCalendar('refetchEvents');
+                                      },
+                                      'json'
+                                  );
                               }
                               else //There is a conflicting event
                               {
@@ -244,27 +173,24 @@
 
               viewRender: function(currentView) //A view is being rendered
               {
-                  if(enabled && locations[selectedLocation].id > 0) //The calendar is enabled and a location is selected
-                  {
-                      $.post( '/salon/businessHours?location=' + locations[selectedLocation].id, //Get the business hours for the selected location
-                          function(data)
+                  $.post( '/salon/businessHours', //Get the business hours for the selected location
+                      function(data)
+                      {
+                          var curMin = $('#calendar').fullCalendar('option', 'minTime'); //Get the current minTime
+                          var curMax = $('#calendar').fullCalendar('option', 'maxTime'); //Get the current maxTime
+
+                          if(curMin != String(data.open + ':00:00')) //The new minTime is different
                           {
-                              var curMin = $('#calendar').fullCalendar('option', 'minTime'); //Get the current minTime
-                              var curMax = $('#calendar').fullCalendar('option', 'maxTime'); //Get the current maxTime
+                              $('#calendar').fullCalendar('option', 'minTime', String(data.open + ':00:00')); //Update the minTime
+                          }
 
-                              if(curMin != String(data.open + ':00:00')) //The new minTime is different
-                              {
-                                  $('#calendar').fullCalendar('option', 'minTime', String(data.open + ':00:00')); //Update the minTime
-                              }
-
-                              if(curMax != String(data.close + ':00:00')) //The new maxTime is different
-                              {
-                                  $('#calendar').fullCalendar('option', 'maxTime', String(data.close + ':00:00')); //Update the maxTime
-                              }
-                          },
-                          'json'
-                      );
-                  }
+                          if(curMax != String(data.close + ':00:00')) //The new maxTime is different
+                          {
+                              $('#calendar').fullCalendar('option', 'maxTime', String(data.close + ':00:00')); //Update the maxTime
+                          }
+                      },
+                      'json'
+                  );
 
                   //Create the minumum and maximum dates
                   var minDate = moment.utc().add(1, 'day').startOf('day'),
@@ -308,7 +234,7 @@
 
               eventClick: function(event, jsEvent, view) //Event clicked
               {
-                  if (event.color != '#BBB') //The event is not grey, so it can be clicked
+                  if (event.color != '#BBB' && event.color != '#008888') //The event is not grey, so it can be clicked
                   {
                       selectedEvent = event.id; //Set the selected event
 
@@ -356,9 +282,42 @@
                       {
                           gallery.innerHTML = '<span>NO IMAGE UPLOADED</span>';
                       }
-
                   }
-              },
+                  else if (event.color == '#008888')
+                  {
+                      selectedEvent = event.id; //Set the selected event
+
+                      //Generate the event window
+                      var modal = document.getElementById('eventPopupMeeting');
+                      modal.style.display = 'block';
+
+                      var eventTitle = document.getElementById('eventTitle2');
+                      eventTitle.innerHTML = event.title;
+
+                      var eventStart = document.getElementById('eventStart2');
+                      eventStart.innerHTML = 'Start Time: ' + event.start.format('MM/DD/YYYY hh:mma');
+
+                      var eventEnd = document.getElementById('eventEnd2');
+                      eventEnd.innerHTML = 'End Time: ' + event.end.format('MM/DD/YYYY hh:mma');
+
+                      var eventStylist = document.getElementById('eventStylist2');
+                      eventStylist.innerHTML = 'Manager: ' + event.stylistName;
+
+                      var eventLocation = document.getElementById('eventLocation2');
+                      eventLocation.innerHTML = 'Salon Location: ' + event.locationName;
+
+                      var eventDetails = document.getElementById('eventDetails2');
+
+                      if (event.details != '') //The event has details
+                      {
+                          eventDetails.innerHTML = 'Meeting Details: ' + event.details;
+                      }
+                      else //The event has no details
+                      {
+                          eventDetails.innerHTML = 'Meeting Details: NO DETAILS SPECIFIED';
+                      }
+                  }
+              }
           });
       });
     </script>
@@ -392,47 +351,6 @@
             </div>
           </div>
         </div>
-        <div class="sminputs">
-          <div class="input full">
-            <label class="string optional" for="user-name" id="label-selectLocation">Select a location</label>
-            <div class="styled-select2">
-              <select id="selectLocation">
-                <option value="Please Select">(Please select)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="sminputsLarge">
-          <div class="input full">
-            <label class="string optional" for="user-name" id="label-selectStylist">Select Stylist</label>
-            <!-- STYLIST WINDOW -->
-            <div id="popupStylist" class="popup__wrapper">
-              <!-- MODAL CONTENT -->
-              <div id="popup__content" class="popup__content">
-                <span class="close">&times;</span>
-                <p>Select a Hairstylist</p>
-                <span id="picForm__wrapper">
-                  <div id ="employee__wrapper" class="employee_wrapper">
-                    <div class="main">
-                      <ul id="selectStylistGrid" class="og-grid scrollable">
-                      </ul>
-                    </div>
-                    <!-- CONTAINER -->
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                  </div>
-                </span>
-                <br><br>
-              </div>
-            </div>
-            <button class="bookAppointmentButton" id="selectedHairstylist">(Please select)</button>
-          </div>
-        </div>
-        <div class="sminputs">
-          <div class="input full">
-            <label class="string optional" for="user-name" id="label-appointmentUpload">photo of desired hairstyle</label>
-            <input type="file" name="appointmentPic" id="appointmentPic">
-          </div>
-        </div>
         <div class="sminputsLarge">
           <div class="input full">
             <label class="string optional" for="user-name" id="label-specialRequest">Details</label>
@@ -440,7 +358,7 @@
           </div>
         </div>
         <div class="simform__actions">
-          <button class="sumbit" name="newAppointment" type="submit" id="newCustomerAppointment" value="Update">Update</button>
+          <button class="sumbit" name="newAppointment" type="submit" id="newStylistAppointment" value="Update">Update</button>
         </div>
       </div>
       <!-- END OF SIDE PANEL -->
@@ -470,7 +388,22 @@
         </div>
       </div>
     </div>
-    <script src="/pages/js/customer_view_handler.js"></script>
+    <!-- MEETING WINDOW -->
+    <div id="eventPopupMeeting" class="popup__wrapper">
+      <!-- MODAL CONTENT -->
+      <div id="eventPopupMeeting__content" class="popup__content">
+        <span class="close">&times;</span>
+        <div id="eventInfo2" class="eventInfo">
+          <div id="eventTitle2" class="eventTitle"></div>
+          <div id="eventStart2" class="eventEtc"></div>
+          <div id="eventEnd2" class="eventEtc"></div>
+          <div id="eventStylist2" class="eventEtc"></div>
+          <div id="eventLocation2" class="eventEtc"></div>
+          <div id="eventDetails2" class="eventEtc"></div>
+        </div>
+      </div>
+    </div>
+    <script src="/pages/js/stylist_view_handler.js"></script>
     <script src="/pages/js/grid.js"></script>
     <script>$(function(){ Grid.init(); });</script>
   </body>

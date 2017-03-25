@@ -1,86 +1,76 @@
 <?php
-if(!defined('ALLOW_ACCESS')) exit(header('Location: /'));
+if(!defined('ALLOW_ACCESS')) exit(header('Location: /')); //Only allow access to this file through the router
 
+/*
+    The Database class is a wrapper for PHP's PDO library and
+    provides a safer, easier to use databse interface by handling
+    errors and exceptions and by making connecting to and querying
+    the database more straightforward.
+*/
 class Database
 {
-	private $config, $database;
+	private $database; //Stores the database connection
 
-	public function __construct($config)
+	public function __construct($host, $port, $database, $username, $password) //Create a connection to the database
 	{
-        $this->config = $config;
-
-        try
+        try //Try to connect to the specified database and catch any exceptions
         {
-            $DSN = "mysql:host={$this->config['mysql']['host']};port={$this->config['mysql']['port']};dbname={$this->config['mysql']['database']};charset=utf8";
+            $DSN = "mysql:host={$host};port={$port};dbname={$database};charset=utf8"; //Set the connection string
+
+            //Set the PDO options
             $options = [
                         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                         PDO::ATTR_EMULATE_PREPARES   => false
                        ];
 
-            $this->database = new PDO($DSN, $this->config['mysql']['username'], $this->config['mysql']['password'], $options);
+            $this->database = new PDO($DSN, $username, $password, $options); //Attempt to connect to the database
         }
-        catch (PDOException $e)
+        catch (PDOException $e) //Catch any exceptions
         {
-            //echo 'MySQL database connection failed: ' . $e->getMessage();
-            echo 'MySQL database connection failed.';
-            exit();
+            exit(print('MySQL database connection failed.')); //Output an error message and kill the script
         }
 
 	}
 
-    public function query($sql, ...$params) //Change name
+    public function query($sql, ...$params) //Query the database
     {
-        try
+        try //Try to run the specified query with the specified paramters
         {
-            $query = $this->database->prepare($sql);
+            $query = $this->database->prepare($sql); //Prepare the SQL statement
 
-            foreach($params as $i => $value)
+            foreach($params as $i => $value) //Loop through the specified paramters
             {
-                $query->bindValue($i + 1, $value);
+                $query->bindValue($i + 1, $value); //Bind each parameter to the query
             }
 
-            $query->execute();
+            $query->execute(); //Attempt to execute the query
 
-            return $query;
+            return $query; //Return the result of the query
         }
-        catch (PDOException $e)
+        catch (PDOException $e) //Catch any exceptions
         {
-            //echo 'MySQL query failed.';
-            //exit();
-            return false;
+            return false; //Return false to signify a failed query
         }
     }
 
-    public function fetch($query)
+    public function fetch($query) //Fetch a row from a successful query
     {
-        if($query && $query->rowCount())
+        if($query && $query->rowCount()) //The query was successful and returned at least one row
         {
-            return $query->fetch();
+            return $query->fetch(); //Fetch and return a row
         }
 
-        return false;
+        return false; //Otherwise return false because the query was invalid or returned no rows
     }
 
-    public function rowCount($query)
+    public function rowCount($query) //Get the number of rows returned by a query
     {
-        if($query)
+        if($query) //The query was successful
         {
-            return $query->rowCount();
+            return $query->rowCount(); //Return the number of rows returned by the query
         }
 
-        return false;
+        return false; //Otherwise return false because the specified was invalid
     }
-
-    /*
-    public function closeCursor($query)
-    {
-        if($query)
-        {
-            return $query->closeCursor();
-        }
-
-        return false;
-    }
-    */
 }

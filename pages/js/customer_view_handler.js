@@ -1,12 +1,10 @@
-//window.addEventListener("load", populateStylists);
-//window.addEventListener("load", stylistListeners);
 window.addEventListener("load", populateServices);
 window.addEventListener("load", populateLocations);
-document.getElementById("newCustomerAppointment").addEventListener("click", addCustomerAppointment);
+document.getElementById("newCustomerAppointment").addEventListener("click", updateCustomerCalendar);
 document.getElementById("selectHairstyle").addEventListener("change", verifyHairstyle);
 document.getElementById("selectLocation").addEventListener("change", verifyLocation);
 document.getElementById("selectedHairstylist").addEventListener("click", openHairstylistWindow);
-document.getElementById("specialRequest").addEventListener("keyup", verifySpecialRequest);
+document.getElementById("specialRequest").addEventListener("keyup", verifyDetails);
 document.getElementsByClassName("close")[0].addEventListener("click",closeSelectHairstylist);
 document.getElementsByClassName("close")[0].addEventListener("click",verifyStylist);
 document.getElementsByClassName("close")[1].addEventListener("click",closeEvent);
