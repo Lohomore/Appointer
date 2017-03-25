@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2017 at 04:30 AM
+-- Generation Time: Mar 25, 2017 at 04:48 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
-  `user` int(11) DEFAULT NULL,
-  `stylist` int(11) DEFAULT NULL,
-  `location` int(11) DEFAULT NULL,
-  `service` varchar(32) NOT NULL,
-  `details` varchar(255) DEFAULT NULL,
+  `user` int(11) NOT NULL DEFAULT '0',
+  `stylist` int(11) NOT NULL DEFAULT '0',
+  `location` int(11) NOT NULL DEFAULT '0',
+  `service` varchar(32) NOT NULL DEFAULT '0',
+  `details` varchar(255) NOT NULL,
   `start` int(11) DEFAULT NULL,
   `end` int(11) DEFAULT NULL,
-  `title` varchar(128) NOT NULL,
+  `title` varchar(128) NOT NULL DEFAULT 'Appointment',
   `image` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -59,7 +59,7 @@ INSERT INTO `appointments` (`id`, `user`, `stylist`, `location`, `service`, `det
 
 CREATE TABLE `availability` (
   `id` int(11) NOT NULL,
-  `stylist` int(11) NOT NULL,
+  `stylist` int(11) NOT NULL DEFAULT '0',
   `sun` tinyint(1) NOT NULL DEFAULT '1',
   `mon` tinyint(1) NOT NULL DEFAULT '1',
   `tues` tinyint(1) NOT NULL DEFAULT '1',
@@ -85,7 +85,7 @@ INSERT INTO `availability` (`id`, `stylist`, `sun`, `mon`, `tues`, `wed`, `thurs
 
 CREATE TABLE `businesshours` (
   `id` int(11) NOT NULL,
-  `location` int(11) DEFAULT NULL,
+  `location` int(11) DEFAULT '0',
   `sun` tinyint(1) NOT NULL DEFAULT '1',
   `mon` tinyint(1) NOT NULL DEFAULT '1',
   `tues` tinyint(1) NOT NULL DEFAULT '1',
