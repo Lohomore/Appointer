@@ -375,7 +375,10 @@ function validatePassword(event) //Validate the password
 }
 
 //User Views
-function populateStylists() //Populate the stylist list
+/*This function is used on the customer view page to populate
+  the list of stylists when the customer selects their desired
+  branch location. */
+function populateStylists()
 {
     var id = -1; //Stores the ID of the selected location
     var popupWindow = document.getElementById("selectStylistGrid");
@@ -445,7 +448,9 @@ function populateStylists() //Populate the stylist list
     }
 }
 
-function populateServices(event) //Populate the service list
+/*This function is used on the customer view page to populate
+  the list of services that the customer may choose from. */
+function populateServices(event)
 {
     var list = document.getElementById("selectHairstyle");
 
@@ -468,7 +473,9 @@ function populateServices(event) //Populate the service list
     );
 }
 
-function populateLocations(event) //Populate the location list
+/*This function is used on the customer view page to populate
+  the list of branch locations that the customer may choose from. */
+function populateLocations(event)
 {
     var list = document.getElementById("selectLocation");
 
@@ -667,7 +674,9 @@ function updateStylistCalendar(event) //Update the stylist calendar
     }
 }
 
-function verifyHairstyle(event) //Verify the hairstyle
+/*This function is used on the customer view page to verify
+  that the customer actually selected a service/hairstyle. */
+function verifyHairstyle(event) 
 {
     var hairstyle = document.getElementById("selectHairstyle");
 
@@ -682,7 +691,9 @@ function verifyHairstyle(event) //Verify the hairstyle
     }
 }
 
-function verifyLocation(event) //Verify the location
+/*This function is used on the customer view page to verify
+  that the customer actually selected a branch location. */
+function verifyLocation(event)
 {
     var location = document.getElementById("selectLocation");
 
@@ -701,7 +712,9 @@ function verifyLocation(event) //Verify the location
     }
 }
 
-function verifyStylist(event) //Verify the stylist
+/*This function is used on the customer view page to verify
+  that the customer actually selected a stylist. */
+function verifyStylist(event)
 {
     var stylist = document.getElementById("selectedHairstylist");
 
@@ -716,7 +729,10 @@ function verifyStylist(event) //Verify the stylist
     }
 }
 
-function verifyDetails(event) //Verify the details
+/*This function is used on the customer view page to verify
+  that the customer's entered details are within the specific
+  character count (range is from 0 to 255 characters). */
+function verifyDetails(event)
 {
     var request = event.currentTarget.value;
 
@@ -729,7 +745,7 @@ function verifyDetails(event) //Verify the details
     }
 }
 
-function closeEvent(event) //Close the event
+function closeEvent(event) //Close the event popup
 {
     var modal = document.getElementById("eventPopup");
 
@@ -738,7 +754,7 @@ function closeEvent(event) //Close the event
     modal.style.display = "none";
 }
 
-function closeEventMeeting(event) //Close the meeting event
+function closeEventMeeting(event) //Close the meeting event popup
 {
     var modal = document.getElementById("eventPopupMeeting");
 
