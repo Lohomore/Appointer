@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2017 at 08:02 PM
+-- Generation Time: Mar 26, 2017 at 05:16 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -173,8 +173,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `password`, `firstName`, `lastName`, `birthday`, `country`, `province`, `city`, `rank`, `location`, `image`) VALUES
 (1, 'bobsmith@email.com', '$2y$10$MUiGbC2ArK6wFFeKXKGdNeKgs95DwKLsWoFhRQ1qK2Nwb.ciqK9B.', 'Bob', 'Smith', '1974-02-01', 'Canada', 'Saskatchewan', 'Regina', 0, 0, 'default.jpg'),
-(2, 'janedoe@email.com', '$2y$10$xMUJ80ZPJe4rKUviBe1kCuK/io4TRg9MyFYu1dllbYVC7DLtvV/ae', 'Jane', 'Doe', '1988-01-01', 'Canada', 'Saskatchewan', 'Regina', 1, 1, 'default.jpg'),
-(3, 'johndoe@email.com', '$2y$10$sSpqR89WZFUwpfz/naZKbeBy/V.EUEjlaDIAyM/RQvWO1/mZIQPu.', 'John', 'Doe', '1985-08-01', 'Canada', 'Saskatchewan', 'Regina', 1, 1, 'default.jpg'),
+(2, 'janedoe@email.com', '$2y$10$xMUJ80ZPJe4rKUviBe1kCuK/io4TRg9MyFYu1dllbYVC7DLtvV/ae', 'Jane', 'Doe', '1988-01-01', 'Canada', 'Saskatchewan', 'Regina', 1, 1, '1490411751.jpg'),
+(3, 'johndoe@email.com', '$2y$10$sSpqR89WZFUwpfz/naZKbeBy/V.EUEjlaDIAyM/RQvWO1/mZIQPu.', 'John', 'Doe', '1985-08-01', 'Canada', 'Saskatchewan', 'Regina', 1, 1, '1490411750.jpg'),
 (4, 'alicesmith@email.com', '$2y$10$40bdjWY1u.hlCJlP6EOiwOh2JWn1v/lz3pY86TVH8eGK1eeLfxiPO', 'Alice', 'Smith', '1976-05-19', 'Canada', 'Saskatchewan', 'Regina', 0, 0, 'default.jpg'),
 (5, 'edwards@email.com', '$2y$10$UUR0h5Qc.NWUPl7DfSOZp.IAUmHo7qefhRbj.BTqUvA/xHiS2Fouy', 'Edward', 'Scissorhands', '1990-12-06', 'Canada', 'Saskatchewan', 'Regina', 2, 1, 'default.jpg');
 
