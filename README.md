@@ -1,5 +1,5 @@
 # Appointer
-A simple calendar based appointment scheduling system!
+A simple calendar based appointment scheduling system created for CS 372 by Mitchell Steffensen, Brooke Clary, Oles Shnurovskyy, Mikhail Shchukin, Laura Teigrob, and Shelby Piechotta.
 
 ## Setup
 * Extract all files to web server directory
